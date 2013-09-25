@@ -1,16 +1,21 @@
-import 'dart:html';
+/*
+ * Packge : aloha
+ * Author : S. Hamblett <steve.hamblett@linux.com>
+ * Date   : 23/09/2013
+ * Copyright :  S.Hamblett@OSCF
+ */
 
-void main() {
-  query("#sample_text_id")
-    ..text = "Click me!"
-    ..onClick.listen(reverseText);
-}
+import '../lib/aloha.dart';
 
-void reverseText(MouseEvent event) {
-  var text = query("#sample_text_id").text;
-  var buffer = new StringBuffer();
-  for (int i = text.length - 1; i >= 0; i--) {
-    buffer.write(text[i]);
-  }
-  query("#sample_text_id").text = buffer.toString();
+main() {
+  
+  Aloha alohaEditor = new Aloha();
+  
+  /* Ready */
+  alohaEditor.ready.listen( (e) {
+    
+    alohaEditor.attachEditable('.editable');
+    
+  });
+    
 }

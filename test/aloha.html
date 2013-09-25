@@ -4,18 +4,45 @@
   <head>
     <meta charset="utf-8">
     <title>Aloha</title>
-    <link rel="stylesheet" href="aloha.css">
+    
+    <!-- load the jQuery and require.js libraries -->
+    <script type="text/javascript" src="http://cdn.aloha-editor.org/latest/lib/require.js"></script>
+    <script type="text/javascript" src="http://cdn.aloha-editor.org/latest/lib/vendor/jquery-1.7.2.js"></script>
+ 
+    <!-- load the Aloha Editor core and some plugins -->
+    <script src="http://cdn.aloha-editor.org/latest/lib/aloha.js"
+                                   data-aloha-plugins="common/ui,
+                                                        common/format,
+                                                        common/list,
+                                                        common/link,
+                                                        common/highlighteditables">
+     </script>
+               
+     <!-- load the Aloha Editor CSS styles -->
+     <link href="http://cdn.aloha-editor.org/latest/css/aloha.css" rel="stylesheet" type="text/css" />
+     
   </head>
   <body>
-    <h1>Aloha</h1>
     
-    <p>Hello world from Dart!</p>
-    
-    <div id="sample_container_id">
-      <p id="sample_text_id"></p>
-    </div>
-
+    <h1 class="editable">Aloha Editor Example</h1>
+     <h2 id="alohanoteditable" class="noteditable">Aloha Editor Example not the editable class</h2>
+              <p class="editable">Click to edit this paragraph.</p>
+ 
+              <div class="editable">
+                     <p>This is an editable div container.</p>
+                     <p>Follow us on <a href="http://twitter.com/alohaeditor">Twitter</a>.</p>
+                     <ul>
+                            <li>list item one</li>
+                            <li>list item two</li>
+                     </ul>
+              </div>
+ 
+              <p>Use Aloha Editor your existing textarea elements:</p>
+              <textarea class="editable">An editable textarea.</textarea>
+              
     <script type="application/dart" src="aloha.dart"></script>
     <script src="packages/browser/dart.js"></script>
+    <script src="packages/browser/interop.js"></script>
+    
   </body>
 </html>
