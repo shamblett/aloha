@@ -12,10 +12,31 @@ main() {
   Aloha alohaEditor = new Aloha();
   
   /* Ready */
-  alohaEditor.ready.listen( (e) {
+  alohaEditor.readyEvent.listen( (e) {
     
     alohaEditor.attachEditable('.editable');
+    print("Aloha is ready");
     
   });
+  
+  alohaEditor.commandWillExecuteEvent.listen ( (e) {
     
+    print(e.commandId);
+    print(e.preventDefault);
+    
+  });
+  
+  alohaEditor.commandExecutedEvent.listen ( (e) {
+    
+    print(e.commandId);
+    
+  });
+
+  alohaEditor.loggerReadyEvent.listen ( (e) {
+  
+    print("Aloha logger is ready");
+    
+  });
+  
+  
 }
