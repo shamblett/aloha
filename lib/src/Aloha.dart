@@ -71,7 +71,7 @@ class Aloha {
   get loggerFullEvent => _onLoggerFull.stream;
   
   /**
-   * Construction, create and bind the callbacks  for the core Aloha events. 
+   * Construction, create and bind the callbacks for the core Aloha events. 
    */
   Aloha() {
     

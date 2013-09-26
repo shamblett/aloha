@@ -7,17 +7,45 @@
 
 import '../lib/aloha.dart';
 
+import 'package:unittest/unittest.dart';
+import 'package:unittest/html_config.dart';
+
+Aloha alohaEditor = null;
+
 main() {
   
-  Aloha alohaEditor = new Aloha();
+  /* Setup */
   
-  /* Ready */
-  alohaEditor.readyEvent.listen( (e) {
+  useHtmlConfiguration(true);
+  
+  /* Group 1 - Core event tests*/
+  group("1. Core Events - ", () {
+         
+    test("Ready", () {  
+      
+      alohaEditor = new Aloha();
+      alohaEditor.readyEvent.listen( (e) {
+        
+        alohaEditor.attachEditable('.editable');
+        expect(true, isTrue);
+      });   
+      
+    }); 
     
-    alohaEditor.attachEditable('.editable');
-    print("Aloha is ready");
-    
+    test("Not Ready", () {  
+      
+      alohaEditor.isReady = false;
+      expect(()=> alohaEditor.attachEditable('.editable'),
+          throwsA(new isInstanceOf<AlohaException>('Not ready, re-initialise Aloha')));  
+      alohaEditor.isReady = true;
+      expect(alohaEditor.isReady, isTrue);
+      
+    });
+ 
   });
+  
+
+  /*
   
   alohaEditor.commandWillExecuteEvent.listen ( (e) {
     
@@ -44,5 +72,5 @@ main() {
     
   });
   
-  
+  */
 }

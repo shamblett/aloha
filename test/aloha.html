@@ -23,23 +23,26 @@
      
   </head>
   <body>
-    
-    <h1 class="editable">Aloha Editor Example</h1>
-     <h2 id="alohanoteditable" class="noteditable">Aloha Editor Example not the editable class</h2>
-              <p class="editable">Click to edit this paragraph.</p>
+    <section id="aloha-edit-section">
+      <h1 id="alohaedit1" class="editable">Aloha Editor Example</h1>
+      <h2 id="alohaedit2" class="noteditable">Aloha Editor Example not the editable class</h2>
+      <p id="alohaedit3" class="editable">Click to edit this paragraph.</p>
  
-              <div class="editable">
-                     <p>This is an editable div container.</p>
-                     <p>Follow us on <a href="http://twitter.com/alohaeditor">Twitter</a>.</p>
-                     <ul>
-                            <li>list item one</li>
-                            <li>list item two</li>
-                     </ul>
-              </div>
+      <div id="alohaedit4" class="editable">
+        <p>This is an editable div container.</p>
+        <p>Follow us on <a href="http://twitter.com/alohaeditor">Twitter</a>.</p>
+        <ul>
+          <li>list item one</li>
+          <li>list item two</li>
+        </ul>
+      </div>
  
-              <p>Use Aloha Editor your existing textarea elements:</p>
-              <textarea class="editable">An editable textarea.</textarea>
-    <button type="button" onclick="Aloha.trigger('aloha-log-full');">Click Me</button>      
+      <p>Use Aloha Editor your existing textarea elements:</p>
+      <textarea id="alohaedit5" class="editable">An editable textarea.</textarea>
+              
+    </section>
+    <section id="aloha-button-section"></section>
+       
     <script type="application/dart" src="aloha.dart"></script>
     <script src="packages/browser/dart.js"></script>
     <script src="packages/browser/interop.js"></script>
