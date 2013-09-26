@@ -7,11 +7,23 @@
 
 import '../lib/aloha.dart';
 
+import 'dart:html';
 import 'package:unittest/unittest.dart';
 import 'package:unittest/html_config.dart';
 
 Aloha alohaEditor = null;
 
+DivElement buttonSection = query('#aloha-button-section');
+
+ButtonElement createEventButton(String onClickScript){
+  
+  buttonSection.children.clear();
+  ButtonElement theButton = new ButtonElement();
+  theButton.attributes['onclick'] = onClickScript;
+  buttonSection.children.add(theButton);
+  return theButton;
+  
+}
 main() {
   
   /* Setup */
@@ -27,7 +39,9 @@ main() {
       alohaEditor.readyEvent.listen( (e) {
         
         alohaEditor.attachEditable('.editable');
+        print(">>> Ready - Aloha ready");
         expect(true, isTrue);
+        
       });   
       
     }); 
@@ -39,6 +53,36 @@ main() {
           throwsA(new isInstanceOf<AlohaException>('Not ready, re-initialise Aloha')));  
       alohaEditor.isReady = true;
       expect(alohaEditor.isReady, isTrue);
+      
+    });
+    
+    test("Logging Ready", () {  
+      
+      
+      alohaEditor.loggerReadyEvent.listen((e){
+        
+        expect(true, isTrue);
+        print(">>> Logging Ready OK");
+        
+      });
+      String script = "Aloha.trigger('aloha-logger-ready');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      
+    });
+    
+    test("Log Full", () {  
+      
+      
+      alohaEditor.loggerFullEvent.listen((e){
+        
+        expect(true, isTrue);
+        print(">>> Logging Full OK");
+        
+      });
+      String script = "Aloha.trigger('aloha-log-full');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
       
     });
  
