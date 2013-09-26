@@ -12,6 +12,7 @@ class Aloha {
   /**
    * Contexts and Aloha object proxies
    */
+  
   js.Proxy _context  = js.retain(js.context);
   get jsContext => _context;
   
@@ -25,29 +26,39 @@ class Aloha {
   get alohajQueryContext => _alohajQueryContext;
   
   /**
-   * State 
+   * State, the API calls check for this, if Aloha is not ready
+   * an AlohaException is raised.
    */
   bool _ready = false;
   get isReady => _ready;
   set isReady(bool state) => _ready = state;
   
   /**
-   * Callbacks and stream attachment
+   * Callbacks and stream attachment for the Core events
    */
   
-  /* Ready, NOT a broadcast event, only use one listener for this */
+  /**
+   *  Ready, NOT a broadcast event, only use one listener for this 
+   */
   js.Callback _jsReady;
   final _onReady = new StreamController();
   get readyEvent => _onReady.stream;
  
-  /* Commands */
+  /**
+   * Commands 
+   */
   js.Callback _jsCommandWillExecute;
-  final _onCommandWillExecute = new StreamController
-                <commandWillExecuteParameters>.broadcast();
+  final _onCommandWillExecute = new StreamController.broadcast();
+  /**
+   * Returned parameter is commandWillExecuteParameters class
+   */
   get commandWillExecuteEvent => _onCommandWillExecute.stream;
  
   js.Callback _jsCommandExecuted;
-  final _onCommandExecuted = new StreamController<String>.broadcast();
+  final _onCommandExecuted = new StreamController.broadcast();
+  /**
+   * Returned parameter is String
+   */
   get commandExecutedEvent => _onCommandExecuted.stream;
   
   /* Logging */
@@ -60,7 +71,7 @@ class Aloha {
   get loggerFullEvent => _onLoggerFull.stream;
   
   /**
-   * Construction, create the callbacks and bind them to Aloha events.
+   * Construction, create and bind the callbacks  for the core Aloha events. 
    */
   Aloha() {
     
@@ -73,20 +84,25 @@ class Aloha {
     });
     _alohaContext.bind('aloha-ready', _jsReady);
     
+    /**
+     * The rest of the bindings will always have the jQuery event object as
+     * their first parameter, even if Aloha sends nothing, e.g, log ready trigger.
+     */
+    
     /* Commands */
-    _jsCommandWillExecute = new js.Callback.many(
-        (String commandId, bool preventDefault){
+    _jsCommandWillExecute = new js.Callback.many((js.Proxy e,
+                                                 Object jsParams) {
       
-          commandWillExecuteParameters params;
-          params.commandId = commandId;
-          params.preventDefault = preventDefault;
+          commandWillExecuteParameters params = new commandWillExecuteParameters();
+          params.commandId = jsParams.commandId;
+          params.preventDefault = jsParams.preventDefault;
           _onCommandWillExecute.add(params);
           
     });
     _alohaContext.bind('aloha-command-will-execute', _jsCommandWillExecute);
     
-    _jsCommandExecuted = new js.Callback.many(
-        (String commandId){
+    _jsCommandExecuted = new js.Callback.many((js.Proxy e,
+                                               String commandId){
           
           _onCommandExecuted.add(commandId);
           
@@ -94,17 +110,17 @@ class Aloha {
     _alohaContext.bind('aloha-command-executed', _jsCommandExecuted);
     
     /* Logging */
-    _jsLoggerReady = new js.Callback.many((){
+    _jsLoggerReady = new js.Callback.many((js.Proxy e){
       
       _onLoggerReady.add(null);
       
     });
     _alohaContext.bind('aloha-logger-ready', _jsLoggerReady);
-    
-    _jsLoggerFull = new js.Callback.many((){
+   
+    _jsLoggerFull = new js.Callback.many((js.Proxy e){
       
       _onLoggerFull.add(null);
-      
+     
     });
     _alohaContext.bind('aloha-log-full', _jsLoggerFull);
     
@@ -117,6 +133,9 @@ class Aloha {
     
     _onReady.close();
     _onCommandWillExecute.close();
+    _onCommandExecuted.close();
+    _onLoggerReady.close();
+    _onLoggerFull.close();
     
   }
   

@@ -10,7 +10,7 @@ part of aloha;
 /**
  * Commands 
  */
-abstract class commandWillExecuteParameters {
+class commandWillExecuteParameters {
     
   String _commandId = null;
   get commandId => _commandId;

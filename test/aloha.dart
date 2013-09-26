@@ -28,13 +28,19 @@ main() {
   
   alohaEditor.commandExecutedEvent.listen ( (e) {
     
-    print(e.commandId);
+    print(e);
     
   });
 
   alohaEditor.loggerReadyEvent.listen ( (e) {
+    
+   print("Aloha logger is ready");
+    
+  });
   
-    print("Aloha logger is ready");
+  alohaEditor.loggerFullEvent.listen ( (e) {
+    
+   print("Aloha logger is full");
     
   });
   

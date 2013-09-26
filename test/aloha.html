@@ -39,10 +39,23 @@
  
               <p>Use Aloha Editor your existing textarea elements:</p>
               <textarea class="editable">An editable textarea.</textarea>
-              
+    <button type="button" onclick="Aloha.trigger('aloha-log-full');">Click Me</button>      
     <script type="application/dart" src="aloha.dart"></script>
     <script src="packages/browser/dart.js"></script>
     <script src="packages/browser/interop.js"></script>
+    <script type="text/javascript">
+                     
+                     Aloha.ready( function() {
+                            var $ = Aloha.jQuery;
+                            //Aloha.bind('aloha-command-will-execute', function() {
+                             // alert("command executed");
+                            //});
+                               
+                     });
+                     
+                     
+                     
+              </script>
     
   </body>
 </html>

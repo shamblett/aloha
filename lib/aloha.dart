@@ -13,3 +13,7 @@ import 'package:js/js.dart' as js;
 part 'src/Aloha.dart';
 part 'src/AlohaException.dart';
 part 'src/AlohaClassTypes.dart';
+part 'src/AlohaEditable.dart';
+part 'src/AlohaLog.dart';
+part 'src/AlohaCommand.dart';
+
