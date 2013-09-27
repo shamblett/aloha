@@ -40,6 +40,7 @@ main() {
       bool passed = false;  
       alohaEditor.readyEvent.listen( (e) {
       
+        /* Do this now, we will formally test it later */
         alohaEditor.attachEditable('.editable');
         print(">>> Ready - Aloha ready");
         passed = true;
@@ -126,6 +127,25 @@ main() {
       String script = "Aloha.trigger('aloha-command-executed', 'Italic');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
+    
+    test("Editable created", () {  
+      
+      bool passed = false;
+      alohaEditor.editableCreatedEvent.listen((e){
+        
+        print(">>> Editable Created OK");
+        passed = true;
+        
+      });
+      
+      /* Create an editable */
+      HeadingElement theEditable = query('#alohaedit2');
+      theEditable.classes.remove('noteditable');
+      theEditable.classes.add('editable');
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
       

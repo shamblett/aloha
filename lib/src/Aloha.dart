@@ -61,7 +61,9 @@ class Aloha {
    */
   get commandExecutedEvent => _onCommandExecuted.stream;
   
-  /* Logging */
+  /**
+   *  Logging 
+   */
   js.Callback _jsLoggerReady = null;
   final _onLoggerReady = new StreamController.broadcast();
   get loggerReadyEvent => _onLoggerReady.stream;
@@ -69,6 +71,16 @@ class Aloha {
   js.Callback _jsLoggerFull = null;
   final _onLoggerFull = new StreamController.broadcast();
   get loggerFullEvent => _onLoggerFull.stream;
+  
+  /**
+   * Editables
+   */
+  js.Callback _jsEditableCreated = null;
+  final _onEditableCreated = new StreamController.broadcast();
+  /**
+   * Returned parameter is an AlohaEditable class
+   */
+  get editableCreatedEvent => _onEditableCreated.stream;
   
   /**
    * Construction, create and bind the callbacks for the core Aloha events. 
@@ -123,6 +135,16 @@ class Aloha {
      
     });
     _alohaContext.bind('aloha-log-full', _jsLoggerFull);
+    
+    /* Editables */
+    _jsEditableCreated = new js.Callback.many((js.Proxy event,
+                                               js.Proxy editable){
+        
+     AlohaEditable theEditable = new AlohaEditable(editable, event);
+     _onEditableCreated.add(theEditable);
+     
+     });
+    _alohaContext.bind('aloha-editable-created', _jsEditableCreated);
     
   }
   
