@@ -85,6 +85,24 @@ main() {
       theButton.click();
       
     });
+    
+    test("Command Will Execute", () {  
+      
+      
+      alohaEditor.commandWillExecuteEvent.listen((e){
+        
+        expect(true, isTrue);
+        expect(e.commandId, equals('Boldooo'));
+        expect(e.preventDefault, isFalse);
+        print(">>> Command Will Execute OK");
+        
+      });
+      String script = "var evtObj = {commandId: 'Bold',preventDefault: false};"
+                      "Aloha.trigger('aloha-command-will-execute', evtObj);";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      
+    });
  
   });
   
