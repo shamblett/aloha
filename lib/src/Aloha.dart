@@ -40,21 +40,21 @@ class Aloha {
   /**
    *  Ready, NOT a broadcast event, only use one listener for this 
    */
-  js.Callback _jsReady;
+  js.Callback _jsReady = null;
   final _onReady = new StreamController();
   get readyEvent => _onReady.stream;
  
   /**
    * Commands 
    */
-  js.Callback _jsCommandWillExecute;
+  js.Callback _jsCommandWillExecute = null;
   final _onCommandWillExecute = new StreamController.broadcast();
   /**
    * Returned parameter is commandWillExecuteParameters class
    */
   get commandWillExecuteEvent => _onCommandWillExecute.stream;
  
-  js.Callback _jsCommandExecuted;
+  js.Callback _jsCommandExecuted = null;
   final _onCommandExecuted = new StreamController.broadcast();
   /**
    * Returned parameter is String
@@ -62,11 +62,11 @@ class Aloha {
   get commandExecutedEvent => _onCommandExecuted.stream;
   
   /* Logging */
-  js.Callback _jsLoggerReady;
+  js.Callback _jsLoggerReady = null;
   final _onLoggerReady = new StreamController.broadcast();
   get loggerReadyEvent => _onLoggerReady.stream;
   
-  js.Callback _jsLoggerFull;
+  js.Callback _jsLoggerFull = null;
   final _onLoggerFull = new StreamController.broadcast();
   get loggerFullEvent => _onLoggerFull.stream;
   
