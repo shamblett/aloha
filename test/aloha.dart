@@ -112,36 +112,25 @@ main() {
       new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
       
     });
+    
+    test("Command Executed", () {  
+      
+      bool passed = false;
+      alohaEditor.commandExecutedEvent.listen((e){
+        
+        if ( e != 'Italic') return;
+        print(">>> Command Executed OK");
+        passed = true;
+        
+      });
+      String script = "Aloha.trigger('aloha-command-executed', 'Italic');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
  
   });
   
-
-  /*
-  
-  alohaEditor.commandWillExecuteEvent.listen ( (e) {
-    
-    print(e.commandId);
-    print(e.preventDefault);
-    
-  });
-  
-  alohaEditor.commandExecutedEvent.listen ( (e) {
-    
-    print(e);
-    
-  });
-
-  alohaEditor.loggerReadyEvent.listen ( (e) {
-    
-   print("Aloha logger is ready");
-    
-  });
-  
-  alohaEditor.loggerFullEvent.listen ( (e) {
-    
-   print("Aloha logger is full");
-    
-  });
-  
-  */
 }
