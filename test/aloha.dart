@@ -8,6 +8,7 @@
 import '../lib/aloha.dart';
 
 import 'dart:html';
+import 'dart:async';
 import 'package:unittest/unittest.dart';
 import 'package:unittest/html_config.dart';
 
@@ -36,14 +37,16 @@ main() {
     test("Ready", () {  
       
       alohaEditor = new Aloha();
+      bool passed = false;  
       alohaEditor.readyEvent.listen( (e) {
-        
+      
         alohaEditor.attachEditable('.editable');
         print(">>> Ready - Aloha ready");
-        expect(true, isTrue);
+        passed = true;
         
-      });   
-      
+      });
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
     }); 
     
     test("Not Ready", () {  
@@ -58,49 +61,55 @@ main() {
     
     test("Logging Ready", () {  
       
-      
+      bool passed = false;  
       alohaEditor.loggerReadyEvent.listen((e){
         
-        expect(true, isTrue);
+        passed = true;
         print(">>> Logging Ready OK");
         
       });
       String script = "Aloha.trigger('aloha-logger-ready');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
       
     });
     
     test("Log Full", () {  
       
-      
+      bool passed = false; 
       alohaEditor.loggerFullEvent.listen((e){
         
-        expect(true, isTrue);
         print(">>> Logging Full OK");
+        passed = true;
         
       });
       String script = "Aloha.trigger('aloha-log-full');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
       
     });
     
     test("Command Will Execute", () {  
       
-      
+      bool passed = false;
       alohaEditor.commandWillExecuteEvent.listen((e){
         
-        expect(true, isTrue);
-        expect(e.commandId, equals('Boldooo'));
-        expect(e.preventDefault, isFalse);
+        if ( e.commandId != 'Bold') return;
+        if ( e.preventDefault ) return;
         print(">>> Command Will Execute OK");
+        passed = true;
         
       });
       String script = "var evtObj = {commandId: 'Bold',preventDefault: false};"
                       "Aloha.trigger('aloha-command-will-execute', evtObj);";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
       
     });
  
