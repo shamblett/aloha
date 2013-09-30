@@ -198,6 +198,24 @@ main() {
       new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
      
     });
+    
+    test("Editable Deactivated", () {  
+      
+      bool passed = false;
+      alohaEditor.editableDeactivatedEvent.listen((e){
+        
+        if ( e.isActive ) return;
+        if ( e.id != 'alohaedit1') return;
+        print(">>> Editable Deactivated OK");
+        passed = true;
+        
+      });
+      
+      alohaEditor.deactivateActiveEditable();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+     
+    });
  
   });
   

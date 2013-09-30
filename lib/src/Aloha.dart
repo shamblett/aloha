@@ -96,6 +96,13 @@ class Aloha {
    */
   get editableActivatedEvent => _onEditableActivated.stream;
   
+  js.Callback _jsEditableDeactivated = null;
+  final _onEditableDeactivated = new StreamController.broadcast();
+  /**
+   * Returned parameter is an AlohaEditable class
+   */
+  get editableDeactivatedEvent => _onEditableDeactivated.stream;
+  
   /**
    * Construction, create and bind the callbacks for the core Aloha events. 
    */
@@ -193,6 +200,16 @@ class Aloha {
     });
     _alohaContext.bind('aloha-editable-activated', _jsEditableActivated);
     
+    _jsEditableDeactivated = new js.Callback.many((js.Proxy event,
+                                                   js.Proxy editable){
+      
+      AlohaEditable theEditable = new AlohaEditable(js.retain(editable.editable), 
+                                                    js.retain(event));
+     _onEditableDeactivated.add(theEditable);
+     
+     });
+    _alohaContext.bind('aloha-editable-deactivated', _jsEditableDeactivated);
+    
   }
   
   /**
@@ -233,6 +250,22 @@ class Aloha {
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
     js.Proxy editableProxy = editable.editableProxy();
     _alohaContext.activateEditable(editableProxy);
+    
+  }
+  
+  AlohaEditable getActiveEditable() {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    js.Proxy editableProxy = _alohaContext.getActiveEditable();
+    AlohaEditable theEditable = new AlohaEditable(editableProxy);
+    return theEditable;
+    
+  }
+  
+  void deactivateActiveEditable() {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    _alohaContext.deactivateEditable();
     
   }
   /**
