@@ -82,6 +82,20 @@ class Aloha {
    */
   get editableCreatedEvent => _onEditableCreated.stream;
   
+  js.Callback _jsEditableDestroyed = null;
+  final _onEditableDestroyed = new StreamController.broadcast();
+  get editableDestroyedEvent => _onEditableDestroyed.stream;
+  
+  js.Callback _jsEditableActivated = null;
+  final _onEditableActivated = new StreamController.broadcast();
+  /**
+   * Returned parameter is a list of the editable activated and the old 
+   * editable that was active, both of AlohaEditable class. if there was
+   * no old active editable(e.g first click on the page) none is supplied.
+   *  [editable, oldEditable]
+   */
+  get editableActivatedEvent => _onEditableActivated.stream;
+  
   /**
    * Construction, create and bind the callbacks for the core Aloha events. 
    */
@@ -102,7 +116,7 @@ class Aloha {
      */
     
     /* Commands */
-    _jsCommandWillExecute = new js.Callback.many((js.Proxy e,
+    _jsCommandWillExecute = new js.Callback.many((js.Proxy event,
                                                  Object jsParams) {
       
           commandWillExecuteParameters params = new commandWillExecuteParameters();
@@ -113,7 +127,7 @@ class Aloha {
     });
     _alohaContext.bind('aloha-command-will-execute', _jsCommandWillExecute);
     
-    _jsCommandExecuted = new js.Callback.many((js.Proxy e,
+    _jsCommandExecuted = new js.Callback.many((js.Proxy event,
                                                String commandId){
           
           _onCommandExecuted.add(commandId);
@@ -140,11 +154,44 @@ class Aloha {
     _jsEditableCreated = new js.Callback.many((js.Proxy event,
                                                js.Proxy editable){
         
-     AlohaEditable theEditable = new AlohaEditable(editable, event);
+      AlohaEditable theEditable = new AlohaEditable(js.retain(editable), 
+                                                    js.retain(event));
      _onEditableCreated.add(theEditable);
      
      });
     _alohaContext.bind('aloha-editable-created', _jsEditableCreated);
+    
+    _jsEditableDestroyed = new js.Callback.many((js.Proxy event,
+                                                 js.Proxy ref){
+      
+      _onEditableDestroyed.add(null);
+      
+    });
+    _alohaContext.bind('aloha-editable-destroyed', _jsEditableDestroyed);
+    
+    _jsEditableActivated = new js.Callback.many((js.Proxy event,
+                                                 editableObjects){
+      
+      /* We always have the event and the current active editable */
+      List editableList = null;
+      js.Proxy editableEvent = js.retain(event);
+      js.Proxy activeEditable = js.retain(editableObjects.editable);
+      AlohaEditable editable = new AlohaEditable(activeEditable, editableEvent);
+      /* See if we have an old editable, if so pass it back. */
+      try {
+      js.Proxy oldActiveEditable =  js.retain(editableObjects.old);
+      AlohaEditable oldEditable = new AlohaEditable(oldActiveEditable, editableEvent);
+      editableList = [editable, oldEditable];
+      } catch(e) {
+        
+        editableList = [editable];
+        
+      }
+          
+      _onEditableActivated.add(editableList);
+      
+    });
+    _alohaContext.bind('aloha-editable-activated', _jsEditableActivated);
     
   }
   
@@ -158,20 +205,59 @@ class Aloha {
     _onCommandExecuted.close();
     _onLoggerReady.close();
     _onLoggerFull.close();
+    _onEditableCreated.close();
+    _onEditableDestroyed.close();
+    _onEditableActivated.close();
     
   }
   
+  
+  /**
+   * Aloha core API
+   */
+  
+  /**
+   * Editables
+   */
+  AlohaEditable getEditableById(String id) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    js.Proxy editableProxy = _alohaContext.getEditableById(id);
+    AlohaEditable theEditable = new AlohaEditable(editableProxy);
+    return theEditable;
+    
+  }
+  
+  void activateEditable(AlohaEditable editable) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    js.Proxy editableProxy = editable.editableProxy();
+    _alohaContext.activateEditable(editableProxy);
+    
+  }
   /**
    * Helper methods for Aloha object manipulation
    */
   
   /**
-   * Attach jQuery selectors to Aloha to make them editable entities
+   * Attach jQuery selectors to Aloha to make them editable entities.
    */
   void attachEditable(String selector) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
     alohajQueryContext(selector).aloha();
+    
+  }
+  
+  /**
+   * Detach jQuery selectors from Aloha to make previous editables non-editable 
+   * entities.
+   * If they were previously editable they will be destroyed.
+   */
+  void detachEditable(String selector) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    alohajQueryContext(selector).mahalo();
     
   }
 }

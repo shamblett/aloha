@@ -142,15 +142,65 @@ main() {
         
       });
       
-      /* Create an editable */
-      HeadingElement theEditable = query('#alohaedit2');
-      theEditable.classes.remove('noteditable');
-      theEditable.classes.add('editable');
+      /**
+       *  Create an editable by adding the noweditable class to a previously
+       *  not editable entity and adding it.
+       */
+      HeadingElement theEditableElement = query('#alohaedit2');
+      theEditableElement.classes.remove('noteditable');
+      theEditableElement.classes.add('noweditable');
+      alohaEditor.attachEditable('.noweditable');
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
       
     });
+    
+    test("Editable destroyed", () {  
+      
+      bool passed = false;
+      alohaEditor.editableDestroyedEvent.listen((e){
+        
+        print(">>> Editable Destroyed OK");
+        passed = true;
+        
+      });
+      
+      /**
+       *  Dedstroy an editable by adding the noteditable class to a previously
+       *  editable entity and detaching it.
+       */
+      HeadingElement theEditableElement = query('#alohaedit2');
+      theEditableElement.classes.remove('noweditable');
+      theEditableElement.classes.add('noteditable');
+      alohaEditor.detachEditable('.noteditable');
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
+    
+    test("Editable activated", () {  
+      
+      bool passed = false;
+      alohaEditor.editableActivatedEvent.listen((e){
+        
+        if ( !e[0].isActive ) return;
+        if ( e[0].id != 'alohaedit1') return;
+        print(">>> Editable Activated OK");
+        passed = true;
+        
+      });
+      
+      HeadingElement theEditableElement = query('#alohaedit1');
+      /* Focus, then click, need this sequence for Aloha */
+      theEditableElement.focus();
+      theEditableElement.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+     
+    });
  
   });
+  
+  
   
 }
