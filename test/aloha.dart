@@ -178,7 +178,7 @@ main() {
       
     });
     
-    test("Editable activated", () {  
+    test("Editable Activated", () {  
       
       bool passed = false;
       alohaEditor.editableActivatedEvent.listen((e){
@@ -190,6 +190,9 @@ main() {
         
       });
       
+      /* To trigger the activated event we must do this through the page,
+       * not any core API calls
+       */
       HeadingElement theEditableElement = query('#alohaedit1');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
