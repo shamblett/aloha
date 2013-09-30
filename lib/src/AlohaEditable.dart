@@ -13,6 +13,7 @@ class AlohaEditable {
    * The context for the editable
    */
   js.Proxy _context = null;
+  get editableProxy => _context;
   
   /**
    * The event that triggered the creation of the editable, e.g 
@@ -84,12 +85,8 @@ class AlohaEditable {
    * Check if object can be edited by Aloha Editor
    * return true if Aloha Editor can handle it.
    */
-  bool check() {
+  bool get check => _context.check();
     
-    return _context.check();
-    
-  }
-  
   /**
    * Initialise the placeholder
    */
@@ -123,24 +120,20 @@ class AlohaEditable {
   /**
    * Check if the content is empty.
    */
-  bool isEmpty() {
-    
-    _context.isEmpty();
-  }
-  
+  bool get isEmpty => _context.isEmpty();
+ 
   /**
    * String representation of the object
    */
-  String toString() {
+  /**
+   * For now, we can't pass toString through yet,
+   * asked on SO
+   */
+  //TODO
+  String toString() => 'Aloha.Editable';
     
-    /**
-     * For now, we can't pass toString through yet,
-     * asked on SO
-     */
-    //TODO
-    return 'Aloha.Editable';
     
-  }
+    
   
   /**
    * Activates an editable for editing, disables all other active items
@@ -202,20 +195,14 @@ class AlohaEditable {
   /**
    * Get the id of this editable
    */
-  String getId() {
+  String get id => _context.getId();
     
-    return _context.getId();
-    
-  }
   
   /**
    * Get a snapshot of the active editable as a HTML string
    */
-  String getSnapshotContent() {
+  String get snapshotContent => _context.getSnapshotContent();
     
-    return _context.getSnapshotContent();
-    
-  }
   
   /**
    * Sets the content serializer function.
@@ -243,7 +230,7 @@ class AlohaEditable {
   /**
    * Gets the content serializer function.
    * 
-   * js.Proxy context, the aAloha editable context ,usually Aloha.Editable
+   * js.Proxy context, the Aloha editable context ,usually Aloha.Editable
    */
   static dynamic getContentSerializer(js.Proxy context) {
     
@@ -257,6 +244,8 @@ class AlohaEditable {
   void destroy() {
     
     _context.destroy();
+    js.release(_context);
+    if (  _event != null ) js.release(_event);
     
   }
   
