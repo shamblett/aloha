@@ -172,6 +172,33 @@ class Aloha {
   get blockSelectedEvent => _onBlockSelectedChange.stream;
   
   /**
+   * The aloha-selection-changed and aloha-context-changed events are not yet implemented
+   * as ranges and selections themselves are not.
+   */
+  
+  /**
+   * Plugins
+   */
+  
+  /**
+   * Image
+   */
+  
+  /**
+   * Image selection event
+   */
+  js.Callback _jsImageSelected = null;
+  final _onImageSelected = new StreamController.broadcast();
+  get imageSelectedEvent => _onImageSelected.stream;
+  
+  /**
+   * Image unselection event
+   */
+  js.Callback _jsImageUnselected = null;
+  final _onImageUnselected = new StreamController.broadcast();
+  get imageUnselectedEvent => _onImageUnselected.stream;
+  
+  /**
    * Construction, create and bind the callbacks for the core Aloha events. 
    */
   Aloha() {
@@ -305,6 +332,21 @@ class Aloha {
      });
     _alohaContext.bind('aloha-block-selected',_jsBlockSelected );
     
+    /* Plugins */
+    _jsImageSelected = new js.Callback.many((js.Proxy e){
+      
+      _onImageSelected.add(null);
+      
+    });
+    _alohaContext.bind('aloha-image-selected', _jsImageSelected);
+    
+    _jsImageUnselected = new js.Callback.many((js.Proxy e){
+      
+      _onImageUnselected.add(null);
+      
+    });
+    _alohaContext.bind('aloha-image-unselected', _jsImageUnselected);
+    
   }
   
   /**
@@ -323,6 +365,8 @@ class Aloha {
     _onEditableDeactivated.close();
     _onSmartContentChange.close();
     _onBlockSelectedChange.close();
+    _onImageSelected.close();
+    _onImageUnselected.close();
     
   }
   

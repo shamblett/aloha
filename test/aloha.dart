@@ -267,6 +267,40 @@ main() {
       new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
       
     });
+    
+    test("Image Selected", () {  
+      
+      bool passed = false;
+      alohaEditor.imageSelectedEvent.listen((e){
+        
+        print(">>> Image Selected OK");
+        passed = true;
+        
+      });
+      String script = "Aloha.trigger('aloha-image-selected');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
+    
+    test("Image Unselected", () {  
+      
+      bool passed = false;
+      alohaEditor.imageUnselectedEvent.listen((e){
+        
+        print(">>> Image Unselected OK");
+        passed = true;
+        
+      });
+      String script = "Aloha.trigger('aloha-image-unselected');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
 
  
     
