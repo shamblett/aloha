@@ -174,6 +174,7 @@ class Aloha {
   /**
    * The aloha-selection-changed and aloha-context-changed events are not yet implemented
    * as ranges and selections themselves are not.
+   * TODO
    */
   
   /**
@@ -216,10 +217,67 @@ class Aloha {
   final _onLinkUnselected = new StreamController.broadcast();
   get linkUnselectedEvent => _onLinkUnselected.stream;
   
+  /**
+   * The aloha-link-href-change event is not yet implemented as the repository API 
+   * is not yet implemented..
+   *  TODO
+   */
+ 
+  /**
+   * Tables
+   */
+    
+  /**
+   * Table activation event
+   * After an existing dom-table is transformed into an editable Aloha Editor 
+   * table this event is triggered.
+   */
+  js.Callback _jsTableSelectionChanged = null;
+  final _onTableSelectionChanged = new StreamController.broadcast();
+  get tableSelectionChangedEvent => _onTableSelectionChanged.stream; 
   
   /**
+   * Table selection change event
+   * Triggers when one or more cells of a table are selected or unselected.
+   */
+  js.Callback _jsTableActivated = null;
+  final _onTableActivated = new StreamController.broadcast();
+  get tableActivatedEvent => _onTableActivated.stream; 
+  
+  /**
+   * Drag and Drop Files
+   */
+  
+  /**
+   * All files upload prepared.
+   * After all files are prepared for an upload this event is triggered.
+   */
+  js.Callback _jsDdfAllFilesPrepared = null;
+  final _onDdfAllFilesPrepared = new StreamController.broadcast();
+  get ddfAllFilesPreparedEvent => _onDdfAllFilesPrepared.stream; 
+  
+  /**
+   * The aloha-drop-files-in-editable event is not yet implemented as the 
+   * range API is not yet implemented..
+   *  TODO
+   */
+  
+  /**
+   * Drop files in page
+   * This event is triggered when files are dropped into the page and not an editable.
+   */
+  js.Callback _jsDdfFilesDroppedInPage = null;
+  final _onDdfFilesDroppedInPage = new StreamController.broadcast();
+  /**
+   * Returned parameter is an HTML element class such as DivElement, ParagraphElement
+   * etc. dependent on the drop target.
+   */
+  get ddfFilesDroppedInPageEvent => _onDdfFilesDroppedInPage.stream; 
+  
+   /**
    * Construction, create and bind the callbacks for the core Aloha events. 
    */
+  
   Aloha() {
     
     /* Ready */
@@ -343,10 +401,10 @@ class Aloha {
     _alohaContext.bind('aloha-smart-content-changed',_jsSmartContentChange );
     
     _jsBlockSelected = new js.Callback.many((js.Proxy event,
-                                             Object parameters){
+                                             Object element){
       
       
-      _onBlockSelectedChange.add(parameters);
+      _onBlockSelectedChange.add(element);
      
      });
     _alohaContext.bind('aloha-block-selected',_jsBlockSelected );
@@ -379,6 +437,36 @@ class Aloha {
       
     });
     _alohaContext.bind('aloha-link-unselected', _jsLinkUnselected);
+    
+    _jsTableSelectionChanged = new js.Callback.many((js.Proxy e){
+      
+      _onTableSelectionChanged.add(null);
+      
+    });
+    _alohaContext.bind('aloha-table-selection-changed', _jsTableSelectionChanged);
+    
+    _jsTableActivated = new js.Callback.many((js.Proxy e){
+      
+      _onTableActivated.add(null);
+      
+    });
+    _alohaContext.bind('aloha-table-activated', _jsTableActivated);
+    
+    _jsDdfAllFilesPrepared = new js.Callback.many((js.Proxy e){
+      
+      _onDdfAllFilesPrepared.add(null);
+      
+    });
+    _alohaContext.bind('aloha-allfiles-upload-prepared', _jsDdfAllFilesPrepared);
+    
+    _jsDdfFilesDroppedInPage = new js.Callback.many((js.Proxy e,
+                                                     Object element){
+      
+      _onDdfFilesDroppedInPage.add(element);
+      
+    });
+    _alohaContext.bind('aloha-drop-files-in-page', _jsDdfFilesDroppedInPage);
+    
   }
   
   /**
@@ -401,6 +489,8 @@ class Aloha {
     _onImageUnselected.close();
     _onLinkSelected.close();
     _onLinkUnselected.close();
+    _onTableSelectionChanged.close();
+    _onTableActivated.close();
     
   }
   

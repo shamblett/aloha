@@ -9,7 +9,6 @@ import '../lib/aloha.dart';
 
 import 'dart:html';
 import 'dart:async';
-import 'package:js/js.dart' as js;
 import 'package:unittest/unittest.dart';
 import 'package:unittest/html_config.dart';
 
@@ -336,6 +335,75 @@ main() {
       
     });
     
+    test("Table Selection Changed", () {  
+      
+      bool passed = false;
+      alohaEditor.tableSelectionChangedEvent.listen((e){
+        
+        print(">>> Table Selection Changed OK");
+        passed = true;
+        
+      });
+      String script = "Aloha.trigger('aloha-table-selection-changed');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
+    
+    test("Table Activated", () {  
+      
+      bool passed = false;
+      alohaEditor.tableActivatedEvent.listen((e){
+        
+        print(">>> Table Activated OK");
+        passed = true;
+        
+      });
+      String script = "Aloha.trigger('aloha-table-activated');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
+
+    test("DDF All Files Prepared", () {  
+      
+      bool passed = false;
+      alohaEditor.ddfAllFilesPreparedEvent.listen((e){
+        
+        print(">>> DDF All Files Prepared OK");
+        passed = true;
+        
+      });
+      String script = "Aloha.trigger('aloha-allfiles-upload-prepared');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
+    
+    test("DDF Files Dropped In Page", () {  
+      
+      bool passed = false;
+      alohaEditor.ddfFilesDroppedInPageEvent.listen((e){
+        
+        if ( e.innerHtml != 'Files Dropped Text') return;
+        print(">>> DDF Files Dropped In Page OK");
+        passed = true;
+        
+      });
+      String script = "var block = \$('#filesdropped');Aloha.trigger('aloha-drop-files-in-page', block);";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
+
   });
   
   
