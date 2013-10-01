@@ -159,6 +159,19 @@ class Aloha {
   get smartContentChangeEvent => _onSmartContentChange.stream;
   
   /**
+   * Processing of cursor keys will currently detect blocks (elements with contenteditable=false) 
+   * and selects them (normally the cursor would jump right past them). 
+   * This will also trigger the blockSelectedEvent event.
+   */
+  js.Callback _jsBlockSelected = null;
+  final _onBlockSelectedChange = new StreamController.broadcast();
+  /**
+   * Returned parameter is an HTML element class such as DivElement, ParagraphElement
+   * etc. dependent on selection.
+   */
+  get blockSelectedEvent => _onBlockSelectedChange.stream;
+  
+  /**
    * Construction, create and bind the callbacks for the core Aloha events. 
    */
   Aloha() {
@@ -283,6 +296,15 @@ class Aloha {
      });
     _alohaContext.bind('aloha-smart-content-changed',_jsSmartContentChange );
     
+    _jsBlockSelected = new js.Callback.many((js.Proxy event,
+                                             Object parameters){
+      
+      
+      _onBlockSelectedChange.add(parameters);
+     
+     });
+    _alohaContext.bind('aloha-block-selected',_jsBlockSelected );
+    
   }
   
   /**
@@ -300,7 +322,7 @@ class Aloha {
     _onEditableActivated.close();
     _onEditableDeactivated.close();
     _onSmartContentChange.close();
-    
+    _onBlockSelectedChange.close();
     
   }
   

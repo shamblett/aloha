@@ -249,6 +249,24 @@ main() {
       new Timer(new Duration(milliseconds:50), expectAsync0(checkTest));
      
     });
+    
+    test("Block Selected", () {  
+      
+      bool passed = false;
+      alohaEditor.blockSelectedEvent.listen((e){
+        
+        if ( e.innerHtml != 'This is an editable div container.') return;
+        print(">>> Block Selected OK");
+        passed = true;
+        
+      });
+      String script = "var block = \$('#cepara');Aloha.trigger('aloha-block-selected', block);";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
 
  
     
