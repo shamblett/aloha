@@ -199,6 +199,25 @@ class Aloha {
   get imageUnselectedEvent => _onImageUnselected.stream;
   
   /**
+   * Link
+   */
+  
+  /**
+   * Link selection event
+   */
+  js.Callback _jsLinkSelected = null;
+  final _onLinkSelected = new StreamController.broadcast();
+  get linkSelectedEvent => _onLinkSelected.stream;
+  
+  /**
+   * Link unselection event
+   */
+  js.Callback _jsLinkUnselected = null;
+  final _onLinkUnselected = new StreamController.broadcast();
+  get linkUnselectedEvent => _onLinkUnselected.stream;
+  
+  
+  /**
    * Construction, create and bind the callbacks for the core Aloha events. 
    */
   Aloha() {
@@ -347,6 +366,19 @@ class Aloha {
     });
     _alohaContext.bind('aloha-image-unselected', _jsImageUnselected);
     
+    _jsLinkSelected = new js.Callback.many((js.Proxy e){
+      
+      _onLinkSelected.add(null);
+      
+    });
+    _alohaContext.bind('aloha-link-selected', _jsLinkSelected);
+    
+    _jsLinkUnselected = new js.Callback.many((js.Proxy e){
+      
+      _onLinkUnselected.add(null);
+      
+    });
+    _alohaContext.bind('aloha-link-unselected', _jsLinkUnselected);
   }
   
   /**
@@ -367,6 +399,8 @@ class Aloha {
     _onBlockSelectedChange.close();
     _onImageSelected.close();
     _onImageUnselected.close();
+    _onLinkSelected.close();
+    _onLinkUnselected.close();
     
   }
   

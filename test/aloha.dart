@@ -302,7 +302,39 @@ main() {
       
     });
 
- 
+    test("Link Selected", () {  
+      
+      bool passed = false;
+      alohaEditor.linkSelectedEvent.listen((e){
+        
+        print(">>> Link Selected OK");
+        passed = true;
+        
+      });
+      String script = "Aloha.trigger('aloha-link-selected');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
+    
+    test("Link Unselected", () {  
+      
+      bool passed = false;
+      alohaEditor.linkUnselectedEvent.listen((e){
+        
+        print(">>> Link Unselected OK");
+        passed = true;
+        
+      });
+      String script = "Aloha.trigger('aloha-link-unselected');";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
     
   });
   
