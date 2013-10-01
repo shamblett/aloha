@@ -1,5 +1,5 @@
 /*
- * Packge : aloha
+ * Package : aloha
  * Author : S. Hamblett <steve.hamblett@linux.com>
  * Date   : 23/09/2013
  * Copyright :  S.Hamblett@OSCF
@@ -9,6 +9,7 @@ import '../lib/aloha.dart';
 
 import 'dart:html';
 import 'dart:async';
+import 'package:js/js.dart' as js;
 import 'package:unittest/unittest.dart';
 import 'package:unittest/html_config.dart';
 
@@ -202,6 +203,7 @@ main() {
      
     });
     
+    
     test("Editable Deactivated", () {  
       
       bool passed = false;
@@ -219,7 +221,37 @@ main() {
       new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
      
     });
+    
+    test("Smart content changed", () {  
+      
+      bool passed = false;
+      alohaEditor.smartContentChangeEvent.listen((e){
+        
+        if ( e.char != null ) return;
+        if ( e.triggerType != 'blur') return;
+        if ( e.keyCode != null ) return;
+        if ( e.keyIdentifier != null ) return;
+        if ( e.snapshotContent != 'Click to edit this paragraph.') return;
+        print(">>> Smart Content Change OK");
+        passed = true;
+        
+      });
+      /* Re-activate an editable */
+      ParagraphElement theEditableElement = query('#alohaedit3');
+      /* Focus, then click, need this sequence for Aloha */
+      theEditableElement.focus();
+      theEditableElement.click();
+      /* Do a content change command */
+      alohaEditor.execCommand('forwardDelete');
+      /* Deactivate the editable to force the content change event */
+      alohaEditor.deactivateActiveEditable();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:50), expectAsync0(checkTest));
+     
+    });
+
  
+    
   });
   
   

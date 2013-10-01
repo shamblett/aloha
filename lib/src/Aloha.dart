@@ -1,5 +1,5 @@
 /*
- * Packge : aloha
+ * Package : aloha
  * Author : S. Hamblett <steve.hamblett@linux.com>
  * Date   : 23/09/2013
  * Copyright :  S.Hamblett@OSCF
@@ -38,7 +38,8 @@ class Aloha {
    */
   
   /**
-   *  Ready, NOT a broadcast event, only use one listener for this 
+   *  Ready, NOT a broadcast event, only use one listener for this.
+   *  This event is triggered when the Aloha Editor is fully initialized, the core, plugins and UI. 
    */
   js.Callback _jsReady = null;
   final _onReady = new StreamController();
@@ -47,33 +48,53 @@ class Aloha {
   /**
    * Commands 
    */
+  
+  /**
+   * This event is triggered before a command will be executed. 
+   * 
+   */
   js.Callback _jsCommandWillExecute = null;
   final _onCommandWillExecute = new StreamController.broadcast();
   /**
-   * Returned parameter is commandWillExecuteParameters class
+   * Returned parameter is AlohaCommandWillExecuteParameters class
    */
   get commandWillExecuteEvent => _onCommandWillExecute.stream;
  
+  /**
+   * This event is triggered after a command is executed using the execCommand method
+   */
   js.Callback _jsCommandExecuted = null;
   final _onCommandExecuted = new StreamController.broadcast();
   /**
-   * Returned parameter is String
+   * Returned parameter is a String, the command executed
    */
   get commandExecutedEvent => _onCommandExecuted.stream;
   
   /**
    *  Logging 
    */
+  
+  /**
+   * This event is triggered when the Aloha Editor logger is fully initialized.
+   */
   js.Callback _jsLoggerReady = null;
   final _onLoggerReady = new StreamController.broadcast();
   get loggerReadyEvent => _onLoggerReady.stream;
   
+  /**
+   * This event is triggered when the Aloha Editor log history is full.
+   */
   js.Callback _jsLoggerFull = null;
   final _onLoggerFull = new StreamController.broadcast();
   get loggerFullEvent => _onLoggerFull.stream;
   
   /**
    * Editables
+   */
+  
+  /**
+   * This event fires after a new editable has been created, eg. via 
+   * $( '#editme' ).aloha() in js or via the attachEditable API method
    */
   js.Callback _jsEditableCreated = null;
   final _onEditableCreated = new StreamController.broadcast();
@@ -82,26 +103,60 @@ class Aloha {
    */
   get editableCreatedEvent => _onEditableCreated.stream;
   
+  /**
+   * This event fires after a new editable has been destroyed, eg. via 
+   * $( '#editme' ).mahalo() in js or via the detachEditable API method.
+   */
   js.Callback _jsEditableDestroyed = null;
   final _onEditableDestroyed = new StreamController.broadcast();
   get editableDestroyedEvent => _onEditableDestroyed.stream;
   
+  /**
+   * This event notifies the system that an editable has been activated 
+   * by clicking on it.
+   */
   js.Callback _jsEditableActivated = null;
   final _onEditableActivated = new StreamController.broadcast();
   /**
    * Returned parameter is a list of the editable activated and the old 
-   * editable that was active, both of AlohaEditable class. if there was
+   * editable that was active, both of AlohaEditable class. If there was
    * no old active editable(e.g first click on the page) none is supplied.
    *  [editable, oldEditable]
    */
   get editableActivatedEvent => _onEditableActivated.stream;
   
+  /**
+   * This event fires when an editable has been deactivated by 
+   * clicking on a non editable part of the page or on an other editable, or
+   * has been specifically deactivated. 
+   */
   js.Callback _jsEditableDeactivated = null;
   final _onEditableDeactivated = new StreamController.broadcast();
   /**
    * Returned parameter is an AlohaEditable class
    */
   get editableDeactivatedEvent => _onEditableDeactivated.stream;
+  
+  /**
+   * Content changes
+   */
+  
+  /**
+   * A smart content change occurs when a special editing action, or a combination of 
+   * interactions are performed by the user during the course of editing within an editable.
+   * The smart content change event therefore signals that content has been inserted (or changed) 
+   * into the editable that may need to be processed in a special way. 
+   * It also lets you know when an Aloha Block has changed (i.e. when any of its attributes have 
+   * changed). 
+   * The smart content change event is also triggered after an idle period that follows rapid, 
+   * basic changes to the contents of an editable such as when the user is typing.
+   */
+  js.Callback _jsSmartContentChange = null;
+  final _onSmartContentChange = new StreamController.broadcast();
+  /**
+   * Returned parameter is a AlohaSmartContentChangeParameters class
+   */
+  get smartContentChangeEvent => _onSmartContentChange.stream;
   
   /**
    * Construction, create and bind the callbacks for the core Aloha events. 
@@ -126,9 +181,9 @@ class Aloha {
     _jsCommandWillExecute = new js.Callback.many((js.Proxy event,
                                                  Object jsParams) {
       
-          commandWillExecuteParameters params = new commandWillExecuteParameters();
-          params.commandId = jsParams.commandId;
-          params.preventDefault = jsParams.preventDefault;
+          AlohaCommandWillExecuteParameters params = new 
+               AlohaCommandWillExecuteParameters(jsParams.commandId,
+                                                 jsParams.preventDefault);
           _onCommandWillExecute.add(params);
           
     });
@@ -209,6 +264,24 @@ class Aloha {
      
      });
     _alohaContext.bind('aloha-editable-deactivated', _jsEditableDeactivated);
+   
+    /* Content changes */
+    _jsSmartContentChange = new js.Callback.many((js.Proxy event,
+                                                  Object parameters){
+      
+      AlohaEditable theEditable = new AlohaEditable(js.retain(parameters.editable), 
+                                                    js.retain(event));
+      AlohaSmartContentChangeParameters params = new AlohaSmartContentChangeParameters(
+                                                        theEditable,
+                                                        parameters.keyIdentifier,
+                                                        parameters.keyCode,
+                                                        parameters.char,
+                                                        parameters.triggerType,
+                                                        parameters.getSnapshotContent());
+      _onSmartContentChange.add(params);
+     
+     });
+    _alohaContext.bind('aloha-smart-content-changed',_jsSmartContentChange );
     
   }
   
@@ -225,6 +298,9 @@ class Aloha {
     _onEditableCreated.close();
     _onEditableDestroyed.close();
     _onEditableActivated.close();
+    _onEditableDeactivated.close();
+    _onSmartContentChange.close();
+    
     
   }
   
@@ -268,6 +344,27 @@ class Aloha {
     _alohaContext.deactivateEditable();
     
   }
+  
+  /**
+   * Command processing.
+   * The Aloha command API implements the HTML5 contenteditable API.
+   */
+  
+  /**
+   * execCommand implements the commands from the commmand manager section
+   * See the relevant Mozilla documentation here for details.
+   * https://developer.mozilla.org/en/docs/Rich-Text_Editing_in_Mozilla
+   */
+  void execCommand(String commandId,
+                  { bool showUi:false,
+                    String value: null}) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    _alohaContext.execCommand(commandId, showUi, value, null);
+    
+  }
+                    
+  
   /**
    * Helper methods for Aloha object manipulation
    */
