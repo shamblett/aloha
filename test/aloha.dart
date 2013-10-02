@@ -403,6 +403,24 @@ main() {
       new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
       
     });
+    
+    test("DDF File Upload Prepared", () {  
+      
+      bool passed = false;
+      alohaEditor.ddfFileUploadPreparedEvent.listen((e){
+        
+        if ( e.innerHtml != 'Files Dropped Text') return;
+        print(">>> DDF File Upload Prepared OK");
+        passed = true;
+        
+      });
+      String script = "var block = \$('#filesdropped');Aloha.trigger('aloha-file-upload-prepared', block);";
+      ButtonElement theButton = createEventButton(script);
+      theButton.click();
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      
+    });
 
   });
   

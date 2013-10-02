@@ -274,6 +274,31 @@ class Aloha {
    */
   get ddfFilesDroppedInPageEvent => _onDdfFilesDroppedInPage.stream; 
   
+  /**
+   * File upload prepared
+   * This event is triggered when a single file of many dropped files is ready for uploading.
+   */
+  js.Callback _jsDdfFileUploadPrepared = null;
+  final _onDdfFileUploadPrepared = new StreamController.broadcast();
+  /**
+   * Returned parameter is an HTML element class such as DivElement, ParagraphElement
+   * etc. dependent on the drop target.
+   */
+  get ddfFileUploadPreparedEvent => _onDdfFileUploadPrepared.stream; 
+  
+  /**
+   * The aloha-upload-progress, aloha-upload-success, aloha-upload-failure,
+   * aloha-upload-abort and aloha-upload-error events are not yet implemented
+   * as these return repository objects.
+   * TODO
+   */
+  
+  /**
+   * Link Browser events not yet supported.
+   * TODO
+   */
+  
+  
    /**
    * Construction, create and bind the callbacks for the core Aloha events. 
    */
@@ -467,6 +492,15 @@ class Aloha {
     });
     _alohaContext.bind('aloha-drop-files-in-page', _jsDdfFilesDroppedInPage);
     
+    _jsDdfFileUploadPrepared = new js.Callback.many((js.Proxy e,
+                                                     Object element){
+      
+      _onDdfFileUploadPrepared.add(element);
+      
+    });
+    _alohaContext.bind('aloha-file-upload-prepared', _jsDdfFileUploadPrepared);
+    
+    
   }
   
   /**
@@ -491,6 +525,7 @@ class Aloha {
     _onLinkUnselected.close();
     _onTableSelectionChanged.close();
     _onTableActivated.close();
+    _onDdfFileUploadPrepared.close();
     
   }
   
