@@ -539,6 +539,7 @@ class Aloha {
    * These are supplied for compatibilty only because Aloha supplies them, where
    * possible use API calls and not these values, for instance use getActiveEditable()
    * rather than the getter for Aloha's internally maintained active editable.
+   * 
    */
   /**
    * Version string
@@ -632,18 +633,61 @@ class Aloha {
     _alohaContext.init();
     
   }
+  
+  /**
+   * Plugins
+   */
+  
+  /**
+   * Loaded plugins
+   */
+  List getLoadedPlugins() {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    return loadedPlugins;
+    
+  }
+  
+  /**
+   * Is a plugin loaded
+   */
+  bool isPluginLoaded(String pluginName) {
+    
+    return  _alohaContext.isPluginLoaded(pluginName);
+    
+  }
   /**
    * Editables
+   */
+  
+  /**
+   * Get an editable by its id attribute, returns null if none found
    */
   AlohaEditable getEditableById(String id) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    js.Proxy editableProxy = _alohaContext.getEditableById(id);
-    AlohaEditable theEditable = new AlohaEditable(editableProxy);
-    return theEditable;
+    
+    try {
+    
+      js.Proxy editableProxy = _alohaContext.getEditableById(id);
+      AlohaEditable theEditable = new AlohaEditable(js.retain(editableProxy));
+      return theEditable;
+      
+    } catch(e) {
+      
+      return null;
+      
+    }
     
   }
   
+  /**
+   * Activate the specified editable, also deactivates all other editables.
+   * 
+   * Note this does NOT set the isActive flag on the editable itself, it just
+   * deactivates all other editables by setting the active flag to false then 
+   * makes the editable supplied the activeEditable.
+   */
   void activateEditable(AlohaEditable editable) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
@@ -652,21 +696,53 @@ class Aloha {
     
   }
   
+  /**
+   * Get the active editable, null if none active
+   */
   AlohaEditable getActiveEditable() {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    js.Proxy editableProxy = _alohaContext.getActiveEditable();
-    AlohaEditable theEditable = new AlohaEditable(editableProxy);
-    return theEditable;
+    
+    try {
+      
+      js.Proxy editableProxy = _alohaContext.getActiveEditable();
+      AlohaEditable theEditable = new AlohaEditable(js.retain(editableProxy));
+      return theEditable;
+      
+    } catch(e) {
+      
+      return null;
+      
+    }
     
   }
   
+  /**
+   * Deactivate the active editable
+   */
   void deactivateActiveEditable() {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
     _alohaContext.deactivateEditable();
     
   }
+  
+  /**
+   * Check if an object is an editable.
+   * 
+   * Although Aloha allows any Object we must at least have a js Proxy object
+   */
+  bool isEditable(Object  anyObject) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    
+    if ( anyObject.runtimeType.toString() == 'AlohaEditable' ) return true;
+    if ( anyObject.runtimeType.toString() != 'Proxy' ) return false;
+    
+    return _alohaContext.isEditable(anyObject);
+    
+  }
+  
   
   /**
    * Command processing.

@@ -498,7 +498,7 @@ main() {
       
     });
     
-    test("Loaded Plugins", () {  
+    test("Loaded Plugins - Property", () {  
       
       List plugins = alohaEditor.loadedPlugins;
       expect(plugins[0], equals('format'));
@@ -518,6 +518,62 @@ main() {
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
       alohaEditor.reinitialise();
+    });
+    
+    test("Loaded Plugins", () {  
+      
+      List plugins = alohaEditor.getLoadedPlugins();
+      expect(plugins[0], equals('format'));
+      expect(plugins[2], equals('link'));
+      
+    });
+    
+    test("Is Plugin Loaded", () {  
+      
+      expect(alohaEditor.isPluginLoaded('format'), isTrue);
+      expect(alohaEditor.isPluginLoaded('link'), isTrue);
+      
+    });
+    
+    test("Get Editable By Id", () {  
+      
+      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      expect(editable.id, equals('alohaedit3'));
+      AlohaEditable nullEditable = alohaEditor.getEditableById('alohaedit35');
+      expect(nullEditable, isNull);
+      
+    });
+    
+    test("Activate Editable", () {  
+      
+      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      expect(editable.id, equals('alohaedit3'));
+      alohaEditor.activateEditable(editable);
+      expect(alohaEditor.activeEditable.id, equals('alohaedit3'));
+      
+    });
+    
+    test("Get Activate Editable", () {  
+      
+      expect(alohaEditor.getActiveEditable().id, equals('alohaedit3'));
+      
+    });
+    
+    test("Deactivate Activate Editable", () {  
+      
+      alohaEditor.deactivateActiveEditable();
+      expect(alohaEditor.getActiveEditable(), isNull);
+         
+    });
+    
+    test("Is Editable", () {  
+      
+      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      expect(alohaEditor.isEditable(editable), isTrue);
+      List myList;
+      expect(alohaEditor.isEditable(myList), isFalse);
+     
+      
     });
     
   });
