@@ -11,6 +11,7 @@ import 'dart:html';
 import 'dart:async';
 import 'package:unittest/unittest.dart';
 import 'package:unittest/html_config.dart';
+import 'package:js/js.dart' as js;
 
 Aloha alohaEditor = null;
 
@@ -30,7 +31,7 @@ main() {
   /* Setup */ 
   useHtmlConfiguration(true);
   alohaEditor = new Aloha();
-  
+
   /* Group 1 - Core event tests*/
   group("1. Core Events - ", () {
          
@@ -39,7 +40,7 @@ main() {
       bool passed = false;  
       alohaEditor.readyEvent.listen( (e) {
       
-        /* Do this now, we will formally test it later */
+        /* Do this now, we will formally test it later */      
         alohaEditor.attachEditable('.editable');
         print(">>> Ready - Aloha ready");
         passed = true;
@@ -450,6 +451,18 @@ main() {
       expect(editable.id, equals('alohaedit1'));
       
     }); 
+    
+    test("Settings", () {  
+      
+      var settings = alohaEditor.settings;
+      bool correct = false;
+      if ( settings.runtimeType.toString() == 'Proxy' ) {
+        correct = true;
+        print(">>> Settings OK");
+      }
+      expect(correct, isTrue);
+      
+    });
     
   });
   

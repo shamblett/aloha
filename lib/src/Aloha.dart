@@ -594,11 +594,26 @@ class Aloha {
   }
   get activeEditable => _getActiveEditable();
   
-  
   /**
+   * Settings object
+   * We have no way of knowing what settings have been applied to Aloha in its js startup
+   * so you need to know the settings structure on the client side, we can only return the
+   * Proxy settings object.
+   */
+  get settings => _alohaContext.settings;
+  
+   /**
    * Methods
    */
   
+  /**
+   * Initialization
+   */
+  void initialise() {
+    
+    _alohaContext.init();
+    
+  }
   /**
    * Editables
    */
