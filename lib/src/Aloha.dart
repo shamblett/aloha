@@ -34,7 +34,7 @@ class Aloha {
   set isReady(bool state) => _ready = state;
   
   /**
-   * Callbacks and stream attachment for the Core events
+   * Event definitions for the core events
    */
   
   /**
@@ -301,8 +301,7 @@ class Aloha {
   
    /**
    * Construction, create and bind the callbacks for the core Aloha events. 
-   */
-  
+   */ 
   Aloha() {
     
     /* Ready */
@@ -532,6 +531,72 @@ class Aloha {
   
   /**
    * Aloha core API
+   */
+  
+  /**
+   * Properties.
+   * 
+   * These are supplied for compatibilty only because Aloha supplies them, where
+   * possible use API calls and not these values, for instance use getActiveEditable()
+   * rather than the getter for Aloha's internally maintained active editable.
+   */
+  /**
+   * Version string
+   */
+  String get version => _alohaContext.version;
+  
+  /**
+   * List of currently maintained editables as a List of AlohaEditable's.
+   */
+  List<AlohaEditable> _getEditablesAsList() {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    
+    List editablesList = new List<AlohaEditable>();
+    
+    try {
+      int length = _alohaContext.editables.length;
+      for ( int i = 0; i<length; i++) {
+      
+        AlohaEditable editable = new AlohaEditable(js.retain(_alohaContext.editables[i]));
+        editablesList.add(editable);
+      }
+      
+    } catch(e) {
+      
+      editablesList = null;
+      
+    }
+    
+    return editablesList;
+  }
+  get editables => _getEditablesAsList();
+  
+  /**
+   * Currently active editable as an AlohaEditable
+   */
+  AlohaEditable _getActiveEditable() {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    
+    try {
+      
+      AlohaEditable editable = new AlohaEditable(
+          js.retain(_alohaContext.activeEditable));
+      return editable;
+      
+    } catch(e) {
+      
+      return null;
+      
+    }
+     
+  }
+  get activeEditable => _getActiveEditable();
+  
+  
+  /**
+   * Methods
    */
   
   /**

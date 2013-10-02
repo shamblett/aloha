@@ -27,16 +27,15 @@ ButtonElement createEventButton(String onClickScript){
 }
 main() {
   
-  /* Setup */
-  
+  /* Setup */ 
   useHtmlConfiguration(true);
+  alohaEditor = new Aloha();
   
   /* Group 1 - Core event tests*/
   group("1. Core Events - ", () {
          
     test("Ready", () {  
-      
-      alohaEditor = new Aloha();
+         
       bool passed = false;  
       alohaEditor.readyEvent.listen( (e) {
       
@@ -424,6 +423,34 @@ main() {
 
   });
   
-  
+  /* Group 2 - Core API tests*/
+  group("2. Core API- ", () {
+         
+    test("Version", () {  
+      
+      expect(alohaEditor.version, equals('0.23.12'));
+      
+    }); 
+    
+    
+    test("Editables List", () {  
+      
+      var editables = alohaEditor.editables;
+      expect(alohaEditor.editables.length, equals(4));
+      
+    }); 
+    
+    test("Active Editable - Property", () {  
+      
+      HeadingElement theEditableElement = query('#alohaedit1');
+      /* Focus, then click, need this sequence for Aloha */
+      theEditableElement.focus();
+      theEditableElement.click();
+      AlohaEditable editable = alohaEditor.activeEditable;
+      expect(editable.id, equals('alohaedit1'));
+      
+    }); 
+    
+  });
   
 }
