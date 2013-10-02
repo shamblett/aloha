@@ -598,7 +598,7 @@ class Aloha {
    * Settings object
    * We have no way of knowing what settings have been applied to Aloha in its js startup
    * so you need to know the settings structure on the client side, we can only return the
-   * Proxy settings object.
+   * proxy settings object for the client to use.
    */
   get settings => _alohaContext.settings;
   

@@ -454,14 +454,8 @@ main() {
     
     test("Settings", () {  
       
-      var settings = alohaEditor.settings;
-      bool correct = false;
-      if ( settings.runtimeType.toString() == 'Proxy' ) {
-        correct = true;
-        print(">>> Settings OK");
-      }
-      expect(correct, isTrue);
-      
+      expect(alohaEditor.settings.logLevels.error, isTrue);
+      expect(alohaEditor.settings.logLevels.warn, isTrue);
     });
     
   });

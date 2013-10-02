@@ -9,6 +9,12 @@
     <script type="text/javascript" src="http://cdn.aloha-editor.org/aloha-0.23.12/lib/require.js"></script>
     <script type="text/javascript" src="http://cdn.aloha-editor.org/aloha-0.23.12/lib/vendor/jquery-1.7.2.js"></script>
  
+    <script>
+        var Aloha = window.Aloha || ( window.Aloha = {} );
+        //Settings 
+        Aloha.settings = {logLevels: {'error': true, 'warn': true, 'info': true, 'debug': false});
+                                                        
+    </script>
     <!-- load the Aloha Editor core and some plugins -->
     <script src="http://cdn.aloha-editor.org/aloha-0.23.12/lib/aloha.js"
                                    data-aloha-plugins="common/ui,
