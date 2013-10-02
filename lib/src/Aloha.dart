@@ -614,6 +614,11 @@ class Aloha {
    */
   get OSName => _alohaContext.OSName;
   
+  /**
+   * Loaded plugins, returned a list of plugin name strings
+   */
+  get loadedPlugins => _alohaContext.loadedPlugins.toString().split(',');
+  
    /**
    * Methods
    */

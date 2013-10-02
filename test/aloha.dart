@@ -498,6 +498,14 @@ main() {
       
     });
     
+    test("Loaded Plugins", () {  
+      
+      List plugins = alohaEditor.loadedPlugins;
+      expect(plugins[0], equals('format'));
+      expect(plugins[2], equals('link'));
+      
+    });
+    
     test("Reinitialise", () {  
       
       bool passed = false;  
