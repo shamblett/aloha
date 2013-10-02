@@ -435,7 +435,33 @@ main() {
       
     }); 
     
-    
+    test("OSName", () {  
+      
+      String correct = 'Failed';
+      String osName = alohaEditor.OSName;
+      switch ( osName ) {
+        
+        case 'Linux' : 
+          correct = 'Passed';
+          break;
+        case 'Win' : 
+          correct = 'Passed';
+          break;
+        case 'Unix' : 
+          correct = 'Passed';
+          break;
+        case 'Unknown' : 
+          correct = 'Passed';
+          break;
+        default:
+          correct = "Failed, actual OSName is $osName";
+          
+      }
+      expect(correct, equals('Passed'));
+      print(">>> OsName is $osName");
+      
+    });
+
     test("Editables List", () {  
       
       var editables = alohaEditor.editables;

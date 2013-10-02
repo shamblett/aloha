@@ -609,6 +609,11 @@ class Aloha {
    */
   get defaults => _context.JSON.stringify(_alohaContext.defaults);
   
+  /**
+   * OS name
+   */
+  get OSName => _alohaContext.OSName;
+  
    /**
    * Methods
    */
