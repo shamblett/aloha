@@ -12,6 +12,8 @@ import 'dart:async';
 import 'package:unittest/unittest.dart';
 import 'package:unittest/html_config.dart';
 import 'package:js/js.dart' as js;
+import 'package:json_object/json_object.dart' as json;
+
 
 Aloha alohaEditor = null;
 
@@ -454,8 +456,34 @@ main() {
     
     test("Settings", () {  
       
-      expect(alohaEditor.settings.logLevels.error, isTrue);
-      expect(alohaEditor.settings.logLevels.warn, isTrue);
+      json.JsonObject settings = new json.JsonObject.fromJsonString(alohaEditor.settings);
+      expect(settings.logLevels.debug, isFalse);
+      expect(settings.baseUrl, equals('http://cdn.aloha-editor.org/aloha-0.23.12/lib'));
+      
+    });
+    
+    test("Defaults", () {  
+      
+      
+      json.JsonObject defaults = new json.JsonObject.fromJsonString(alohaEditor.defaults);
+      expect(defaults.contentHandler.getContents[0], equals('blockelement'));
+      expect(defaults.contentHandler.initEditable[0], equals('blockelement'));
+     
+      
+    });
+    
+    test("Reinitialise", () {  
+      
+      bool passed = false;  
+      alohaEditor.loggerReadyEvent.listen((e){
+        
+        passed = true;
+        print(">>> Logging Ready After Initialise OK");
+        
+      });
+      void checkTest() => expect(passed, isTrue);
+      new Timer(new Duration(milliseconds:20), expectAsync0(checkTest));
+      alohaEditor.reinitialise();
     });
     
   });

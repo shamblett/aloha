@@ -595,12 +595,19 @@ class Aloha {
   get activeEditable => _getActiveEditable();
   
   /**
-   * Settings object
+   * Settings
    * We have no way of knowing what settings have been applied to Aloha in its js startup
-   * so you need to know the settings structure on the client side, we can only return the
-   * proxy settings object for the client to use.
+   * so you need to know the settings structure on the client side. The settings are returned
+   * as a JSON string.
    */
-  get settings => _alohaContext.settings;
+  get settings =>  _context.JSON.stringify(_alohaContext.settings);
+  
+  /**
+   * Defaults
+   * Hardwired startup defaults, returned as a JSON string
+   * 
+   */
+  get defaults => _context.JSON.stringify(_alohaContext.defaults);
   
    /**
    * Methods
@@ -608,8 +615,9 @@ class Aloha {
   
   /**
    * Initialization
+   * Use to set Aloha back to its original state
    */
-  void initialise() {
+  void reinitialise() {
     
     _alohaContext.init();
     
