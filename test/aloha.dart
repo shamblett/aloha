@@ -566,12 +566,12 @@ main() {
          
     });
     
-    test("Is Editable", () {  
+    test("Is An Editable", () {  
       
       AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
-      expect(alohaEditor.isEditable(editable), isTrue);
+      expect(alohaEditor.isAnEditable(editable), isTrue);
       List myList;
-      expect(alohaEditor.isEditable(myList), isFalse);
+      expect(alohaEditor.isAnEditable(myList), isFalse);
      
       
     });

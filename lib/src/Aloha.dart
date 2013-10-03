@@ -730,16 +730,27 @@ class Aloha {
   /**
    * Check if an object is an editable.
    * 
-   * Although Aloha allows any Object we must at least have a js Proxy object
+   * This check is performed in the class, its not passed through to the 
+   * Aloha API, Aloha uses javascript object comparison which is not robust,
+   * we can better do this ourselves.
    */
-  bool isEditable(Object  anyObject) {
+  bool isAnEditable(Object  anyObject) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
     
+    /* If we are an AlohaEditable then we are an editable */
     if ( anyObject.runtimeType.toString() == 'AlohaEditable' ) return true;
+    
+    /* We must at least be a Proxy object to be an editable */
     if ( anyObject.runtimeType.toString() != 'Proxy' ) return false;
     
-    return _alohaContext.isEditable(anyObject);
+    /* Check if the object is in the editables list */
+    int length = _alohaContext.editables.length;
+    for ( int i=0; i<length; i++) {
+      
+      if ( anyObject == _alohaContext.editables[i]) return true;
+      
+    }
     
   }
   
