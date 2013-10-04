@@ -11,7 +11,6 @@ import 'dart:html';
 import 'dart:async';
 import 'package:unittest/unittest.dart';
 import 'package:unittest/html_config.dart';
-import 'package:js/js.dart' as js;
 import 'package:json_object/json_object.dart' as json;
 
 
@@ -573,6 +572,18 @@ main() {
       List myList;
       expect(alohaEditor.isAnEditable(myList), isFalse);
      
+      
+    });
+    
+    test("Get Editable Host", () {  
+      
+      HtmlElement element = query('#cepara');
+      AlohaEditable editable = alohaEditor.getEditableHost(element);
+      expect(editable.id, equals('alohaedit4'));
+      element = query('#aloha-edit-section');
+      editable = alohaEditor.getEditableHost(element);
+      expect(editable, isNull);
+      
       
     });
     

@@ -754,6 +754,23 @@ class Aloha {
     
   }
   
+  /**
+   * Get editable host.
+   * 
+   * Gets the nearest editable parent of the HTML element contained in the
+   * element parameter. Returns null if none found.
+   */
+  AlohaEditable getEditableHost(HtmlElement element) {
+    
+   String jQueryId = '#' + element.id;
+   js.Proxy jQueryElement = _alohajQueryContext(jQueryId);
+   js.Proxy proxy = _alohaContext.getEditableHost(jQueryElement);
+   if ( proxy == null ) return null;
+   AlohaEditable editable = new AlohaEditable(js.retain(proxy));
+   return editable;
+   
+    
+  }
   
   /**
    * Command processing.
