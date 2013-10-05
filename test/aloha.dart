@@ -587,6 +587,14 @@ main() {
       
     });
     
+    test("Log", () {  
+      
+      alohaEditor.log("warn", "Dart", ">>> Log Test");
+      alohaEditor.log("debug", "Dart", "This won't log");
+      
+      
+    });
+    
   });
   
 }

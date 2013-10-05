@@ -16,13 +16,13 @@ class Aloha {
   js.Proxy _context  = js.retain(js.context);
   get jsContext => _context;
   
-  js.Proxy _jQueryContext  = js.retain(js.context.jQuery);
+  final _jQueryContext  = js.retain(js.context.jQuery);
   get jQueryContext => _jQueryContext;
   
-  js.Proxy _alohaContext = js.retain(js.context.Aloha);
+  final _alohaContext = js.retain(js.context.Aloha);
   get context => _alohaContext;
   
-  js.Proxy _alohajQueryContext = js.retain(js.context.Aloha.jQuery);
+  final _alohajQueryContext = js.retain(js.context.Aloha.jQuery);
   get alohajQueryContext => _alohajQueryContext;
   
   /**
@@ -772,6 +772,22 @@ class Aloha {
     
   }
   
+  
+  /**
+   * Logging
+   */
+  
+  /**
+   * Logs a message to the console.
+   * 
+   * Takes the log level, the logging component name and the
+   * log message itself.
+   */
+  void log(String level, String component, String message) {
+    
+    _alohaContext.log(level, component, message);
+    
+  }
   /**
    * Command processing.
    * The Aloha command API implements the HTML5 contenteditable API.
