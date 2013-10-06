@@ -32,6 +32,7 @@ main() {
   /* Setup */ 
   useHtmlConfiguration(true);
   alohaEditor = new Aloha();
+  AlohaEditable regEditable = null;
 
   /* Group 1 - Core event tests*/
   group("1. Core Events - ", () {
@@ -586,6 +587,26 @@ main() {
       
       
     });
+    
+    test("Unregister Editable", () {  
+      
+      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      regEditable = editable;
+      expect(alohaEditor.isAnEditable(regEditable), isTrue);
+      alohaEditor.unregisterEditable(regEditable);
+      AlohaEditable editable2 = alohaEditor.getEditableById('alohaedit3');
+      expect(editable2, isNull);
+    
+    });
+    
+    test("Register Editable", () {  
+      
+      alohaEditor.registerEditable(regEditable);
+      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      expect(alohaEditor.isAnEditable(editable), isTrue);
+    
+    });
+    
     
     test("Log", () {  
       

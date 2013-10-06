@@ -691,7 +691,7 @@ class Aloha {
   void activateEditable(AlohaEditable editable) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    js.Proxy editableProxy = editable.editableProxy;
+    js.Proxy editableProxy = editable.proxy;
     _alohaContext.activateEditable(editableProxy);
     
   }
@@ -772,6 +772,23 @@ class Aloha {
     
   }
   
+  /**
+   * Register an editable. 
+   */
+  void registerEditable(AlohaEditable editable) {
+    
+    _alohaContext.registerEditable(editable.proxy);
+    
+  }
+  
+  /**
+   * Unregister an editable. 
+   */
+  void unregisterEditable(AlohaEditable editable) {
+    
+    _alohaContext.unregisterEditable(editable.proxy);
+    
+  }
   
   /**
    * Logging
