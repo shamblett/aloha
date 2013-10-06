@@ -630,6 +630,19 @@ main() {
       
     });
     
+    test("Disable Object Resizing", () {  
+      
+      alohaEditor.disableObjectResizing();
+      
+    });
+    
+    test("To String", () {  
+      
+      String name = alohaEditor.toString();
+      expect(name, 'Aloha');
+      
+    });
+    
   });
   
 }

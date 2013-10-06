@@ -762,6 +762,7 @@ class Aloha {
    */
   AlohaEditable getEditableHost(HtmlElement element) {
     
+   if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha'); 
    String jQueryId = '#' + element.id;
    js.Proxy jQueryElement = _alohajQueryContext(jQueryId);
    js.Proxy proxy = _alohaContext.getEditableHost(jQueryElement);
@@ -777,6 +778,7 @@ class Aloha {
    */
   void registerEditable(AlohaEditable editable) {
     
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
     _alohaContext.registerEditable(editable.proxy);
     
   }
@@ -786,6 +788,7 @@ class Aloha {
    */
   void unregisterEditable(AlohaEditable editable) {
     
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
     _alohaContext.unregisterEditable(editable.proxy);
     
   }
@@ -801,6 +804,7 @@ class Aloha {
    */
   String getUrl() {
     
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
     return _alohaContext.getAlohaUrl();
     
   }
@@ -812,6 +816,7 @@ class Aloha {
    */
   String getPluginUrl(String name) {
     
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
     return _alohaContext.getPluginUrl(name);
     
   }
@@ -828,6 +833,7 @@ class Aloha {
    */
   void log(String level, String component, String message) {
     
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');   
     _alohaContext.log(level, component, message);
     
   }
@@ -876,4 +882,25 @@ class Aloha {
     alohajQueryContext(selector).mahalo();
     
   }
+  
+  /**
+   * Disable object resizing if the browser supports this.
+   */
+  void disableObjectResizing(){
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    _alohaContext.disableObjectResizing();
+    
+  }
+  
+  /**
+   * To string override
+   */
+  String toString() {
+    
+    return 'Aloha';
+    
+  }
+  
+  
 }
