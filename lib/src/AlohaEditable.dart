@@ -13,7 +13,7 @@ class AlohaEditable {
    * The context for the editable
    */
   js.Proxy _context = null;
-  get editableProxy => _context;
+  get proxy => _context;
   
   /**
    * The event that triggered the creation of the editable, e.g 
