@@ -607,6 +607,20 @@ main() {
     
     });
     
+    test("URL", () {  
+      
+      String url= alohaEditor.getUrl();
+      expect(url, equals('http://cdn.aloha-editor.org/aloha-0.23.12/lib'));
+      
+    });
+    
+    test("Plugin URL", () {  
+      
+      String url= alohaEditor.getPluginUrl('format');
+      expect(url, equals( 'http://cdn.aloha-editor.org/aloha-0.23.12/lib/../plugins/common/format'));
+      
+    });
+    
     
     test("Log", () {  
       

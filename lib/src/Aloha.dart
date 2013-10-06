@@ -791,6 +791,32 @@ class Aloha {
   }
   
   /**
+   * URL handling
+   */
+  
+  /**
+   * Get the Aloha url.
+   * 
+   * Aloha's baseUrl setting or "" if not set
+   */
+  String getUrl() {
+    
+    return _alohaContext.getAlohaUrl();
+    
+  }
+  
+  /**
+   * Gets a plugin's url.
+   * 
+   * Given the name returns the plugin url as a string
+   */
+  String getPluginUrl(String name) {
+    
+    return _alohaContext.getPluginUrl(name);
+    
+  }
+  
+  /**
    * Logging
    */
   
