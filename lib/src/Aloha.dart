@@ -16,13 +16,13 @@ class Aloha {
   js.Proxy _context  = js.retain(js.context);
   get jsContext => _context;
   
-  js.Proxy _jQueryContext  = js.retain(js.context.jQuery);
+  final _jQueryContext  = js.retain(js.context.jQuery);
   get jQueryContext => _jQueryContext;
   
-  js.Proxy _alohaContext = js.retain(js.context.Aloha);
+  final _alohaContext = js.retain(js.context.Aloha);
   get context => _alohaContext;
   
-  js.Proxy _alohajQueryContext = js.retain(js.context.Aloha.jQuery);
+  final _alohajQueryContext = js.retain(js.context.Aloha.jQuery);
   get alohajQueryContext => _alohajQueryContext;
   
   /**
@@ -691,7 +691,7 @@ class Aloha {
   void activateEditable(AlohaEditable editable) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    js.Proxy editableProxy = editable.editableProxy;
+    js.Proxy editableProxy = editable.proxy;
     _alohaContext.activateEditable(editableProxy);
     
   }
@@ -762,6 +762,7 @@ class Aloha {
    */
   AlohaEditable getEditableHost(HtmlElement element) {
     
+   if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha'); 
    String jQueryId = '#' + element.id;
    js.Proxy jQueryElement = _alohajQueryContext(jQueryId);
    js.Proxy proxy = _alohaContext.getEditableHost(jQueryElement);
@@ -772,6 +773,70 @@ class Aloha {
     
   }
   
+  /**
+   * Register an editable. 
+   */
+  void registerEditable(AlohaEditable editable) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    _alohaContext.registerEditable(editable.proxy);
+    
+  }
+  
+  /**
+   * Unregister an editable. 
+   */
+  void unregisterEditable(AlohaEditable editable) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    _alohaContext.unregisterEditable(editable.proxy);
+    
+  }
+  
+  /**
+   * URL handling
+   */
+  
+  /**
+   * Get the Aloha url.
+   * 
+   * Aloha's baseUrl setting or "" if not set
+   */
+  String getUrl() {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    return _alohaContext.getAlohaUrl();
+    
+  }
+  
+  /**
+   * Gets a plugin's url.
+   * 
+   * Given the name returns the plugin url as a string
+   */
+  String getPluginUrl(String name) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    return _alohaContext.getPluginUrl(name);
+    
+  }
+  
+  /**
+   * Logging
+   */
+  
+  /**
+   * Logs a message to the console.
+   * 
+   * Takes the log level, the logging component name and the
+   * log message itself.
+   */
+  void log(String level, String component, String message) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');   
+    _alohaContext.log(level, component, message);
+    
+  }
   /**
    * Command processing.
    * The Aloha command API implements the HTML5 contenteditable API.
@@ -817,4 +882,25 @@ class Aloha {
     alohajQueryContext(selector).mahalo();
     
   }
+  
+  /**
+   * Disable object resizing if the browser supports this.
+   */
+  void disableObjectResizing(){
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    _alohaContext.disableObjectResizing();
+    
+  }
+  
+  /**
+   * To string override
+   */
+  String toString() {
+    
+    return 'Aloha';
+    
+  }
+  
+  
 }

@@ -32,6 +32,7 @@ main() {
   /* Setup */ 
   useHtmlConfiguration(true);
   alohaEditor = new Aloha();
+  AlohaEditable regEditable = null;
 
   /* Group 1 - Core event tests*/
   group("1. Core Events - ", () {
@@ -584,6 +585,61 @@ main() {
       editable = alohaEditor.getEditableHost(element);
       expect(editable, isNull);
       
+      
+    });
+    
+    test("Unregister Editable", () {  
+      
+      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      regEditable = editable;
+      expect(alohaEditor.isAnEditable(regEditable), isTrue);
+      alohaEditor.unregisterEditable(regEditable);
+      AlohaEditable editable2 = alohaEditor.getEditableById('alohaedit3');
+      expect(editable2, isNull);
+    
+    });
+    
+    test("Register Editable", () {  
+      
+      alohaEditor.registerEditable(regEditable);
+      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      expect(alohaEditor.isAnEditable(editable), isTrue);
+    
+    });
+    
+    test("URL", () {  
+      
+      String url= alohaEditor.getUrl();
+      expect(url, equals('http://cdn.aloha-editor.org/aloha-0.23.12/lib'));
+      
+    });
+    
+    test("Plugin URL", () {  
+      
+      String url= alohaEditor.getPluginUrl('format');
+      expect(url, equals( 'http://cdn.aloha-editor.org/aloha-0.23.12/lib/../plugins/common/format'));
+      
+    });
+    
+    
+    test("Log", () {  
+      
+      alohaEditor.log("warn", "Dart", ">>> Log Test");
+      alohaEditor.log("debug", "Dart", "This won't log");
+      
+      
+    });
+    
+    test("Disable Object Resizing", () {  
+      
+      alohaEditor.disableObjectResizing();
+      
+    });
+    
+    test("To String", () {  
+      
+      String name = alohaEditor.toString();
+      expect(name, 'Aloha');
       
     });
     
