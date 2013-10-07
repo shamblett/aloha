@@ -855,7 +855,88 @@ class Aloha {
     _alohaContext.execCommand(commandId, showUi, value, null);
     
   }
-                    
+  
+  /**
+   * Query command enabled.
+   * 
+   * If the command is available and not disabled or the active range 
+   * is not null the command is enabled, True indicates this.
+   * 
+   * TODO range option needs to be added, uses current range selection. 
+   */
+  bool queryCommandEnabled(String commandId) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    return _alohaContext.queryCommandEnabled(commandId, null);
+    
+  }
+  
+  /**
+   * Query command indeterminate.
+   * 
+   * Returns true if command is indeterminate.
+   * 
+   * TODO range option needs to be added, uses current range selection. 
+   */
+  bool queryCommandIndeterminate(String commandId) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    return _alohaContext.queryCommandIndeterminate(commandId, null);
+    
+  }
+  
+  /**
+   * Query command state.
+   * 
+   * Return true if command's state is true or if the state override is set.
+   * 
+   * TODO range option needs to be added, uses current range selection. 
+   */
+  bool queryCommandState(String commandId) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    return _alohaContext.queryCommandState(commandId, null);
+    
+  }
+  
+  /**
+   * Query command supported.
+   * 
+   * Returns true if the command is supported.
+   */
+  bool queryCommandSupported(String commandId) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+    return _alohaContext.queryCommandSupported(commandId);
+    
+  }
+  
+  /**
+   * Return the commands value.
+   * 
+   * 
+   * TODO range option needs to be added, uses current range selection. 
+   */
+  String queryCommandValue(String commandId) {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+   return  _alohaContext.queryCommandValue(commandId, null);
+    
+  }
+  
+  /**
+   * Query supported commands.
+   * 
+   * Returns a list of supported commands.
+   * 
+   */
+  List querySupportedCommands() {
+    
+    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
+   return  _alohaContext.querySupportedCommands();
+    
+  }
+  
   
   /**
    * Helper methods for Aloha object manipulation

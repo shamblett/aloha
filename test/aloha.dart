@@ -427,7 +427,7 @@ main() {
   });
   
   /* Group 2 - Core API tests*/
-  group("2. Core API- ", () {
+  group("2. Core API - ", () {
          
     test("Version", () {  
       
@@ -640,6 +640,28 @@ main() {
       
       String name = alohaEditor.toString();
       expect(name, 'Aloha');
+      
+    });
+    
+  });
+  
+  /* Group 3 - Command tests*/
+  group("3.Commands - ", () {
+          
+    test("Query Command Enabled", () {  
+      
+      ParagraphElement theEditableElement = query('#alohaedit3');
+      /* Focus, then click, need this sequence for Aloha */
+      theEditableElement.focus();
+      theEditableElement.click();
+      bool state = alohaEditor.queryCommandEnabled('forwardDelete');
+      expect(state, isTrue);
+      
+    });
+    
+    test("Execute command", () {  
+      
+      alohaEditor.execCommand('forwardDelete');
       
     });
     
