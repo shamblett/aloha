@@ -871,33 +871,6 @@ class Aloha {
     
   }
   
-  /**
-   * Query command indeterminate.
-   * 
-   * Returns true if command is indeterminate.
-   * 
-   * TODO range option needs to be added, uses current range selection. 
-   */
-  bool queryCommandIndeterminate(String commandId) {
-    
-    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    return _alohaContext.queryCommandIndeterminate(commandId, null);
-    
-  }
-  
-  /**
-   * Query command state.
-   * 
-   * Return true if command's state is true or if the state override is set.
-   * 
-   * TODO range option needs to be added, uses current range selection. 
-   */
-  bool queryCommandState(String commandId) {
-    
-    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    return _alohaContext.queryCommandState(commandId, null);
-    
-  }
   
   /**
    * Query command supported.
@@ -920,7 +893,7 @@ class Aloha {
   String queryCommandValue(String commandId) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-   return  _alohaContext.queryCommandValue(commandId, null);
+    return  _alohaContext.queryCommandValue(commandId, null);
     
   }
   
@@ -933,7 +906,25 @@ class Aloha {
   List querySupportedCommands() {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-   return  _alohaContext.querySupportedCommands();
+    
+    var proxy = _alohaContext.querySupportedCommands();
+    
+    List commands = new List<String>();
+    
+    try {
+      int length = proxy.length;
+      for ( int i = 0; i<length; i++) {
+      
+        commands.add(proxy[i]);
+      }
+      
+    } catch(e) {
+      
+      commands = null;
+      
+    }
+    
+    return commands;
     
   }
   

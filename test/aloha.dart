@@ -659,11 +659,34 @@ main() {
       
     });
     
-    test("Execute command", () {  
+    test("Execute Command", () {  
       
       alohaEditor.execCommand('forwardDelete');
       
     });
+    
+    test("Query Command Supported", () {  
+      
+      bool res = alohaEditor.queryCommandSupported('forwardDelete');
+      expect(res, isTrue);
+      
+    });
+    
+    test("Query Command Value", () {  
+      
+      String res = alohaEditor.queryCommandValue('forwardDelete');
+      expect(res, isEmpty);
+      
+    });
+    
+    test("Query Supported Commands", () {  
+      
+      List res = alohaEditor.querySupportedCommands();
+      expect(res.length, isPositive);
+      print(">> Supported Commands are : ${res}");
+      
+    });
+    
     
   });
   
