@@ -439,32 +439,6 @@ class Aloha {
     
   }
   
-  /**
-   * Destruction
-   */
-  void _onDispose() {
-    
-    _onReady.close();
-    _onCommandWillExecute.close();
-    _onCommandExecuted.close();
-    _onLoggerReady.close();
-    _onLoggerFull.close();
-    _onEditableCreated.close();
-    _onEditableDestroyed.close();
-    _onEditableActivated.close();
-    _onEditableDeactivated.close();
-    _onSmartContentChange.close();
-    _onBlockSelectedChange.close();
-    _onImageSelected.close();
-    _onImageUnselected.close();
-    _onLinkSelected.close();
-    _onLinkUnselected.close();
-    _onTableSelectionChanged.close();
-    _onTableActivated.close();
-    _onDdfFileUploadPrepared.close();
-    
-  }
-  
   
   /**
    * Version string

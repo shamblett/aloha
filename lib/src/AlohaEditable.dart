@@ -9,31 +9,34 @@ part of aloha;
 
 class AlohaEditable {
   
+  js.Proxy _context = null;
   /**
    * The context for the editable
    */
-  js.Proxy _context = null;
   get proxy => _context;
   
+  js.Proxy _event = null;
   /**
    * The event that triggered the creation of the editable, e.g 
    * the event from editableActivatedEvent. This is optional for this
    * class but if not supplied some API calls will throw an exception.
    */
-  js.Proxy _event = null;
   set event(js.Proxy event) => _event = event;
   
   /**
-   * Construction
+   * An Aloha editable class binding.
+   * Note that the context and event you pass here are NOT automatically
+   * retained by this class, if you want this to happen you must retain it
+   * in your client code. The main Aloha class for instance retains all proxies it 
+   * uses to instantiate this class.
    */
   AlohaEditable(this._context,
                 [this._event]);
   
-  /**
-   * State
+ 
+  /** 
+   * True, if this editable is active for editing.
    */
-  
-  /* True, if this editable is active for editing */
   get isActive => _context.isActive;
   
   /**
@@ -78,11 +81,7 @@ class AlohaEditable {
   }
   
   /**
-   * API methods
-   */
-  
-  /**
-   * Check if object can be edited by Aloha Editor
+   * Check if the object can be edited by Aloha Editor
    * return true if Aloha Editor can handle it.
    */
   bool get check => _context.check();
@@ -125,15 +124,7 @@ class AlohaEditable {
   /**
    * String representation of the object
    */
-  /**
-   * For now, we can't pass toString through yet,
-   * asked on SO
-   */
-  //TODO
-  String toString() => 'Aloha.Editable';
-    
-    
-    
+  String toString() => 'Aloha.Editable';     
   
   /**
    * Activates an editable for editing, disables all other active items
@@ -168,11 +159,10 @@ class AlohaEditable {
    * objects.
    *
    * Boolean asObject Whether or not to retreive the contents of
-   *                           this editable as child node objects or as
-   *                           HTML string
-   * defaults to string                          .
-   * return {string|jQuery.<HTMLElement>} Contents of the editable as
-   *                                       DOM objects or an HTML string.
+   * this editable as child node objects or as an HTML string.
+   * Defaults to string                          .
+   * return {string|jQuery.HTMLElement} Contents of the editable as
+   * a DOM object or an HTML string.
    */
   dynamic getContents([bool asObject = false]) {
     
@@ -182,8 +172,7 @@ class AlohaEditable {
   
   /**
    * Set the contents of this editable as a HTML string
-   * String content as html
-   * Boolean asObject return object is as object or html string, default is HTML.
+   * The return object is as an object or html string, default is HTML.
    */
   dynamic setContents(String content, 
                       [bool asObject = false]) {
@@ -215,9 +204,9 @@ class AlohaEditable {
    * will be constructed.
    *
    * Dynamic serializerFunction
-   *        A function that accepts a DOM element and returns the serialized
-   *        XHTML of the element contents (excluding the start and end tag of
-   *        the passed element).
+   *   A function that accepts a DOM element and returns the serialized
+   *   XHTML of the element contents (excluding the start and end tag of
+   *   the passed element).
    * js.Proxy context, the aAloha editable context ,usually Aloha.Editable
    */
   static void setContentSerializer(dynamic serializerFunction,
@@ -248,7 +237,5 @@ class AlohaEditable {
     if (  _event != null ) js.release(_event);
     
   }
-  
-  
   
 }

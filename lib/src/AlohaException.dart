@@ -8,7 +8,12 @@
 part of aloha;
 
 class AlohaException implements Exception {
+  
   String _message = 'No Message Supplied';
+  
+  /**
+   * Aloha'a exception class
+   */
   AlohaException([this._message]);
   
   String toString() => "AlohaException: message = ${_message}";
