@@ -1,0 +1,200 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>AlohaSmartContentChangeParameters class / aloha Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="aloha" data-type="AlohaSmartContentChangeParameters">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../aloha.html">aloha</a> &rsaquo; <a href="../aloha/AlohaSmartContentChangeParameters.html">AlohaSmartContentChangeParameters</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>AlohaSmartContentChangeParameters</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class AlohaSmartContentChangeParameters {
+ 
+ 
+ /**
+  * Smart content change event return parameters
+  */
+ AlohaSmartContentChangeParameters(this._editableObject,
+                              this._keyIdentifier,
+                              this._keyCode,
+                              this._char,
+                              this._triggerType,
+                              this._snapshotContent);
+ 
+ AlohaEditable _editableObject = null;
+ /**
+  * The editable object
+  */
+ get editableObject =&gt; _editableObject;
+ 
+ String _keyIdentifier = null;
+ /**
+  * The key identifier
+  */
+ get keyIdentifier =&gt; _keyIdentifier;
+ 
+ int _keyCode = null;
+ /**
+  * The key code
+  */
+ get keyCode =&gt; _keyCode;
+ 
+ String _char = null;
+ /**
+  * The character entered
+  */
+ get char =&gt; _char;
+ 
+ String _triggerType = null;
+ /**
+  * The trigger type, one of
+  * keypress, idle, blur, paste, block-change
+  */
+ get triggerType =&gt; _triggerType;
+ 
+ String _snapshotContent = null;
+ /**
+  * Snapshot content
+  * The snapshot content of the editable as a HTML String
+  */
+ get snapshotContent =&gt; _snapshotContent;
+ 
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="">
+<button class="show-code">Code</button>
+new <strong>AlohaSmartContentChangeParameters</strong>(<a href="../aloha/AlohaEditable.html">AlohaEditable</a> _editableObject, String _keyIdentifier, int _keyCode, String _char, String _triggerType, String _snapshotContent) <a class="anchor-link" href="#"
+              title="Permalink to AlohaSmartContentChangeParameters.AlohaSmartContentChangeParameters">#</a></h4>
+<div class="doc">
+<p>Smart content change event return parameters</p>
+<pre class="source">
+AlohaSmartContentChangeParameters(this._editableObject,
+                            this._keyIdentifier,
+                            this._keyCode,
+                            this._char,
+                            this._triggerType,
+                            this._snapshotContent);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="char">
+<button class="show-code">Code</button>
+final         <strong>char</strong> <a class="anchor-link"
+            href="#char"
+            title="Permalink to AlohaSmartContentChangeParameters.char">#</a>
+        </h4>
+        <div class="doc">
+<p>The character entered</p>
+<pre class="source">
+get char =&gt; _char;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="editableObject">
+<button class="show-code">Code</button>
+final         <strong>editableObject</strong> <a class="anchor-link"
+            href="#editableObject"
+            title="Permalink to AlohaSmartContentChangeParameters.editableObject">#</a>
+        </h4>
+        <div class="doc">
+<p>The editable object</p>
+<pre class="source">
+get editableObject =&gt; _editableObject;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="keyCode">
+<button class="show-code">Code</button>
+final         <strong>keyCode</strong> <a class="anchor-link"
+            href="#keyCode"
+            title="Permalink to AlohaSmartContentChangeParameters.keyCode">#</a>
+        </h4>
+        <div class="doc">
+<p>The key code</p>
+<pre class="source">
+get keyCode =&gt; _keyCode;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="keyIdentifier">
+<button class="show-code">Code</button>
+final         <strong>keyIdentifier</strong> <a class="anchor-link"
+            href="#keyIdentifier"
+            title="Permalink to AlohaSmartContentChangeParameters.keyIdentifier">#</a>
+        </h4>
+        <div class="doc">
+<p>The key identifier</p>
+<pre class="source">
+get keyIdentifier =&gt; _keyIdentifier;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="snapshotContent">
+<button class="show-code">Code</button>
+final         <strong>snapshotContent</strong> <a class="anchor-link"
+            href="#snapshotContent"
+            title="Permalink to AlohaSmartContentChangeParameters.snapshotContent">#</a>
+        </h4>
+        <div class="doc">
+<p>Snapshot content
+The snapshot content of the editable as a HTML String</p>
+<pre class="source">
+get snapshotContent =&gt; _snapshotContent;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="triggerType">
+<button class="show-code">Code</button>
+final         <strong>triggerType</strong> <a class="anchor-link"
+            href="#triggerType"
+            title="Permalink to AlohaSmartContentChangeParameters.triggerType">#</a>
+        </h4>
+        <div class="doc">
+<p>The trigger type, one of
+keypress, idle, blur, paste, block-change</p>
+<pre class="source">
+get triggerType =&gt; _triggerType;
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-10-09 14:27:07.915</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

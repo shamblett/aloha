@@ -1,0 +1,676 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>AlohaEditable class / aloha Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="aloha" data-type="AlohaEditable">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../aloha.html">aloha</a> &rsaquo; <a href="../aloha/AlohaEditable.html">AlohaEditable</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>AlohaEditable</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class AlohaEditable {
+ 
+ js.Proxy _context = null;
+ /**
+  * The context for the editable
+  */
+ get proxy =&gt; _context;
+ 
+ js.Proxy _event = null;
+ /**
+  * The event that triggered the creation of the editable, e.g 
+  * the event from editableActivatedEvent. This is optional for this
+  * class but if not supplied some API calls will throw an exception.
+  */
+ set event(js.Proxy event) =&gt; _event = event;
+ 
+ /**
+  * An Aloha editable class binding.
+  * Note that the context and event you pass here are NOT automatically
+  * retained by this class, if you want this to happen you must retain it
+  * in your client code. The main Aloha class for instance retains all proxies it 
+  * uses to instantiate this class.
+  */
+ AlohaEditable(this._context,
+               [this._event]);
+ 
+
+ /** 
+  * True, if this editable is active for editing.
+  */
+ get isActive =&gt; _context.isActive;
+ 
+ /**
+  * Check if the editable has been modified during the edit process
+  * Return boolean true if the editable has been modified.
+  */
+ get isModified =&gt; _context.isModified();
+ 
+ /**
+  * Marks the editables current state as unmodified. Use this method to inform the editable
+  * that it's contents have been saved
+  */
+ void setUnmodified() {
+    
+   _context.setUnmodified();
+   
+ }
+  
+ /**
+ * Check whether the editable has been disabled
+ */
+ get isDisabled =&gt; _context.isDisabled();
+ 
+ /**
+  * Disable this editable
+  * A disabled editable cannot be written on by keyboard
+  */
+ void disable() {
+    
+   _context.disable();
+    
+ }
+  
+ /**
+   * Enable this editable
+   * Reenables a disabled editable to be writeable again
+   */
+ void enable() {
+   
+   _context.enable();
+   
+ }
+ 
+ /**
+  * Check if the object can be edited by Aloha Editor
+  * return true if Aloha Editor can handle it.
+  */
+ bool get check =&gt; _context.check();
+   
+ /**
+  * Initialise the placeholder
+  */
+ void initPlaceholder() {
+   
+   _context.initPlaceholder();
+   
+ }
+ 
+ /**
+  * Add placeholder in editable
+  */
+ void addPlaceholder() {
+   
+   _context.addPlaceholder();
+   
+ }
+ 
+ /**
+  * Remove placeholder from the content. If setCursor is true,
+  * will also set the cursor to the start of the selection. However,
+  * this will be ASYNCHRONOUS, so if you rely on the fact that
+  * the placeholder is removed after calling this method, setCursor
+  * should be false ( or not set )
+  */
+ void removePlaceholder([bool setCursor = false]) {
+   
+   _context.removePlaceholder(_context, setCursor);
+   
+ }
+ /**
+  * Check if the content is empty.
+  */
+ bool get isEmpty =&gt; _context.isEmpty();
+
+ /**
+  * String representation of the object
+  */
+ String toString() =&gt; 'Aloha.Editable';     
+ 
+ /**
+  * Activates an editable for editing, disables all other active items
+  */
+ void activate() {
+   
+   if ( _event == null ) throw new AlohaException("AlohaEditable - Activate, no event specified");
+   _context.activate(_event);
+   
+ }
+ 
+ /**
+  * Blur the editable
+  */
+ void blur() {
+   
+   _context.blur();
+   
+ }
+ 
+ /**
+  * Check if the string is empty as far as Aloha is concerned
+  */
+ bool empty(String str) {
+   
+   return _context.empty(str);
+   
+ }
+ 
+ /**
+  * Get the contents of this editable as a HTML string or child node DOM
+  * objects.
+  *
+  * Boolean asObject Whether or not to retreive the contents of
+  * this editable as child node objects or as an HTML string.
+  * Defaults to string                          .
+  * return {string|jQuery.HTMLElement} Contents of the editable as
+  * a DOM object or an HTML string.
+  */
+ dynamic getContents([bool asObject = false]) {
+   
+   return _context.getContents(asObject);
+   
+ }
+ 
+ /**
+  * Set the contents of this editable as a HTML string
+  * The return object is as an object or html string, default is HTML.
+  */
+ dynamic setContents(String content, 
+                     [bool asObject = false]) {
+   
+   return _context.setContents(content, asObject);
+   
+ }
+ 
+ /**
+  * Get the id of this editable
+  */
+ String get id =&gt; _context.getId();
+   
+ 
+ /**
+  * Get a snapshot of the active editable as a HTML string
+  */
+ String get snapshotContent =&gt; _context.getSnapshotContent();
+   
+ 
+ /**
+  * Sets the content serializer function.
+  *
+  * The default content serializer will just call the jQuery.html()
+  * function on the editable element (which gets the innerHTML property).
+  *
+  * This method is a static class method and will affect the result
+  * of editable.getContents() for all editables that have been or
+  * will be constructed.
+  *
+  * Dynamic serializerFunction
+  *   A function that accepts a DOM element and returns the serialized
+  *   XHTML of the element contents (excluding the start and end tag of
+  *   the passed element).
+  * js.Proxy context, the aAloha editable context ,usually Aloha.Editable
+  */
+ static void setContentSerializer(dynamic serializerFunction,
+                                  js.Proxy context) {
+   
+   context.contentSerializer = serializerFunction;
+   
+ }
+ 
+ /**
+  * Gets the content serializer function.
+  * 
+  * js.Proxy context, the Aloha editable context ,usually Aloha.Editable
+  */
+ static dynamic getContentSerializer(js.Proxy context) {
+   
+   return context.contextSerializer;
+   
+ }
+ 
+ /**
+  * Destroy the editable
+  */
+ void destroy() {
+   
+   _context.destroy();
+   js.release(_context);
+   if (  _event != null ) js.release(_event);
+   
+ }
+ 
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="setContentSerializer">
+<button class="show-code">Code</button>
+void <strong>setContentSerializer</strong>(serializerFunction, Proxy context) <a class="anchor-link" href="#setContentSerializer"
+              title="Permalink to AlohaEditable.setContentSerializer">#</a></h4>
+<div class="doc">
+<p>Sets the content serializer function.</p>
+<p>The default content serializer will just call the jQuery.html()
+function on the editable element (which gets the innerHTML property).</p>
+<p>This method is a static class method and will affect the result
+of editable.getContents() for all editables that have been or
+will be constructed.</p>
+<p>Dynamic serializerFunction
+  A function that accepts a DOM element and returns the serialized
+  XHTML of the element contents (excluding the start and end tag of
+  the passed element).
+js.Proxy context, the aAloha editable context ,usually Aloha.Editable</p>
+<pre class="source">
+static void setContentSerializer(dynamic serializerFunction,
+                                js.Proxy context) {
+ 
+ context.contentSerializer = serializerFunction;
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getContentSerializer">
+<button class="show-code">Code</button>
+dynamic <strong>getContentSerializer</strong>(Proxy context) <a class="anchor-link" href="#getContentSerializer"
+              title="Permalink to AlohaEditable.getContentSerializer">#</a></h4>
+<div class="doc">
+<p>Gets the content serializer function.</p>
+<p>js.Proxy context, the Aloha editable context ,usually Aloha.Editable</p>
+<pre class="source">
+static dynamic getContentSerializer(js.Proxy context) {
+ 
+ return context.contextSerializer;
+ 
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="">
+<button class="show-code">Code</button>
+new <strong>AlohaEditable</strong>(Proxy _context, [Proxy _event]) <a class="anchor-link" href="#"
+              title="Permalink to AlohaEditable.AlohaEditable">#</a></h4>
+<div class="doc">
+<p>An Aloha editable class binding.
+Note that the context and event you pass here are NOT automatically
+retained by this class, if you want this to happen you must retain it
+in your client code. The main Aloha class for instance retains all proxies it 
+uses to instantiate this class.</p>
+<pre class="source">
+AlohaEditable(this._context,
+             [this._event]);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="check">
+<button class="show-code">Code</button>
+final bool         <strong>check</strong> <a class="anchor-link"
+            href="#check"
+            title="Permalink to AlohaEditable.check">#</a>
+        </h4>
+        <div class="doc">
+<p>Check if the object can be edited by Aloha Editor
+return true if Aloha Editor can handle it.</p>
+<pre class="source">
+bool get check =&gt; _context.check();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="event=">
+<button class="show-code">Code</button>
+dynamic <strong>set event</strong>(Proxy event) <a class="anchor-link" href="#event="
+              title="Permalink to AlohaEditable.set event">#</a></h4>
+<div class="doc">
+<p>The event that triggered the creation of the editable, e.g 
+the event from editableActivatedEvent. This is optional for this
+class but if not supplied some API calls will throw an exception.</p>
+<pre class="source">
+set event(js.Proxy event) =&gt; _event = event;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="id">
+<button class="show-code">Code</button>
+final String         <strong>id</strong> <a class="anchor-link"
+            href="#id"
+            title="Permalink to AlohaEditable.id">#</a>
+        </h4>
+        <div class="doc">
+<p>Get the id of this editable</p>
+<pre class="source">
+String get id =&gt; _context.getId();
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="isActive">
+<button class="show-code">Code</button>
+final         <strong>isActive</strong> <a class="anchor-link"
+            href="#isActive"
+            title="Permalink to AlohaEditable.isActive">#</a>
+        </h4>
+        <div class="doc">
+<p>True, if this editable is active for editing.</p>
+<pre class="source">
+get isActive =&gt; _context.isActive;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="isDisabled">
+<button class="show-code">Code</button>
+final         <strong>isDisabled</strong> <a class="anchor-link"
+            href="#isDisabled"
+            title="Permalink to AlohaEditable.isDisabled">#</a>
+        </h4>
+        <div class="doc">
+<p>Check whether the editable has been disabled</p>
+<pre class="source">
+get isDisabled =&gt; _context.isDisabled();
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="isEmpty">
+<button class="show-code">Code</button>
+final bool         <strong>isEmpty</strong> <a class="anchor-link"
+            href="#isEmpty"
+            title="Permalink to AlohaEditable.isEmpty">#</a>
+        </h4>
+        <div class="doc">
+<p>Check if the content is empty.</p>
+<pre class="source">
+bool get isEmpty =&gt; _context.isEmpty();
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="isModified">
+<button class="show-code">Code</button>
+final         <strong>isModified</strong> <a class="anchor-link"
+            href="#isModified"
+            title="Permalink to AlohaEditable.isModified">#</a>
+        </h4>
+        <div class="doc">
+<p>Check if the editable has been modified during the edit process
+Return boolean true if the editable has been modified.</p>
+<pre class="source">
+get isModified =&gt; _context.isModified();
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="proxy">
+<button class="show-code">Code</button>
+final         <strong>proxy</strong> <a class="anchor-link"
+            href="#proxy"
+            title="Permalink to AlohaEditable.proxy">#</a>
+        </h4>
+        <div class="doc">
+<p>The context for the editable</p>
+<pre class="source">
+get proxy =&gt; _context;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="snapshotContent">
+<button class="show-code">Code</button>
+final String         <strong>snapshotContent</strong> <a class="anchor-link"
+            href="#snapshotContent"
+            title="Permalink to AlohaEditable.snapshotContent">#</a>
+        </h4>
+        <div class="doc">
+<p>Get a snapshot of the active editable as a HTML string</p>
+<pre class="source">
+String get snapshotContent =&gt; _context.getSnapshotContent();
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="activate">
+<button class="show-code">Code</button>
+void <strong>activate</strong>() <a class="anchor-link" href="#activate"
+              title="Permalink to AlohaEditable.activate">#</a></h4>
+<div class="doc">
+<p>Activates an editable for editing, disables all other active items</p>
+<pre class="source">
+void activate() {
+ 
+ if ( _event == null ) throw new AlohaException("AlohaEditable - Activate, no event specified");
+ _context.activate(_event);
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addPlaceholder">
+<button class="show-code">Code</button>
+void <strong>addPlaceholder</strong>() <a class="anchor-link" href="#addPlaceholder"
+              title="Permalink to AlohaEditable.addPlaceholder">#</a></h4>
+<div class="doc">
+<p>Add placeholder in editable</p>
+<pre class="source">
+void addPlaceholder() {
+ 
+ _context.addPlaceholder();
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="blur">
+<button class="show-code">Code</button>
+void <strong>blur</strong>() <a class="anchor-link" href="#blur"
+              title="Permalink to AlohaEditable.blur">#</a></h4>
+<div class="doc">
+<p>Blur the editable</p>
+<pre class="source">
+void blur() {
+ 
+ _context.blur();
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="destroy">
+<button class="show-code">Code</button>
+void <strong>destroy</strong>() <a class="anchor-link" href="#destroy"
+              title="Permalink to AlohaEditable.destroy">#</a></h4>
+<div class="doc">
+<p>Destroy the editable</p>
+<pre class="source">
+void destroy() {
+ 
+ _context.destroy();
+ js.release(_context);
+ if (  _event != null ) js.release(_event);
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="disable">
+<button class="show-code">Code</button>
+void <strong>disable</strong>() <a class="anchor-link" href="#disable"
+              title="Permalink to AlohaEditable.disable">#</a></h4>
+<div class="doc">
+<p>Disable this editable
+A disabled editable cannot be written on by keyboard</p>
+<pre class="source">
+void disable() {
+  
+ _context.disable();
+  
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="empty">
+<button class="show-code">Code</button>
+bool <strong>empty</strong>(String str) <a class="anchor-link" href="#empty"
+              title="Permalink to AlohaEditable.empty">#</a></h4>
+<div class="doc">
+<p>Check if the string is empty as far as Aloha is concerned</p>
+<pre class="source">
+bool empty(String str) {
+ 
+ return _context.empty(str);
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="enable">
+<button class="show-code">Code</button>
+void <strong>enable</strong>() <a class="anchor-link" href="#enable"
+              title="Permalink to AlohaEditable.enable">#</a></h4>
+<div class="doc">
+<p>Enable this editable
+Reenables a disabled editable to be writeable again</p>
+<pre class="source">
+void enable() {
+ 
+ _context.enable();
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getContents">
+<button class="show-code">Code</button>
+dynamic <strong>getContents</strong>([bool asObject = false]) <a class="anchor-link" href="#getContents"
+              title="Permalink to AlohaEditable.getContents">#</a></h4>
+<div class="doc">
+<p>Get the contents of this editable as a HTML string or child node DOM
+objects.</p>
+<p>Boolean asObject Whether or not to retreive the contents of
+this editable as child node objects or as an HTML string.
+Defaults to string                          .
+return {string|jQuery.HTMLElement} Contents of the editable as
+a DOM object or an HTML string.</p>
+<pre class="source">
+dynamic getContents([bool asObject = false]) {
+ 
+ return _context.getContents(asObject);
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="initPlaceholder">
+<button class="show-code">Code</button>
+void <strong>initPlaceholder</strong>() <a class="anchor-link" href="#initPlaceholder"
+              title="Permalink to AlohaEditable.initPlaceholder">#</a></h4>
+<div class="doc">
+<p>Initialise the placeholder</p>
+<pre class="source">
+void initPlaceholder() {
+ 
+ _context.initPlaceholder();
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="removePlaceholder">
+<button class="show-code">Code</button>
+void <strong>removePlaceholder</strong>([bool setCursor = false]) <a class="anchor-link" href="#removePlaceholder"
+              title="Permalink to AlohaEditable.removePlaceholder">#</a></h4>
+<div class="doc">
+<p>Remove placeholder from the content. If setCursor is true,
+will also set the cursor to the start of the selection. However,
+this will be ASYNCHRONOUS, so if you rely on the fact that
+the placeholder is removed after calling this method, setCursor
+should be false ( or not set )</p>
+<pre class="source">
+void removePlaceholder([bool setCursor = false]) {
+ 
+ _context.removePlaceholder(_context, setCursor);
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="setContents">
+<button class="show-code">Code</button>
+dynamic <strong>setContents</strong>(String content, [bool asObject = false]) <a class="anchor-link" href="#setContents"
+              title="Permalink to AlohaEditable.setContents">#</a></h4>
+<div class="doc">
+<p>Set the contents of this editable as a HTML string
+The return object is as an object or html string, default is HTML.</p>
+<pre class="source">
+dynamic setContents(String content, 
+                   [bool asObject = false]) {
+ 
+ return _context.setContents(content, asObject);
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="setUnmodified">
+<button class="show-code">Code</button>
+void <strong>setUnmodified</strong>() <a class="anchor-link" href="#setUnmodified"
+              title="Permalink to AlohaEditable.setUnmodified">#</a></h4>
+<div class="doc">
+<p>Marks the editables current state as unmodified. Use this method to inform the editable
+that it's contents have been saved</p>
+<pre class="source">
+void setUnmodified() {
+  
+ _context.setUnmodified();
+ 
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to AlohaEditable.toString">#</a></h4>
+<div class="doc">
+<p>String representation of the object</p>
+<pre class="source">
+String toString() =&gt; 'Aloha.Editable';
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2013-10-09 14:27:07.891</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        
