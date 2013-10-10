@@ -1,8 +1,12 @@
 name: aloha
-description: A sample web application
+version: 1.0.0
+author: S. Hamblett <steve.hamblett@linux.com>
+description: Bindings for the Aloha HTML5 editor
+homepage: https://github.com/shamblett/aloha
+documentation: http://oscf.org.uk/dart/api/aloha/aloha.html
 dependencies:
-  browser: any
-  js: any
+  browser: '>=0.8.1 <0.8.2'
+  js: '>=0.0.25 <0.0.26'
 dev_dependencies:
   json_object: any
   unittest: any
