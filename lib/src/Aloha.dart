@@ -558,6 +558,7 @@ class Aloha {
     try {
     
       js.Proxy editableProxy = _alohaContext.getEditableById(id);
+      if ( editableProxy == null ) return null;
       AlohaEditable theEditable = new AlohaEditable(js.retain(editableProxy));
       return theEditable;
       
@@ -594,6 +595,7 @@ class Aloha {
     try {
       
       js.Proxy editableProxy = _alohaContext.getActiveEditable();
+      if ( editableProxy == null ) return null;
       AlohaEditable theEditable = new AlohaEditable(js.retain(editableProxy));
       return theEditable;
       

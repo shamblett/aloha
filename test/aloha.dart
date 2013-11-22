@@ -16,7 +16,7 @@ import 'package:json_object/json_object.dart' as json;
 
 Aloha alohaEditor = null;
 
-DivElement buttonSection = query('#aloha-button-section');
+DivElement buttonSection = querySelector('#aloha-button-section');
 
 ButtonElement createEventButton(String onClickScript){
   
@@ -148,7 +148,7 @@ main() {
        *  Create an editable by adding the noweditable class to a previously
        *  not editable entity and adding it.
        */
-      HeadingElement theEditableElement = query('#alohaedit2');
+      HeadingElement theEditableElement = querySelector('#alohaedit2');
       theEditableElement.classes.remove('noteditable');
       theEditableElement.classes.add('noweditable');
       alohaEditor.attachEditable('.noweditable');
@@ -171,7 +171,7 @@ main() {
        *  Dedstroy an editable by adding the noteditable class to a previously
        *  editable entity and detaching it.
        */
-      HeadingElement theEditableElement = query('#alohaedit2');
+      HeadingElement theEditableElement = querySelector('#alohaedit2');
       theEditableElement.classes.remove('noweditable');
       theEditableElement.classes.add('noteditable');
       alohaEditor.detachEditable('.noteditable');
@@ -195,7 +195,7 @@ main() {
       /* To trigger the activated event we must do this through the page,
        * not any core API calls
        */
-      HeadingElement theEditableElement = query('#alohaedit1');
+      HeadingElement theEditableElement = querySelector('#alohaedit1');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -238,7 +238,7 @@ main() {
         
       });
       /* Re-activate an editable */
-      ParagraphElement theEditableElement = query('#alohaedit3');
+      ParagraphElement theEditableElement = querySelector('#alohaedit3');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -431,7 +431,7 @@ main() {
          
     test("Version", () {  
       
-      expect(alohaEditor.version, equals('0.23.12'));
+      expect(alohaEditor.version, equals('0.23.27-SNAPSHOT'));
       
     }); 
     
@@ -471,7 +471,7 @@ main() {
     
     test("Active Editable - Property", () {  
       
-      HeadingElement theEditableElement = query('#alohaedit1');
+      HeadingElement theEditableElement = querySelector('#alohaedit1');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -484,7 +484,7 @@ main() {
       
       json.JsonObject settings = new json.JsonObject.fromJsonString(alohaEditor.settings);
       expect(settings.logLevels.debug, isFalse);
-      expect(settings.baseUrl, equals('http://cdn.aloha-editor.org/aloha-0.23.12/lib'));
+      expect(settings.baseUrl, equals('http://cdn.aloha-editor.org/latest/lib'));
       
     });
     
@@ -501,8 +501,8 @@ main() {
     test("Loaded Plugins - Property", () {  
       
       List plugins = alohaEditor.loadedPlugins;
-      expect(plugins[0], equals('format'));
-      expect(plugins[2], equals('link'));
+      expect(plugins[0], equals('[format'));
+      expect(plugins[2], equals(' link'));
       
     });
     
@@ -523,8 +523,8 @@ main() {
     test("Loaded Plugins", () {  
       
       List plugins = alohaEditor.getLoadedPlugins();
-      expect(plugins[0], equals('format'));
-      expect(plugins[2], equals('link'));
+      expect(plugins[0], equals('[format'));
+      expect(plugins[2], equals(' link'));
       
     });
     
@@ -578,10 +578,10 @@ main() {
     
     test("Get Editable Host", () {  
       
-      HtmlElement element = query('#cepara');
+      HtmlElement element = querySelector('#cepara');
       AlohaEditable editable = alohaEditor.getEditableHost(element);
       expect(editable.id, equals('alohaedit4'));
-      element = query('#aloha-edit-section');
+      element = querySelector('#aloha-edit-section');
       editable = alohaEditor.getEditableHost(element);
       expect(editable, isNull);
       
@@ -610,14 +610,14 @@ main() {
     test("URL", () {  
       
       String url= alohaEditor.getUrl();
-      expect(url, equals('http://cdn.aloha-editor.org/aloha-0.23.12/lib'));
+      expect(url, equals('http://cdn.aloha-editor.org/latest/lib'));
       
     });
     
     test("Plugin URL", () {  
       
       String url= alohaEditor.getPluginUrl('format');
-      expect(url, equals( 'http://cdn.aloha-editor.org/aloha-0.23.12/lib/../plugins/common/format'));
+      expect(url, equals( 'http://cdn.aloha-editor.org/latest/lib/../plugins/common/format'));
       
     });
     
@@ -650,7 +650,7 @@ main() {
           
     test("Query Command Enabled", () {  
       
-      ParagraphElement theEditableElement = query('#alohaedit3');
+      ParagraphElement theEditableElement = querySelector('#alohaedit3');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
