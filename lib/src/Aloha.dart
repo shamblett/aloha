@@ -12,104 +12,77 @@ part of aloha;
 
 class Aloha {
    
-  
-  js.Proxy _context  = js.retain(js.context);
   /**
-   * The js context
+   * jQuery context
    */
-  get jsContext => _context;
+  js.JsObject _alohajQueryContext = js.context['jQuery'];
   
-  final _jQueryContext  = js.retain(js.context.jQuery);
-  /**
-   * JQuery context
-   */
-  get jQueryContext => _jQueryContext;
-  
-  final _alohaContext = js.retain(js.context.Aloha);
   /**
    * Aloha context
    */
+  js.JsObject _alohaContext = js.context['Aloha'];
   get context => _alohaContext;
   
-  final _alohajQueryContext = js.retain(js.context.Aloha.jQuery);
-  /**
-   * Aloha's extended jQuery context
-   */
-  get alohajQueryContext => _alohajQueryContext;
-  
-  bool _ready = false;
   /**
    * Aloha is ready when this is set. The API calls check for this,
    * if Aloha is not ready an AlohaException is raised.
    */
+  bool _ready = false;
   get isReady => _ready;
   set isReady(bool state) => _ready = state;
   
-  
-  js.Callback _jsReady = null;
-  final _onReady = new StreamController();
   /**
    *  Ready, NOT a broadcast event, only use one listener for this.
    *  This event is triggered when the Aloha Editor is fully initialized, the core, plugins and UI. 
    */
+  final _onReady = new StreamController();
   get readyEvent => _onReady.stream;
  
   /**
    * Commands 
    */
-  
- 
-  js.Callback _jsCommandWillExecute = null;
-  final _onCommandWillExecute = new StreamController.broadcast();
+
   /**
    * This event is triggered before a command will be executed. 
    * Returned parameter is AlohaCommandWillExecuteParameters class.
    */
+  final _onCommandWillExecute = new StreamController.broadcast();
   get commandWillExecuteEvent => _onCommandWillExecute.stream;
  
-  js.Callback _jsCommandExecuted = null;
-  final _onCommandExecuted = new StreamController.broadcast();
   /**
    * This event is triggered after a command is executed using the execCommand method
    * Returned parameter is a String, the command executed.
    */
+  final _onCommandExecuted = new StreamController.broadcast();
   get commandExecutedEvent => _onCommandExecuted.stream;
   
-  js.Callback _jsLoggerReady = null;
-  final _onLoggerReady = new StreamController.broadcast();
   /**
    * This event is triggered when the Aloha Editor logger is fully initialized.
    */
+  final _onLoggerReady = new StreamController.broadcast();
   get loggerReadyEvent => _onLoggerReady.stream;
   
-  js.Callback _jsLoggerFull = null;
-  final _onLoggerFull = new StreamController.broadcast();
   /**
    * This event is triggered when the Aloha Editor log history is full.
    */
+  final _onLoggerFull = new StreamController.broadcast();
   get loggerFullEvent => _onLoggerFull.stream;
   
-  js.Callback _jsEditableCreated = null;
-  final _onEditableCreated = new StreamController.broadcast();
   /**
    * This event fires after a new editable has been created, eg. via 
    * $( '#editme' ).aloha() in js or via the attachEditable API method
    * Returned parameter is an AlohaEditable class.
    */
+  final _onEditableCreated = new StreamController.broadcast();
   get editableCreatedEvent => _onEditableCreated.stream;
   
-  js.Callback _jsEditableDestroyed = null;
-  final _onEditableDestroyed = new StreamController.broadcast();
   /**
    * This event fires after a new editable has been destroyed, eg. via 
    * $( '#editme' ).mahalo() in js or via the detachEditable API method.
    */
+  final _onEditableDestroyed = new StreamController.broadcast();
   get editableDestroyedEvent => _onEditableDestroyed.stream;
   
-  
-  js.Callback _jsEditableActivated = null;
-  
-  final _onEditableActivated = new StreamController.broadcast();
   /**
    * This event fires when an editable has been activated 
    * by clicking on it say.
@@ -119,10 +92,9 @@ class Aloha {
    * no old active editable(e.g first click on the page) none is supplied.
    *  [editable, oldEditable]
    */
+  final _onEditableActivated = new StreamController.broadcast();
   get editableActivatedEvent => _onEditableActivated.stream;
   
-  js.Callback _jsEditableDeactivated = null;
-  final _onEditableDeactivated = new StreamController.broadcast();
   /**
    * This event fires when an editable has been deactivated by 
    * clicking on a non editable part of the page or on an other editable, or
@@ -130,10 +102,9 @@ class Aloha {
    *
    * Returned parameter is an AlohaEditable class
    */
+  final _onEditableDeactivated = new StreamController.broadcast();
   get editableDeactivatedEvent => _onEditableDeactivated.stream;
   
-  js.Callback _jsSmartContentChange = null;
-  final _onSmartContentChange = new StreamController.broadcast();
   /**
    * A smart content change occurs when a special editing action, or a combination of 
    * interactions are performed by the user during the course of editing within an editable.
@@ -146,10 +117,9 @@ class Aloha {
    *
    * Returned parameter is a AlohaSmartContentChangeParameters class
    */
+  final _onSmartContentChange = new StreamController.broadcast();
   get smartContentChangeEvent => _onSmartContentChange.stream;
   
-  js.Callback _jsBlockSelected = null;
-  final _onBlockSelectedChange = new StreamController.broadcast();
   /**
    * Processing of cursor keys will currently detect blocks (elements with contenteditable=false) 
    * and selects them (normally the cursor would jump right past them). 
@@ -158,63 +128,55 @@ class Aloha {
    * Returned parameter is an HTML element class such as DivElement, ParagraphElement
    * etc. dependent on selection.
    */
+  final _onBlockSelectedChange = new StreamController.broadcast();
   get blockSelectedEvent => _onBlockSelectedChange.stream;
   
-  js.Callback _jsImageSelected = null;
-  final _onImageSelected = new StreamController.broadcast();
   /**
    * Image selection event
    */
+  final _onImageSelected = new StreamController.broadcast();
   get imageSelectedEvent => _onImageSelected.stream;
   
-  js.Callback _jsImageUnselected = null;
-  final _onImageUnselected = new StreamController.broadcast();
   /**
    * Image unselection event
    */
+  final _onImageUnselected = new StreamController.broadcast();
   get imageUnselectedEvent => _onImageUnselected.stream;
   
-  js.Callback _jsLinkSelected = null;
-  final _onLinkSelected = new StreamController.broadcast();
   /**
    * Link selection event
    */
+  final _onLinkSelected = new StreamController.broadcast();
   get linkSelectedEvent => _onLinkSelected.stream;
   
-  js.Callback _jsLinkUnselected = null;
-  final _onLinkUnselected = new StreamController.broadcast();
   /**
    * Link unselection event
    */
+  final _onLinkUnselected = new StreamController.broadcast();
   get linkUnselectedEvent => _onLinkUnselected.stream;
   
-  js.Callback _jsTableSelectionChanged = null;
-  final _onTableSelectionChanged = new StreamController.broadcast();
   /**
    * Table activation event
    * After an existing dom-table is transformed into an editable Aloha Editor 
    * table this event is triggered.
    */
+  final _onTableSelectionChanged = new StreamController.broadcast();
   get tableSelectionChangedEvent => _onTableSelectionChanged.stream; 
   
-  js.Callback _jsTableActivated = null;
-  final _onTableActivated = new StreamController.broadcast();
   /**
    * Table selection change event
    * Triggers when one or more cells of a table are selected or unselected.
    */
+  final _onTableActivated = new StreamController.broadcast();
   get tableActivatedEvent => _onTableActivated.stream; 
   
-  js.Callback _jsDdfAllFilesPrepared = null;
-  final _onDdfAllFilesPrepared = new StreamController.broadcast();
   /**
    * All files upload prepared.
    * After all files are prepared for an upload this event is triggered.
    */
+  final _onDdfAllFilesPrepared = new StreamController.broadcast();
   get ddfAllFilesPreparedEvent => _onDdfAllFilesPrepared.stream; 
   
-  js.Callback _jsDdfFilesDroppedInPage = null;
-  final _onDdfFilesDroppedInPage = new StreamController.broadcast();
   /**
    * Drop files in page
    * This event is triggered when files are dropped into the page and not an editable.
@@ -222,10 +184,9 @@ class Aloha {
    * Returned parameter is an HTML element class such as DivElement, ParagraphElement
    * etc. dependent on the drop target.
    */
+  final _onDdfFilesDroppedInPage = new StreamController.broadcast();
   get ddfFilesDroppedInPageEvent => _onDdfFilesDroppedInPage.stream; 
   
-  js.Callback _jsDdfFileUploadPrepared = null;
-  final _onDdfFileUploadPrepared = new StreamController.broadcast();
   /**
    * File upload prepared
    * This event is triggered when a single file of many dropped files is ready for uploading.
@@ -233,6 +194,7 @@ class Aloha {
    * Returned parameter is an HTML element class such as DivElement, ParagraphElement
    * etc. dependent on the drop target.
    */
+  final _onDdfFileUploadPrepared = new StreamController.broadcast();
   get ddfFileUploadPreparedEvent => _onDdfFileUploadPrepared.stream; 
   
   /**
@@ -242,84 +204,84 @@ class Aloha {
   Aloha() {
     
     /* Ready */
-    _jsReady = new js.Callback.many((){
-      
+    _jsReady() {  
       _ready = true;
       _onReady.add(null);
       
-    });
-    _alohaContext.bind('aloha-ready', _jsReady);
+    };
     
+    _alohaContext.callMethod('bind', ['aloha-ready',_jsReady]);
+   
     /**
      * The rest of the bindings will always have the jQuery event object as
      * their first parameter, even if Aloha sends nothing, e.g, log ready trigger.
      */
     
     /* Commands */
-    _jsCommandWillExecute = new js.Callback.many((js.Proxy event,
-                                                 Object jsParams) {
+    _jsCommandWillExecute(js.JsObject event,
+                             Object jsParams) {
       
           AlohaCommandWillExecuteParameters params = new 
                AlohaCommandWillExecuteParameters(jsParams.commandId,
                                                  jsParams.preventDefault);
           _onCommandWillExecute.add(params);
           
-    });
-    _alohaContext.bind('aloha-command-will-execute', _jsCommandWillExecute);
+    };
+    _alohaContext.callMethod('bind', ['aloha-command-will-execute', _jsCommandWillExecute]);
     
-    _jsCommandExecuted = new js.Callback.many((js.Proxy event,
-                                               String commandId){
+    _jsCommandExecuted(js.JsObject event,
+                       String commandId){
           
           _onCommandExecuted.add(commandId);
           
-    });
-    _alohaContext.bind('aloha-command-executed', _jsCommandExecuted);
+    };
+    _alohaContext.callMethod('bind', ['aloha-command-executed', _jsCommandExecuted] );
     
     /* Logging */
-    _jsLoggerReady = new js.Callback.many((js.Proxy e){
+    _jsLoggerReady(js.JsObject e){
       
       _onLoggerReady.add(null);
       
-    });
-    _alohaContext.bind('aloha-logger-ready', _jsLoggerReady);
+    };
+    _alohaContext.callMethod('bind', ['aloha-logger-ready', _jsLoggerReady] );
    
-    _jsLoggerFull = new js.Callback.many((js.Proxy e){
+    _jsLoggerFull(js.JsObject e){
       
       _onLoggerFull.add(null);
      
-    });
-    _alohaContext.bind('aloha-log-full', _jsLoggerFull);
+    };
+    _alohaContext.callMethod('bind', ['aloha-log-full', _jsLoggerFull] );
     
     /* Editables */
-    _jsEditableCreated = new js.Callback.many((js.Proxy event,
-                                               js.Proxy editable){
+    _jsEditableCreated(js.JsObject event,
+                       js.JsObject editable){
         
-      AlohaEditable theEditable = new AlohaEditable(js.retain(editable), 
-                                                    js.retain(event));
+      AlohaEditable theEditable = new AlohaEditable(editable, 
+                                                    event);
      _onEditableCreated.add(theEditable);
      
-     });
-    _alohaContext.bind('aloha-editable-created', _jsEditableCreated);
+     };
+    _alohaContext.callMethod('bind', ['aloha-editable-created', _jsEditableCreated] );
     
-    _jsEditableDestroyed = new js.Callback.many((js.Proxy event,
-                                                 js.Proxy ref){
+    _jsEditableDestroyed(js.JsObject event,
+                         js.JsObject ref){
       
       _onEditableDestroyed.add(null);
       
-    });
-    _alohaContext.bind('aloha-editable-destroyed', _jsEditableDestroyed);
+    };
+    _alohaContext.callMethod('bind', ['aloha-editable-destroyed', _jsEditableDestroyed] );
     
-    _jsEditableActivated = new js.Callback.many((js.Proxy event,
-                                                 editableObjects){
+    _jsEditableActivated(js.JsObject event,
+                         editableObjects){
       
       /* We always have the event and the current active editable */
       List editableList = null;
-      js.Proxy editableEvent = js.retain(event);
-      js.Proxy activeEditable = js.retain(editableObjects.editable);
+      js.JsObject editableEvent = event;
+      js.JsObject activeEditable = editableObjects.editable;
       AlohaEditable editable = new AlohaEditable(activeEditable, editableEvent);
       /* See if we have an old editable, if so pass it back. */
       try {
-      js.Proxy oldActiveEditable =  js.retain(editableObjects.old);
+      js.JsObject oldActiveEditable = editableObjects.old;
       AlohaEditable oldEditable = new AlohaEditable(oldActiveEditable, editableEvent);
       editableList = [editable, oldEditable];
       } catch(e) {
@@ -330,25 +292,25 @@ class Aloha {
           
       _onEditableActivated.add(editableList);
       
-    });
-    _alohaContext.bind('aloha-editable-activated', _jsEditableActivated);
+    };
+    _alohaContext.callMethod('bind', ['aloha-editable-activated', _jsEditableActivated] );
     
-    _jsEditableDeactivated = new js.Callback.many((js.Proxy event,
-                                                   js.Proxy editable){
+    _jsEditableDeactivated(js.JsObject event,
+                           js.JsObject editable){
       
-      AlohaEditable theEditable = new AlohaEditable(js.retain(editable.editable), 
-                                                    js.retain(event));
+      AlohaEditable theEditable = new AlohaEditable(editable.editable, 
+                                                    event);
      _onEditableDeactivated.add(theEditable);
      
-     });
-    _alohaContext.bind('aloha-editable-deactivated', _jsEditableDeactivated);
+     };
+    _alohaContext.callMethod('bind', ['aloha-editable-deactivated', _jsEditableDeactivated] );
    
     /* Content changes */
-    _jsSmartContentChange = new js.Callback.many((js.Proxy event,
-                                                  Object parameters){
+    _jsSmartContentChange(js.JsObject event,
+                          Object parameters){
       
-      AlohaEditable theEditable = new AlohaEditable(js.retain(parameters.editable), 
-                                                    js.retain(event));
+      AlohaEditable theEditable = new AlohaEditable(parameters.editable, 
+                                                    event);
       AlohaSmartContentChangeParameters params = new AlohaSmartContentChangeParameters(
                                                         theEditable,
                                                         parameters.keyIdentifier,
@@ -358,83 +320,83 @@ class Aloha {
                                                         parameters.getSnapshotContent());
       _onSmartContentChange.add(params);
      
-     });
-    _alohaContext.bind('aloha-smart-content-changed',_jsSmartContentChange );
+     };
+    _alohaContext.callMethod('bind', ['aloha-smart-content-changed',_jsSmartContentChange] );
     
-    _jsBlockSelected = new js.Callback.many((js.Proxy event,
-                                             Object element){
+    _jsBlockSelected(js.JsObject event,
+                     Object element){
       
       
       _onBlockSelectedChange.add(element);
      
-     });
-    _alohaContext.bind('aloha-block-selected',_jsBlockSelected );
+     };
+    _alohaContext.callMethod('bind', ['aloha-block-selected',_jsBlockSelected] );
     
     /* Plugins */
-    _jsImageSelected = new js.Callback.many((js.Proxy e){
+    _jsImageSelected(js.JsObject e){
       
       _onImageSelected.add(null);
       
-    });
-    _alohaContext.bind('aloha-image-selected', _jsImageSelected);
+    };
+    _alohaContext.callMethod('bind', ['aloha-image-selected', _jsImageSelected]);
     
-    _jsImageUnselected = new js.Callback.many((js.Proxy e){
+    _jsImageUnselected(js.JsObject e){
       
       _onImageUnselected.add(null);
       
-    });
-    _alohaContext.bind('aloha-image-unselected', _jsImageUnselected);
+    };
+    _alohaContext.callMethod('bind', ['aloha-image-unselected', _jsImageUnselected] );
     
-    _jsLinkSelected = new js.Callback.many((js.Proxy e){
+    _jsLinkSelected(js.JsObject e){
       
       _onLinkSelected.add(null);
       
-    });
-    _alohaContext.bind('aloha-link-selected', _jsLinkSelected);
+    };
+    _alohaContext.callMethod('bind', ['aloha-link-selected', _jsLinkSelected] );
     
-    _jsLinkUnselected = new js.Callback.many((js.Proxy e){
+    _jsLinkUnselected(js.JsObject e){
       
       _onLinkUnselected.add(null);
       
-    });
-    _alohaContext.bind('aloha-link-unselected', _jsLinkUnselected);
+    };
+    _alohaContext.callMethod('bind', ['aloha-link-unselected', _jsLinkUnselected] );
     
-    _jsTableSelectionChanged = new js.Callback.many((js.Proxy e){
+    _jsTableSelectionChanged(js.JsObject e){
       
       _onTableSelectionChanged.add(null);
       
-    });
-    _alohaContext.bind('aloha-table-selection-changed', _jsTableSelectionChanged);
+    };
+    _alohaContext.callMethod('bind', ['aloha-table-selection-changed', _jsTableSelectionChanged] );
     
-    _jsTableActivated = new js.Callback.many((js.Proxy e){
+    _jsTableActivated(js.JsObject e){
       
       _onTableActivated.add(null);
       
-    });
-    _alohaContext.bind('aloha-table-activated', _jsTableActivated);
+    };
+    _alohaContext.callMethod('bind', ['aloha-table-activated', _jsTableActivated] );
     
-    _jsDdfAllFilesPrepared = new js.Callback.many((js.Proxy e){
+    _jsDdfAllFilesPrepared(js.JsObject e){
       
       _onDdfAllFilesPrepared.add(null);
       
-    });
-    _alohaContext.bind('aloha-allfiles-upload-prepared', _jsDdfAllFilesPrepared);
+    };
+    _alohaContext.callMethod('bind', ['aloha-allfiles-upload-prepared', _jsDdfAllFilesPrepared]);
     
-    _jsDdfFilesDroppedInPage = new js.Callback.many((js.Proxy e,
-                                                     Object element){
+    _jsDdfFilesDroppedInPage(js.JsObject e,
+                             Object element){
       
       _onDdfFilesDroppedInPage.add(element);
       
-    });
-    _alohaContext.bind('aloha-drop-files-in-page', _jsDdfFilesDroppedInPage);
+    };
+    _alohaContext.callMethod('bind', ['aloha-drop-files-in-page', _jsDdfFilesDroppedInPage] );
     
-    _jsDdfFileUploadPrepared = new js.Callback.many((js.Proxy e,
-                                                     Object element){
+    _jsDdfFileUploadPrepared(js.JsObject e,
+                             Object element){
       
       _onDdfFileUploadPrepared.add(element);
       
-    });
-    _alohaContext.bind('aloha-file-upload-prepared', _jsDdfFileUploadPrepared);
+    };
+    _alohaContext.callMethod('bind', ['aloha-file-upload-prepared', _jsDdfFileUploadPrepared] );
     
     
   }
@@ -479,7 +441,7 @@ class Aloha {
     try {
       
       AlohaEditable editable = new AlohaEditable(
-          js.retain(_alohaContext.activeEditable));
+          _alohaContext.activeEditable);
       return editable;
       
     } catch(e) {
@@ -497,17 +459,16 @@ class Aloha {
   /**
    * Settings
    * We have no way of knowing what settings have been applied to Aloha in its js startup
-   * so you need to know the settings structure on the client side. The settings are returned
-   * as a JSON string.
+   * so you need to know the settings structure on the client side.
    */
-  get settings =>  _context.JSON.stringify(_alohaContext.settings);
+  get settings =>  _alohaContext.settings;
   
   /**
    * Defaults
-   * Hardwired startup defaults, returned as a JSON string
+   * Hardwired startup defaults.
    * 
    */
-  get defaults => _context.JSON.stringify(_alohaContext.defaults);
+  get defaults => _alohaContext.defaults;
   
   /**
    * OS name
@@ -525,7 +486,7 @@ class Aloha {
    */
   void reinitialise() {
     
-    _alohaContext.init();
+    _alohaContext.callMethod('init');
     
   }
   
@@ -544,7 +505,7 @@ class Aloha {
    */
   bool isPluginLoaded(String pluginName) {
     
-    return  _alohaContext.isPluginLoaded(pluginName);
+    return  _alohaContext.callMethod('isPluginLoaded', [pluginName] );
     
   }
   
@@ -557,9 +518,9 @@ class Aloha {
     
     try {
     
-      js.Proxy editableProxy = _alohaContext.getEditableById(id);
+      js.JsObject editableProxy = _alohaContext.callMethod('getEditableById', [id] );
       if ( editableProxy == null ) return null;
-      AlohaEditable theEditable = new AlohaEditable(js.retain(editableProxy));
+      AlohaEditable theEditable = new AlohaEditable(editableProxy);
       return theEditable;
       
     } catch(e) {
@@ -580,8 +541,8 @@ class Aloha {
   void activateEditable(AlohaEditable editable) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    js.Proxy editableProxy = editable.proxy;
-    _alohaContext.activateEditable(editableProxy);
+    js.JsObject editableProxy = editable.proxy;
+    _alohaContext.callMethod('activateEditable', [editableProxy] );
     
   }
   
@@ -594,9 +555,9 @@ class Aloha {
     
     try {
       
-      js.Proxy editableProxy = _alohaContext.getActiveEditable();
+      js.JsObject editableProxy = _alohaContext.callMethod('getActiveEditable');
       if ( editableProxy == null ) return null;
-      AlohaEditable theEditable = new AlohaEditable(js.retain(editableProxy));
+      AlohaEditable theEditable = new AlohaEditable(editableProxy);
       return theEditable;
       
     } catch(e) {
@@ -613,7 +574,7 @@ class Aloha {
   void deactivateActiveEditable() {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    _alohaContext.deactivateEditable();
+    _alohaContext.callMethod('deactivateEditable');
     
   }
   
@@ -654,10 +615,10 @@ class Aloha {
     
    if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha'); 
    String jQueryId = '#' + element.id;
-   js.Proxy jQueryElement = _alohajQueryContext(jQueryId);
-   js.Proxy proxy = _alohaContext.getEditableHost(jQueryElement);
+   js.JsObject jQueryElement = js.context.callMethod(r'$', [jQueryId] );
+   js.JsObject = _alohaContext.callMethod('getEditableHost', [jQueryElement] );
    if ( proxy == null ) return null;
-   AlohaEditable editable = new AlohaEditable(js.retain(proxy));
+   AlohaEditable editable = new AlohaEditable(proxy);
    return editable;
    
     
@@ -669,7 +630,7 @@ class Aloha {
   void registerEditable(AlohaEditable editable) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    _alohaContext.registerEditable(editable.proxy);
+    _alohaContext.callMethod('registerEditable', [editable.proxy] );
     
   }
   
@@ -679,7 +640,7 @@ class Aloha {
   void unregisterEditable(AlohaEditable editable) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    _alohaContext.unregisterEditable(editable.proxy);
+    _alohaContext.callMethod('unregisterEditable', [editable.proxy]);
     
   }
 
@@ -691,7 +652,7 @@ class Aloha {
   String getUrl() {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    return _alohaContext.getAlohaUrl();
+    return _alohaContext.callMethod('getAlohaUrl');
     
   }
   
@@ -703,7 +664,7 @@ class Aloha {
   String getPluginUrl(String name) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    return _alohaContext.getPluginUrl(name);
+    return _alohaContext.callMethod('getPluginUrl', [name] );
     
   }
   
@@ -716,7 +677,7 @@ class Aloha {
   void log(String level, String component, String message) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');   
-    _alohaContext.log(level, component, message);
+    _alohaContext.callMethod('log', [level, component, message] );
     
   }
   
@@ -730,7 +691,7 @@ class Aloha {
                     String value: null}) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    _alohaContext.execCommand(commandId, showUi, value, null);
+    _alohaContext.callMethod('execCommand', [commandId, showUi, value, null] );
     
   }
   
@@ -745,8 +706,8 @@ class Aloha {
   bool queryCommandEnabled(String commandId) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    return _alohaContext.queryCommandEnabled(commandId, null);
-    
+    return _alohaContext.callMethod('queryCommandEnabled', [commandId, null]);
+
   }
   
   
@@ -758,7 +719,7 @@ class Aloha {
   bool queryCommandSupported(String commandId) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    return _alohaContext.queryCommandSupported(commandId);
+    return _alohaContext.callMethod('queryCommandSupported', [commandId] );
     
   }
   
@@ -771,7 +732,7 @@ class Aloha {
   String queryCommandValue(String commandId) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    return  _alohaContext.queryCommandValue(commandId, null);
+    return  _alohaContext.callMethod('queryCommandValue', [commandId, null] );
     
   }
   
@@ -785,7 +746,7 @@ class Aloha {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
     
-    var proxy = _alohaContext.querySupportedCommands();
+    js.JsObject proxy = _alohaContext.callMethod('querySupportedCommands');
     
     List commands = new List<String>();
     
@@ -813,7 +774,7 @@ class Aloha {
   void attachEditable(String selector) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    alohajQueryContext(selector).aloha();
+    js.context.callMethod(r'$', [selector] ).callMethod('aloha');
     
   }
   
@@ -825,7 +786,7 @@ class Aloha {
   void detachEditable(String selector) {
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    alohajQueryContext(selector).mahalo();
+    js.context.callMethod(r'$', [selector] ).callMethod('mahalo');
     
   }
   
@@ -835,7 +796,7 @@ class Aloha {
   void disableObjectResizing(){
     
     if ( !_ready ) throw new AlohaException('Not ready, re-initialise Aloha');
-    _alohaContext.disableObjectResizing();
+    _alohaContext.callMethod('disableObjectResizing');
     
   }
   

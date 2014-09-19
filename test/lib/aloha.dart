@@ -37,6 +37,7 @@ main() {
   /* Group 1 - Core event tests*/
   group("1. Core Events - ", () {
 
+
     test("Ready", () {
 
       print("1.1");
@@ -180,7 +181,7 @@ main() {
       });
 
       /**
-       *  Dedstroy an editable by adding the noteditable class to a previously
+       *  Destroy an editable by adding the noteditable class to a previously
        *  editable entity and detaching it.
        */
       HeadingElement theEditableElement = querySelector('#alohaedit2');
@@ -214,7 +215,7 @@ main() {
       theEditableElement.focus();
       theEditableElement.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      new Timer(new Duration(milliseconds: 50), expectAsync0(checkTest));
 
     });
 
