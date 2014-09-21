@@ -47,7 +47,6 @@ main() {
 
         /* Do this now, we will formally test it later */
         alohaEditor.attachEditable('.editable');
-        print(">>> Ready - Aloha ready");
         passed = true;
 
       });
@@ -72,9 +71,8 @@ main() {
       alohaEditor.loggerReadyEvent.listen((e) {
 
         passed = true;
-        print(">>> Logging Ready OK");
-
       });
+      
       String script = "Aloha.trigger('aloha-logger-ready');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -90,10 +88,10 @@ main() {
       bool passed = false;
       alohaEditor.loggerFullEvent.listen((e) {
 
-        print(">>> Logging Full OK");
         passed = true;
 
       });
+      
       String script = "Aloha.trigger('aloha-log-full');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -111,10 +109,10 @@ main() {
 
         if (e.commandId != 'Bold') return;
         if (e.preventDefault) return;
-        print(">>> Command Will Execute OK");
         passed = true;
 
       });
+      
       String script = "var evtObj = {commandId: 'Bold',preventDefault: false};" "Aloha.trigger('aloha-command-will-execute', evtObj);";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -131,10 +129,10 @@ main() {
       alohaEditor.commandExecutedEvent.listen((e) {
 
         if (e != 'Italic') return;
-        print(">>> Command Executed OK");
         passed = true;
 
       });
+      
       String script = "Aloha.trigger('aloha-command-executed', 'Italic');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -150,7 +148,6 @@ main() {
       bool passed = false;
       alohaEditor.editableCreatedEvent.listen((e) {
 
-        print(">>> Editable Created OK");
         passed = true;
 
       });
@@ -175,7 +172,6 @@ main() {
       bool passed = false;
       alohaEditor.editableDestroyedEvent.listen((e) {
 
-        print(">>> Editable Destroyed OK");
         passed = true;
 
       });
@@ -202,7 +198,6 @@ main() {
 
         if (!e[0].isActive) return;
         if (e[0].id != 'alohaedit1') return;
-        print(">>> Editable Activated OK");
         passed = true;
 
       });
@@ -229,7 +224,6 @@ main() {
 
         if (e.isActive) return;
         if (e.id != 'alohaedit1') return;
-        print(">>> Editable Deactivated OK");
         passed = true;
 
       });
@@ -252,7 +246,6 @@ main() {
         if (e.keyCode != null) return;
         if (e.keyIdentifier != null) return;
         if (e.snapshotContent != 'Click to edit this paragraph.') return;
-        print(">>> Smart Content Change OK");
         passed = true;
 
       });
@@ -278,10 +271,10 @@ main() {
       alohaEditor.blockSelectedEvent.listen((e) {
 
         if (e.innerHtml != 'This is an editable div container.') return;
-        print(">>> Block Selected OK");
         passed = true;
 
       });
+      
       String script = "var block = \$('#cepara');Aloha.trigger('aloha-block-selected', block);";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -295,10 +288,10 @@ main() {
       bool passed = false;
       alohaEditor.imageSelectedEvent.listen((e) {
 
-        print(">>> Image Selected OK");
         passed = true;
 
       });
+      
       String script = "Aloha.trigger('aloha-image-selected');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -312,10 +305,10 @@ main() {
       bool passed = false;
       alohaEditor.imageUnselectedEvent.listen((e) {
 
-        print(">>> Image Unselected OK");
         passed = true;
 
       });
+      
       String script = "Aloha.trigger('aloha-image-unselected');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -331,10 +324,10 @@ main() {
       bool passed = false;
       alohaEditor.linkSelectedEvent.listen((e) {
 
-        print(">>> Link Selected OK");
         passed = true;
 
       });
+      
       String script = "Aloha.trigger('aloha-link-selected');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -350,10 +343,10 @@ main() {
       bool passed = false;
       alohaEditor.linkUnselectedEvent.listen((e) {
 
-        print(">>> Link Unselected OK");
         passed = true;
 
       });
+      
       String script = "Aloha.trigger('aloha-link-unselected');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -369,10 +362,10 @@ main() {
       bool passed = false;
       alohaEditor.tableSelectionChangedEvent.listen((e) {
 
-        print(">>> Table Selection Changed OK");
         passed = true;
 
       });
+      
       String script = "Aloha.trigger('aloha-table-selection-changed');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -388,10 +381,10 @@ main() {
       bool passed = false;
       alohaEditor.tableActivatedEvent.listen((e) {
 
-        print(">>> Table Activated OK");
         passed = true;
 
       });
+      
       String script = "Aloha.trigger('aloha-table-activated');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -407,10 +400,10 @@ main() {
       bool passed = false;
       alohaEditor.ddfAllFilesPreparedEvent.listen((e) {
 
-        print(">>> DDF All Files Prepared OK");
         passed = true;
 
       });
+      
       String script = "Aloha.trigger('aloha-allfiles-upload-prepared');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -427,10 +420,11 @@ main() {
       alohaEditor.ddfFilesDroppedInPageEvent.listen((e) {
 
         if (e.innerHtml != 'Files Dropped Text') return;
-        print(">>> DDF Files Dropped In Page OK");
+
         passed = true;
 
       });
+      
       String script = "var block = \$('#filesdropped');Aloha.trigger('aloha-drop-files-in-page', block);";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -447,10 +441,10 @@ main() {
       alohaEditor.ddfFileUploadPreparedEvent.listen((e) {
 
         if (e.innerHtml != 'Files Dropped Text') return;
-        print(">>> DDF File Upload Prepared OK");
         passed = true;
 
       });
+      
       String script = "var block = \$('#filesdropped');Aloha.trigger('aloha-file-upload-prepared', block);";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -462,7 +456,7 @@ main() {
   });
 
   /* Group 2 - Core API tests*/
-  group("2. Core API - ", () {
+  solo_group("2. Core API - ", () {
 
     test("Version", () {
 
@@ -555,7 +549,6 @@ main() {
       alohaEditor.loggerReadyEvent.listen((e) {
 
         passed = true;
-        print(">>> Logging Ready After Initialise OK");
 
       });
       void checkTest() => expect(passed, isTrue);

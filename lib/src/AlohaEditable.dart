@@ -9,19 +9,19 @@ part of aloha;
 
 class AlohaEditable {
   
-  js.Proxy _context = null;
+  js.JsObject _context = null;
   /**
    * The context for the editable
    */
   get proxy => _context;
   
-  js.Proxy _event = null;
+  js.JsObject _event = null;
   /**
    * The event that triggered the creation of the editable, e.g 
    * the event from editableActivatedEvent. This is optional for this
    * class but if not supplied some API calls will throw an exception.
    */
-  set event(js.Proxy event) => _event = event;
+  set event(js.JsObject event) => _event = event;
   
   /**
    * An Aloha editable class binding.
@@ -37,13 +37,13 @@ class AlohaEditable {
   /** 
    * True, if this editable is active for editing.
    */
-  get isActive => _context.isActive;
+  get isActive => _context['isActive'];
   
   /**
    * Check if the editable has been modified during the edit process
    * Return boolean true if the editable has been modified.
    */
-  get isModified => _context.isModified();
+  get isModified => _context.callMethod('isModified');
   
   /**
    * Marks the editables current state as unmodified. Use this method to inform the editable
@@ -51,14 +51,14 @@ class AlohaEditable {
    */
   void setUnmodified() {
      
-    _context.setUnmodified();
+    _context.callMethod('setUnmodified');
     
   }
    
   /**
   * Check whether the editable has been disabled
   */
-  get isDisabled => _context.isDisabled();
+  get isDisabled => _context.callMethod('isDisabled');
   
   /**
    * Disable this editable
@@ -66,7 +66,7 @@ class AlohaEditable {
    */
   void disable() {
      
-    _context.disable();
+    _context.callMethod('disable');
      
   }
    
@@ -76,7 +76,7 @@ class AlohaEditable {
     */
   void enable() {
     
-    _context.enable();
+    _context.callMethod('enable');
     
   }
   
@@ -84,14 +84,14 @@ class AlohaEditable {
    * Check if the object can be edited by Aloha Editor
    * return true if Aloha Editor can handle it.
    */
-  bool get check => _context.check();
+  bool get check => _context.callMethod('check');
     
   /**
    * Initialise the placeholder
    */
   void initPlaceholder() {
     
-    _context.initPlaceholder();
+    _context.callMethod('initPlaceholder');
     
   }
   
@@ -100,7 +100,7 @@ class AlohaEditable {
    */
   void addPlaceholder() {
     
-    _context.addPlaceholder();
+    _context.callMethod('addPlaceholder');
     
   }
   
@@ -113,13 +113,13 @@ class AlohaEditable {
    */
   void removePlaceholder([bool setCursor = false]) {
     
-    _context.removePlaceholder(_context, setCursor);
+    _context.callMethod('removePlaceholder',[setCursor]);
     
   }
   /**
    * Check if the content is empty.
    */
-  bool get isEmpty => _context.isEmpty();
+  bool get isEmpty => _context.callMethod('isEmpty');
  
   /**
    * String representation of the object
@@ -132,7 +132,7 @@ class AlohaEditable {
   void activate() {
     
     if ( _event == null ) throw new AlohaException("AlohaEditable - Activate, no event specified");
-    _context.activate(_event);
+    _context.callMethod('activate', [_event]);
     
   }
   
@@ -141,7 +141,7 @@ class AlohaEditable {
    */
   void blur() {
     
-    _context.blur();
+    _context.callMethod('blur');
     
   }
   
@@ -150,7 +150,7 @@ class AlohaEditable {
    */
   bool empty(String str) {
     
-    return _context.empty(str);
+    return _context.callMethod('empty', [str]);
     
   }
   
@@ -166,7 +166,7 @@ class AlohaEditable {
    */
   dynamic getContents([bool asObject = false]) {
     
-    return _context.getContents(asObject);
+    return _context.callMethod('getContents', [asObject] );
     
   }
   
@@ -177,20 +177,20 @@ class AlohaEditable {
   dynamic setContents(String content, 
                       [bool asObject = false]) {
     
-    return _context.setContents(content, asObject);
+    return _context.callMethod('setContents', [content, asObject]);
     
   }
   
   /**
    * Get the id of this editable
    */
-  String get id => _context.getId();
+  String get id => _context.callMethod('getId');
     
   
   /**
    * Get a snapshot of the active editable as a HTML string
    */
-  String get snapshotContent => _context.getSnapshotContent();
+  String get snapshotContent => _context.callMethod('getSnapshotContent');
     
   
   /**
@@ -210,9 +210,9 @@ class AlohaEditable {
    * js.Proxy context, the aAloha editable context ,usually Aloha.Editable
    */
   static void setContentSerializer(dynamic serializerFunction,
-                                   js.Proxy context) {
+                                   js.JsObject context) {
     
-    context.contentSerializer = serializerFunction;
+    context['contentSerializer'] = serializerFunction;
     
   }
   
@@ -221,9 +221,9 @@ class AlohaEditable {
    * 
    * js.Proxy context, the Aloha editable context ,usually Aloha.Editable
    */
-  static dynamic getContentSerializer(js.Proxy context) {
+  static dynamic getContentSerializer(js.JsObject context) {
     
-    return context.contextSerializer;
+    return context['contextSerializer'];
     
   }
   
@@ -232,9 +232,7 @@ class AlohaEditable {
    */
   void destroy() {
     
-    _context.destroy();
-    js.release(_context);
-    if (  _event != null ) js.release(_event);
+    _context.callMethod('destroy');
     
   }
   
