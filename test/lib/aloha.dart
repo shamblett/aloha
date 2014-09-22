@@ -9,10 +9,9 @@ import 'package:aloha/aloha.dart';
 
 import 'dart:html';
 import 'dart:async';
+import 'dart:js' as js;
 import 'package:unittest/unittest.dart';
 import 'package:unittest/html_config.dart';
-import 'package:json_object/json_object.dart' as json;
-
 
 Aloha alohaEditor = null;
 
@@ -456,11 +455,12 @@ main() {
   });
 
   /* Group 2 - Core API tests*/
-  solo_group("2. Core API - ", () {
+  group("2. Core API - ", () {
 
     test("Version", () {
 
       expect(alohaEditor.version, equals('0.23.27-SNAPSHOT'));
+      print(">>> Aloha Version is ${alohaEditor.version}");
 
     });
 
@@ -516,18 +516,16 @@ main() {
     test("Settings", () {
 
       print("2.4");
-      json.JsonObject settings = new json.JsonObject.fromJsonString(alohaEditor.settings);
-      expect(settings.logLevels.debug, isFalse);
-      expect(settings.baseUrl, equals('http://cdn.aloha-editor.org/latest/lib'));
+      expect(alohaEditor.settings['logLevels']['debug'], isFalse);
+      expect(alohaEditor.settings['baseUrl'], equals('http://cdn.aloha-editor.org/latest/lib'));
 
     });
 
     test("Defaults", () {
 
       print("2.5");
-      json.JsonObject defaults = new json.JsonObject.fromJsonString(alohaEditor.defaults);
-      expect(defaults.contentHandler.getContents[0], equals('blockelement'));
-      expect(defaults.contentHandler.initEditable[0], equals('blockelement'));
+      expect(alohaEditor.defaults['contentHandler']['getContents'][0], equals('blockelement'));
+      expect(alohaEditor.defaults['contentHandler']['initEditable'][0], equals('blockelement'));
 
 
     });
@@ -535,9 +533,9 @@ main() {
     test("Loaded Plugins - Property", () {
 
       print("2.6");
-      List plugins = alohaEditor.loadedPlugins;
-      expect(plugins[0], equals('[format'));
-      expect(plugins[2], equals(' link'));
+      js.JsObject plugins = alohaEditor.loadedPlugins;
+      expect(plugins[0], equals('format'));
+      expect(plugins[2], equals('link'));
 
     });
 
@@ -559,9 +557,9 @@ main() {
     test("Loaded Plugins", () {
 
       print("2.8");
-      List plugins = alohaEditor.getLoadedPlugins();
-      expect(plugins[0], equals('[format'));
-      expect(plugins[2], equals(' link'));
+      js.JsObject plugins = alohaEditor.loadedPlugins;
+      expect(plugins[0], equals('format'));
+      expect(plugins[2], equals('link'));
 
     });
 
@@ -739,7 +737,6 @@ main() {
       print("3.5");
       List res = alohaEditor.querySupportedCommands();
       expect(res.length, isPositive);
-      print(">> Supported Commands are : ${res}");
 
     });
 

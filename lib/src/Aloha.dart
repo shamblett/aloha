@@ -452,31 +452,31 @@ class Aloha {
   /**
    * Currently active editable as an AlohaEditable
    */
-  get activeEditable => _getActiveEditable();
+  AlohaEditable get  activeEditable => _getActiveEditable();
 
   /**
    * Settings
    * We have no way of knowing what settings have been applied to Aloha in its js startup
    * so you need to know the settings structure on the client side.
    */
-  get settings => _alohaContext['settings'];
+  js.JsObject get settings => _alohaContext['settings'];
 
   /**
    * Defaults
    * Hardwired startup defaults.
    * 
    */
-  get defaults => _alohaContext['defaults'];
+  js.JsObject get defaults => _alohaContext['defaults'];
 
   /**
    * OS name
    */
-  get OSName => _alohaContext['OSName'];
+  String get OSName => _alohaContext['OSName'];
 
   /**
    * Loaded plugins, returned a list of plugin name strings
    */
-  get loadedPlugins => _alohaContext.callMethod('loadedPlugins.toString().split(",")');
+  js.JsObject get loadedPlugins => _alohaContext['loadedPlugins'];
 
   /**
    * Initialization
@@ -485,16 +485,6 @@ class Aloha {
   void reinitialise() {
 
     _alohaContext.callMethod('init');
-
-  }
-
-  /**
-   * Currently loaded plugins
-   */
-  List getLoadedPlugins() {
-
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
-    return loadedPlugins;
 
   }
 
