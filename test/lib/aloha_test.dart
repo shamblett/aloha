@@ -42,11 +42,16 @@ main() {
       print("1.1");
 
       bool passed = false;
+      alohaEditor.editableCreatedEvent.listen((e) {
+
+        passed = true;
+
+      });
+
       alohaEditor.readyEvent.listen((e) {
 
         /* Do this now, we will formally test it later */
         alohaEditor.attachEditable('.editable');
-        passed = true;
 
       });
       void checkTest() => expect(passed, isTrue);
@@ -56,7 +61,7 @@ main() {
     test("Not Ready", () {
 
       alohaEditor.isReady = false;
-      expect(() => alohaEditor.attachEditable('.editable'), throwsA(new isInstanceOf<AlohaException>('Not ready, re-initialise Aloha')));
+      expect(() => alohaEditor.attachEditable('.editable'), throwsA(new isInstanceOf<AlohaException>(AlohaException.NOT_READY)));
       alohaEditor.isReady = true;
       expect(alohaEditor.isReady, isTrue);
 
@@ -71,7 +76,7 @@ main() {
 
         passed = true;
       });
-      
+
       String script = "Aloha.trigger('aloha-logger-ready');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -90,7 +95,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "Aloha.trigger('aloha-log-full');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -111,7 +116,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "var evtObj = {commandId: 'Bold',preventDefault: false};" "Aloha.trigger('aloha-command-will-execute', evtObj);";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -131,7 +136,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "Aloha.trigger('aloha-command-executed', 'Italic');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -273,7 +278,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "var block = \$('#cepara');Aloha.trigger('aloha-block-selected', block);";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -290,7 +295,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "Aloha.trigger('aloha-image-selected');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -307,7 +312,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "Aloha.trigger('aloha-image-unselected');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -326,7 +331,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "Aloha.trigger('aloha-link-selected');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -345,7 +350,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "Aloha.trigger('aloha-link-unselected');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -364,7 +369,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "Aloha.trigger('aloha-table-selection-changed');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -383,7 +388,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "Aloha.trigger('aloha-table-activated');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -402,7 +407,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "Aloha.trigger('aloha-allfiles-upload-prepared');";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -423,7 +428,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "var block = \$('#filesdropped');Aloha.trigger('aloha-drop-files-in-page', block);";
       ButtonElement theButton = createEventButton(script);
       theButton.click();
@@ -443,7 +448,7 @@ main() {
         passed = true;
 
       });
-      
+
       String script = "var block = \$('#filesdropped');Aloha.trigger('aloha-file-upload-prepared', block);";
       ButtonElement theButton = createEventButton(script);
       theButton.click();

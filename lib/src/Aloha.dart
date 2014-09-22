@@ -408,7 +408,7 @@ class Aloha {
 
   List<AlohaEditable> _getEditablesAsList() {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
 
     List editablesList = new List<AlohaEditable>();
 
@@ -435,7 +435,7 @@ class Aloha {
 
   AlohaEditable _getActiveEditable() {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
 
     try {
 
@@ -452,7 +452,7 @@ class Aloha {
   /**
    * Currently active editable as an AlohaEditable
    */
-  AlohaEditable get  activeEditable => _getActiveEditable();
+  AlohaEditable get activeEditable => _getActiveEditable();
 
   /**
    * Settings
@@ -502,7 +502,7 @@ class Aloha {
    */
   AlohaEditable getEditableById(String id) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
 
     try {
 
@@ -528,7 +528,7 @@ class Aloha {
    */
   void activateEditable(AlohaEditable editable) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     js.JsObject editableProxy = editable.proxy;
     _alohaContext.callMethod('activateEditable', [editableProxy]);
 
@@ -539,7 +539,7 @@ class Aloha {
    */
   AlohaEditable getActiveEditable() {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
 
     try {
 
@@ -561,7 +561,7 @@ class Aloha {
    */
   void deactivateActiveEditable() {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     _alohaContext.callMethod('deactivateEditable');
 
   }
@@ -575,7 +575,7 @@ class Aloha {
    */
   bool isAnEditable(Object anyObject) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
 
     /* If we are an AlohaEditable then we are an editable */
     if (anyObject.runtimeType.toString() == 'AlohaEditable') return true;
@@ -604,7 +604,7 @@ class Aloha {
    */
   AlohaEditable getEditableHost(HtmlElement element) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     String jQueryId = '#' + element.id;
     js.JsObject jQueryElement = js.context.callMethod(r'$', [jQueryId]);
     js.JsObject proxy = _alohaContext.callMethod('getEditableHost', [jQueryElement]);
@@ -620,7 +620,7 @@ class Aloha {
    */
   void registerEditable(AlohaEditable editable) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     _alohaContext.callMethod('registerEditable', [editable.proxy]);
 
   }
@@ -630,7 +630,7 @@ class Aloha {
    */
   void unregisterEditable(AlohaEditable editable) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     _alohaContext.callMethod('unregisterEditable', [editable.proxy]);
 
   }
@@ -642,7 +642,7 @@ class Aloha {
    */
   String getUrl() {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     return _alohaContext.callMethod('getAlohaUrl');
 
   }
@@ -654,7 +654,7 @@ class Aloha {
    */
   String getPluginUrl(String name) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     return _alohaContext.callMethod('getPluginUrl', [name]);
 
   }
@@ -667,7 +667,7 @@ class Aloha {
    */
   void log(String level, String component, String message) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     _alohaContext.callMethod('log', [level, component, message]);
 
   }
@@ -679,7 +679,7 @@ class Aloha {
    */
   void execCommand(String commandId, {bool showUi: false, String value: null}) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     _alohaContext.callMethod('execCommand', [commandId, showUi, value, null]);
 
   }
@@ -694,7 +694,7 @@ class Aloha {
    */
   bool queryCommandEnabled(String commandId) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     return _alohaContext.callMethod('queryCommandEnabled', [commandId, null]);
 
   }
@@ -707,7 +707,7 @@ class Aloha {
    */
   bool queryCommandSupported(String commandId) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     return _alohaContext.callMethod('queryCommandSupported', [commandId]);
 
   }
@@ -720,7 +720,7 @@ class Aloha {
    */
   String queryCommandValue(String commandId) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     return _alohaContext.callMethod('queryCommandValue', [commandId, null]);
 
   }
@@ -733,7 +733,7 @@ class Aloha {
    */
   List querySupportedCommands() {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
 
     js.JsArray proxy = _alohaContext.callMethod('querySupportedCommands');
 
@@ -762,7 +762,7 @@ class Aloha {
    */
   void attachEditable(String selector) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     js.context.callMethod(r'$', [selector]).callMethod('aloha');
 
   }
@@ -774,7 +774,7 @@ class Aloha {
    */
   void detachEditable(String selector) {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     js.context.callMethod(r'$', [selector]).callMethod('mahalo');
 
   }
@@ -784,7 +784,7 @@ class Aloha {
    */
   void disableObjectResizing() {
 
-    if (!_ready) throw new AlohaException('Not ready, re-initialise Aloha');
+    if (!_ready) throw new AlohaException(AlohaException.NOT_READY);
     _alohaContext.callMethod('disableObjectResizing');
 
   }

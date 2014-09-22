@@ -8,13 +8,17 @@
 part of aloha;
 
 class AlohaException implements Exception {
-  
+
+  /* Exception message strings */
+  static const HEADER = 'Aloha Exception: ';
+  static const NOT_READY = 'Not ready, re-initialise Aloha';
+
   String _message = 'No Message Supplied';
-  
+
   /**
    * Aloha'a exception class
    */
   AlohaException([this._message]);
-  
-  String toString() => "AlohaException: message = ${_message}";
+
+  String toString() => HEADER + "${_message}";
 }

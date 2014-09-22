@@ -102,4 +102,6 @@ and simply fired.
 This may seem a bit of a cheat but keep in mind we are testing the Aloha class bindings here for correct
 operation, not Aloha itself.
 
+Note also issue 3, the first run of the tests will fail, refresh the browser to see the real results.
+
  

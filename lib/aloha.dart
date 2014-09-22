@@ -17,4 +17,3 @@ part 'src/AlohaClassTypes.dart';
 part 'src/AlohaEditable.dart';
 
 
-

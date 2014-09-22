@@ -1,6 +1,8 @@
-## 2.x.x
+## 2.0.1
 
 Updated for use with Dart 1.6
+Issues 1 and 2 incorporated.
+Note: Aloha now uses dart:js, not package:js, no API changes
 
 ## 2.0.0
 
