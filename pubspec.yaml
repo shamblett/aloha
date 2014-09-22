@@ -1,14 +1,11 @@
 name: aloha
-version: 2.0.0
+version: 2.0.1
 author: S. Hamblett <steve.hamblett@linux.com>
 description: Bindings for the Aloha HTML5 editor
 homepage: https://github.com/shamblett/aloha
-documentation: http://oscf.org.uk/dart/api/aloha/aloha.html
 environment:
   sdk: '>=0.8.10+6 <2.0.0'
-dependencies:
-  browser: 0.9.0 <0.10.0
-  js: '<=0.0.26'
-  json_object: any
+documentation: http://oscf.org.uk/dart/api/aloha/aloha.html
 dev_dependencies:
+  browser: any
   unittest: '>=0.9.0 <0.10.0'
