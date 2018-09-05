@@ -428,8 +428,10 @@ int main() {
     test("Settings", () {
       print("2.4");
       expect(alohaEditor.settings['logLevels']['debug'], isFalse);
-      expect(alohaEditor.settings['baseUrl'],
-          equals('https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib'));
+      expect(
+          alohaEditor.settings['baseUrl'],
+          equals(
+              'https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib'));
     }, skip: false);
 
     test("Defaults", () {
@@ -538,7 +540,10 @@ int main() {
     test("URL", () {
       print("2.18");
       final String url = alohaEditor.getUrl();
-      expect(url, equals('https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib'));
+      expect(
+          url,
+          equals(
+              'https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib'));
     }, skip: false);
 
     test("Plugin URL", () {
