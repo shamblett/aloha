@@ -12,7 +12,6 @@ part of aloha;
  */
 
 class AlohaCommandWillExecuteParameters {
-
   /**
    * Command will execute event return parameters
    */
@@ -29,17 +28,14 @@ class AlohaCommandWillExecuteParameters {
    * The prevent default state
    */
   get preventDefault => _preventDefault;
-
 }
 
-
 class AlohaSmartContentChangeParameters {
-
-
   /**
    * Smart content change event return parameters
    */
-  AlohaSmartContentChangeParameters(this._editableObject, this._keyIdentifier, this._keyCode, this._char, this._triggerType, this._snapshotContent);
+  AlohaSmartContentChangeParameters(this._editableObject, this._keyIdentifier,
+      this._keyCode, this._char, this._triggerType, this._snapshotContent);
 
   AlohaEditable _editableObject = null;
   /**
@@ -78,5 +74,4 @@ class AlohaSmartContentChangeParameters {
    * The snapshot content of the editable as a HTML String
    */
   get snapshotContent => _snapshotContent;
-
 }

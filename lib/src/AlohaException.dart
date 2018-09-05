@@ -8,7 +8,6 @@
 part of aloha;
 
 class AlohaException implements Exception {
-
   /* Exception message strings */
   static const HEADER = 'Aloha Exception: ';
   static const NOT_READY = 'Not ready, re-initialise Aloha';
