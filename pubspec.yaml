@@ -1,7 +1,7 @@
 name: aloha
 version: 3.0.0
 author: S. Hamblett <steve.hamblett@linux.com>
-description: Bindings for the Aloha HTML5 editor
+description: Bindings for the Aloha HTML5 editor. Allows text updating/reading etc from Dart.
 homepage: https://github.com/shamblett/aloha
 environment:
   sdk: '>=2.0.0-dev <3.0.0'

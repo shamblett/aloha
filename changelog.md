@@ -1,3 +1,7 @@
+## 3.0.0
+
+Updates for Dart 2.0
+
 ## 2.0.1
 
 Updated for use with Dart 1.6
