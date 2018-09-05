@@ -20,13 +20,13 @@ DivElement buttonSection = querySelector('#aloha-button-section');
 
 ButtonElement createEventButton(String onClickScript) {
   buttonSection.children.clear();
-  ButtonElement theButton = new ButtonElement();
+  final ButtonElement theButton = new ButtonElement();
   theButton.attributes['onclick'] = onClickScript;
   buttonSection.children.add(theButton);
   return theButton;
 }
 
-main() {
+int main() {
   /* Setup */
   alohaEditor = new Aloha();
   AlohaEditable regEditable = null;
@@ -65,8 +65,8 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-logger-ready');";
-      ButtonElement theButton = createEventButton(script);
+      final String script = "Aloha.trigger('aloha-logger-ready');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -80,8 +80,8 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-log-full');";
-      ButtonElement theButton = createEventButton(script);
+      final String script = "Aloha.trigger('aloha-log-full');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -97,9 +97,10 @@ main() {
         passed = true;
       });
 
-      String script = "var evtObj = {commandId: 'Bold',preventDefault: false};"
+      final String script =
+          "var evtObj = {commandId: 'Bold',preventDefault: false};"
           "Aloha.trigger('aloha-command-will-execute', evtObj);";
-      ButtonElement theButton = createEventButton(script);
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -114,8 +115,9 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-command-executed', 'Italic');";
-      ButtonElement theButton = createEventButton(script);
+      final String script =
+          "Aloha.trigger('aloha-command-executed', 'Italic');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -133,7 +135,7 @@ main() {
        *  Create an editable by adding the noweditable class to a previously
        *  not editable entity and adding it.
        */
-      HeadingElement theEditableElement = querySelector('#alohaedit2');
+      final HeadingElement theEditableElement = querySelector('#alohaedit2');
       theEditableElement.classes.remove('noteditable');
       theEditableElement.classes.add('noweditable');
       alohaEditor.attachEditable('.noweditable');
@@ -153,7 +155,7 @@ main() {
        *  Destroy an editable by adding the noteditable class to a previously
        *  editable entity and detaching it.
        */
-      HeadingElement theEditableElement = querySelector('#alohaedit2');
+      final HeadingElement theEditableElement = querySelector('#alohaedit2');
       theEditableElement.classes.remove('noweditable');
       theEditableElement.classes.add('noteditable');
       alohaEditor.detachEditable('.noteditable');
@@ -174,7 +176,7 @@ main() {
       /* To trigger the activated event we must do this through the page,
        * not any core API calls
        */
-      HeadingElement theEditableElement = querySelector('#alohaedit1');
+      final HeadingElement theEditableElement = querySelector('#alohaedit1');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -210,7 +212,7 @@ main() {
         passed = true;
       });
       /* Re-activate an editable */
-      ParagraphElement theEditableElement = querySelector('#alohaedit3');
+      final ParagraphElement theEditableElement = querySelector('#alohaedit3');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -231,9 +233,9 @@ main() {
         passed = true;
       });
 
-      String script =
+      final String script =
           "var block = \$('#cepara');Aloha.trigger('aloha-block-selected', block);";
-      ButtonElement theButton = createEventButton(script);
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -245,8 +247,8 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-image-selected');";
-      ButtonElement theButton = createEventButton(script);
+      final String script = "Aloha.trigger('aloha-image-selected');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -258,8 +260,8 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-image-unselected');";
-      ButtonElement theButton = createEventButton(script);
+      final String script = "Aloha.trigger('aloha-image-unselected');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -273,8 +275,8 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-link-selected');";
-      ButtonElement theButton = createEventButton(script);
+      final String script = "Aloha.trigger('aloha-link-selected');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -288,8 +290,8 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-link-unselected');";
-      ButtonElement theButton = createEventButton(script);
+      final String script = "Aloha.trigger('aloha-link-unselected');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -303,8 +305,8 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-table-selection-changed');";
-      ButtonElement theButton = createEventButton(script);
+      final String script = "Aloha.trigger('aloha-table-selection-changed');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -318,8 +320,8 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-table-activated');";
-      ButtonElement theButton = createEventButton(script);
+      final String script = "Aloha.trigger('aloha-table-activated');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -333,8 +335,8 @@ main() {
         passed = true;
       });
 
-      String script = "Aloha.trigger('aloha-allfiles-upload-prepared');";
-      ButtonElement theButton = createEventButton(script);
+      final String script = "Aloha.trigger('aloha-allfiles-upload-prepared');";
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -350,9 +352,9 @@ main() {
         passed = true;
       });
 
-      String script =
+      final String script =
           "var block = \$('#filesdropped');Aloha.trigger('aloha-drop-files-in-page', block);";
-      ButtonElement theButton = createEventButton(script);
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -367,9 +369,9 @@ main() {
         passed = true;
       });
 
-      String script =
+      final String script =
           "var block = \$('#filesdropped');Aloha.trigger('aloha-file-upload-prepared', block);";
-      ButtonElement theButton = createEventButton(script);
+      final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -387,7 +389,7 @@ main() {
       print("2.1");
 
       String correct = 'Failed';
-      String osName = alohaEditor.OSName;
+      final String osName = alohaEditor.osName;
       switch (osName) {
         case 'Linux':
           correct = 'Passed';
@@ -415,11 +417,11 @@ main() {
 
     test("Active Editable - Property", () {
       print("2.3");
-      HeadingElement theEditableElement = querySelector('#alohaedit1');
+      final HeadingElement theEditableElement = querySelector('#alohaedit1');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
-      AlohaEditable editable = alohaEditor.activeEditable;
+      final AlohaEditable editable = alohaEditor.activeEditable;
       expect(editable.id, equals('alohaedit1'));
     }, skip: false);
 
@@ -440,7 +442,7 @@ main() {
 
     test("Loaded Plugins - Property", () {
       print("2.6");
-      js.JsObject plugins = alohaEditor.loadedPlugins;
+      final js.JsObject plugins = alohaEditor.loadedPlugins;
       expect(plugins[0], equals('format'));
       expect(plugins[2], equals('link'));
     }, skip: false);
@@ -459,7 +461,7 @@ main() {
 
     test("Loaded Plugins", () {
       print("2.8");
-      js.JsObject plugins = alohaEditor.loadedPlugins;
+      final js.JsObject plugins = alohaEditor.loadedPlugins;
       expect(plugins[0], equals('format'));
       expect(plugins[2], equals('link'));
     }, skip: false);
@@ -472,15 +474,16 @@ main() {
 
     test("Get Editable By Id", () {
       print("2.10");
-      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
       expect(editable.id, equals('alohaedit3'));
-      AlohaEditable nullEditable = alohaEditor.getEditableById('alohaedit35');
+      final AlohaEditable nullEditable =
+          alohaEditor.getEditableById('alohaedit35');
       expect(nullEditable, isNull);
     }, skip: false);
 
     test("Activate Editable", () {
       print("2.11");
-      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
       expect(editable.id, equals('alohaedit3'));
       alohaEditor.activateEditable(editable);
       expect(alohaEditor.activeEditable.id, equals('alohaedit3'));
@@ -499,7 +502,7 @@ main() {
 
     test("Is An Editable", () {
       print("2.14");
-      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
       expect(alohaEditor.isAnEditable(editable), isTrue);
       List myList;
       expect(alohaEditor.isAnEditable(myList), isFalse);
@@ -517,30 +520,30 @@ main() {
 
     test("Unregister Editable", () {
       print("2.16");
-      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
       regEditable = editable;
       expect(alohaEditor.isAnEditable(regEditable), isTrue);
       alohaEditor.unregisterEditable(regEditable);
-      AlohaEditable editable2 = alohaEditor.getEditableById('alohaedit3');
+      final AlohaEditable editable2 = alohaEditor.getEditableById('alohaedit3');
       expect(editable2, isNull);
     }, skip: false);
 
     test("Register Editable", () {
       print("2.17");
       alohaEditor.registerEditable(regEditable);
-      AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
       expect(alohaEditor.isAnEditable(editable), isTrue);
     }, skip: false);
 
     test("URL", () {
       print("2.18");
-      String url = alohaEditor.getUrl();
+      final String url = alohaEditor.getUrl();
       expect(url, equals('http://cdn.aloha-editor.org/latest/lib'));
     }, skip: false);
 
     test("Plugin URL", () {
       print("2.19");
-      String url = alohaEditor.getPluginUrl('format');
+      final String url = alohaEditor.getPluginUrl('format');
       expect(
           url,
           equals(
@@ -560,7 +563,7 @@ main() {
 
     test("To String", () {
       print("2.22");
-      String name = alohaEditor.toString();
+      final String name = alohaEditor.toString();
       expect(name, 'Aloha');
     }, skip: false);
   });
@@ -569,11 +572,11 @@ main() {
   group("3.Commands - ", () {
     test("Query Command Enabled", () {
       print("3.1");
-      ParagraphElement theEditableElement = querySelector('#alohaedit3');
+      final ParagraphElement theEditableElement = querySelector('#alohaedit3');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
-      bool state = alohaEditor.queryCommandEnabled('forwardDelete');
+      final bool state = alohaEditor.queryCommandEnabled('forwardDelete');
       expect(state, isTrue);
     }, skip: false);
 
@@ -584,20 +587,22 @@ main() {
 
     test("Query Command Supported", () {
       print("3.3");
-      bool res = alohaEditor.queryCommandSupported('forwardDelete');
+      final bool res = alohaEditor.queryCommandSupported('forwardDelete');
       expect(res, isTrue);
     }, skip: false);
 
     test("Query Command Value", () {
       print("3.4");
-      String res = alohaEditor.queryCommandValue('forwardDelete');
+      final String res = alohaEditor.queryCommandValue('forwardDelete');
       expect(res, isEmpty);
     }, skip: false);
 
     test("Query Supported Commands", () {
       print("3.5");
-      List res = alohaEditor.querySupportedCommands();
+      final List res = alohaEditor.querySupportedCommands();
       expect(res.length, isPositive);
     }, skip: false);
   });
+
+  return 0;
 }
