@@ -6,8 +6,8 @@
     <title>Aloha Test Suite</title>
     
     <!-- load the jQuery and require.js libraries -->
-    <script type="text/javascript" src="http://cdn.aloha-editor.org/latest/lib/require.js"></script>
-    <script type="text/javascript" src="http://cdn.aloha-editor.org/latest/lib/vendor/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib/require.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib/vendor/jquery-1.7.2.js"></script>
  
     <script>
         var Aloha = window.Aloha || ( window.Aloha = {} );
@@ -16,7 +16,7 @@
                                                         
     </script>
     <!-- load the Aloha Editor core and some plugins -->
-    <script src="http://cdn.aloha-editor.org/latest/lib/aloha.js"
+    <script src="https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib/aloha.js"
                                    data-aloha-plugins="common/ui,
                                                         common/format,
                                                         common/list,
@@ -25,8 +25,12 @@
      </script>
                
      <!-- load the Aloha Editor CSS styles -->
-     <link href="http://cdn.aloha-editor.org/latest/css/aloha.css" rel="stylesheet" type="text/css" />
-     
+     <link href="https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/css/aloha-core.css" rel="stylesheet" type="text/css" />
+
+      <!-- Dart inclusions -->
+    <link rel="x-dart-test" href="aloha_test.dart">
+    <script src="packages/test/dart.js"></script>
+
   </head>
   <body>
     <div id="aloha-edit-section">
@@ -52,11 +56,6 @@
     </div>
     <div id="aloha-button-section"></div>
     <div id="filesdropped">Files Dropped Text</div>
-       
-    <script type="application/dart" src="aloha_test.dart"></script>
-    <script src="packages/browser/dart.js"></script>
-    <script src="packages/browser/interop.js"></script>
-    
     
   </body>
 </html>

@@ -13,11 +13,6 @@ part of aloha;
 class Aloha {
 
   /**
-   * jQuery context
-   */
-  js.JsObject _alohajQueryContext = js.context['jQuery'];
-
-  /**
    * Aloha context
    */
   js.JsObject _alohaContext = js.context['Aloha'];
