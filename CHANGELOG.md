@@ -1,3 +1,7 @@
+## 3.0.1
+
+Linter updates
+
 ## 3.0.0
 
 Updates for Dart 2.0

@@ -5,22 +5,35 @@
  * Copyright :  S.Hamblett@OSCF
  */
 
-@TestOn("browser")
+@TestOn('browser')
 
-import 'package:aloha/aloha.dart';
-
-import 'dart:html';
 import 'dart:async';
+import 'dart:html';
 import 'dart:js' as js;
+import 'package:aloha/aloha.dart';
 import 'package:test/test.dart';
 
-Aloha alohaEditor = null;
+// ignore_for_file: file_names
+// ignore_for_file: omit_local_variable_types
+// ignore_for_file: unnecessary_final
+// ignore_for_file: cascade_invocations
+// ignore_for_file: avoid_print
+// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: public_member_api_docs
+// ignore_for_file: always_specify_types
+// ignore_for_file: unnecessary_getters_setters
+// ignore_for_file: always_put_control_body_on_new_line
+// ignore_for_file: flutter_style_todos
+// ignore_for_file: avoid_positional_boolean_parameters
+// ignore_for_file: prefer_single_quotes
+
+Aloha alohaEditor;
 
 DivElement buttonSection = querySelector('#aloha-button-section');
 
 ButtonElement createEventButton(String onClickScript) {
   buttonSection.children.clear();
-  final ButtonElement theButton = new ButtonElement();
+  final ButtonElement theButton = ButtonElement();
   theButton.attributes['onclick'] = onClickScript;
   buttonSection.children.add(theButton);
   return theButton;
@@ -28,13 +41,13 @@ ButtonElement createEventButton(String onClickScript) {
 
 int main() {
   /* Setup */
-  alohaEditor = new Aloha();
-  AlohaEditable regEditable = null;
+  alohaEditor = Aloha();
+  AlohaEditable regEditable;
 
   /* Group 1 - Core event tests*/
-  group("1. Core Events - ", () {
-    test("Ready", () {
-      print("1.1");
+  group('1. Core Events - ', () {
+    test('Ready', () {
+      print('1.1');
 
       bool passed = false;
       alohaEditor.editableCreatedEvent.listen((e) {
@@ -46,10 +59,10 @@ int main() {
         alohaEditor.attachEditable('.editable');
       });
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Not Ready", () {
+    test('Not Ready', () {
       alohaEditor.isReady = false;
       expect(() => alohaEditor.attachEditable('.editable'),
           throwsA(const TypeMatcher<AlohaException>()));
@@ -57,38 +70,38 @@ int main() {
       expect(alohaEditor.isReady, isTrue);
     }, skip: false);
 
-    test("Logging Ready", () {
-      print("1.2");
+    test('Logging Ready', () {
+      print('1.2');
 
       bool passed = false;
       alohaEditor.loggerReadyEvent.listen((e) {
         passed = true;
       });
 
-      final String script = "Aloha.trigger('aloha-logger-ready');";
+      const String script = "Aloha.trigger('aloha-logger-ready');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Log Full", () {
-      print("1.3");
+    test('Log Full', () {
+      print('1.3');
 
       bool passed = false;
       alohaEditor.loggerFullEvent.listen((e) {
         passed = true;
       });
 
-      final String script = "Aloha.trigger('aloha-log-full');";
+      const String script = "Aloha.trigger('aloha-log-full');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Command Will Execute", () {
-      print("1.4");
+    test('Command Will Execute', () {
+      print('1.4');
 
       bool passed = false;
       alohaEditor.commandWillExecuteEvent.listen((e) {
@@ -97,17 +110,17 @@ int main() {
         passed = true;
       });
 
-      final String script =
+      const String script =
           "var evtObj = {commandId: 'Bold',preventDefault: false};"
           "Aloha.trigger('aloha-command-will-execute', evtObj);";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Command Executed", () {
-      print("1.5");
+    test('Command Executed', () {
+      print('1.5');
 
       bool passed = false;
       alohaEditor.commandExecutedEvent.listen((e) {
@@ -115,16 +128,16 @@ int main() {
         passed = true;
       });
 
-      final String script =
+      const String script =
           "Aloha.trigger('aloha-command-executed', 'Italic');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Editable created", () {
-      print("1.6");
+    test('Editable created', () {
+      print('1.6');
 
       bool passed = false;
       alohaEditor.editableCreatedEvent.listen((e) {
@@ -140,11 +153,11 @@ int main() {
       theEditableElement.classes.add('noweditable');
       alohaEditor.attachEditable('.noweditable');
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Editable destroyed", () {
-      print("1.7");
+    test('Editable destroyed', () {
+      print('1.7');
 
       bool passed = false;
       alohaEditor.editableDestroyedEvent.listen((e) {
@@ -160,11 +173,11 @@ int main() {
       theEditableElement.classes.add('noteditable');
       alohaEditor.detachEditable('.noteditable');
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Editable Activated", () {
-      print("1.8");
+    test('Editable Activated', () {
+      print('1.8');
 
       bool passed = false;
       alohaEditor.editableActivatedEvent.listen((e) {
@@ -181,11 +194,11 @@ int main() {
       theEditableElement.focus();
       theEditableElement.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 50), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 50), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Editable Deactivated", () {
-      print("1.9");
+    test('Editable Deactivated', () {
+      print('1.9');
 
       bool passed = false;
       alohaEditor.editableDeactivatedEvent.listen((e) {
@@ -196,11 +209,11 @@ int main() {
 
       alohaEditor.deactivateActiveEditable();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Smart content changed", () {
-      print("1.10");
+    test('Smart content changed', () {
+      print('1.10');
 
       bool passed = false;
       alohaEditor.smartContentChangeEvent.listen((e) {
@@ -221,11 +234,11 @@ int main() {
       /* Deactivate the editable to force the content change event */
       alohaEditor.deactivateActiveEditable();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 50), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 50), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Block Selected", () {
-      print("1.11");
+    test('Block Selected', () {
+      print('1.11');
 
       bool passed = false;
       alohaEditor.blockSelectedEvent.listen((e) {
@@ -233,117 +246,117 @@ int main() {
         passed = true;
       });
 
-      final String script =
+      const String script =
           "var block = \$('#cepara');Aloha.trigger('aloha-block-selected', block);";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Image Selected", () {
+    test('Image Selected', () {
       bool passed = false;
       alohaEditor.imageSelectedEvent.listen((e) {
         passed = true;
       });
 
-      final String script = "Aloha.trigger('aloha-image-selected');";
+      const String script = "Aloha.trigger('aloha-image-selected');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Image Unselected", () {
+    test('Image Unselected', () {
       bool passed = false;
       alohaEditor.imageUnselectedEvent.listen((e) {
         passed = true;
       });
 
-      final String script = "Aloha.trigger('aloha-image-unselected');";
+      const String script = "Aloha.trigger('aloha-image-unselected');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Link Selected", () {
-      print("1.12");
+    test('Link Selected', () {
+      print('1.12');
 
       bool passed = false;
       alohaEditor.linkSelectedEvent.listen((e) {
         passed = true;
       });
 
-      final String script = "Aloha.trigger('aloha-link-selected');";
+      const String script = "Aloha.trigger('aloha-link-selected');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Link Unselected", () {
-      print("1.13");
+    test('Link Unselected', () {
+      print('1.13');
 
       bool passed = false;
       alohaEditor.linkUnselectedEvent.listen((e) {
         passed = true;
       });
 
-      final String script = "Aloha.trigger('aloha-link-unselected');";
+      const String script = "Aloha.trigger('aloha-link-unselected');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Table Selection Changed", () {
-      print("1.14");
+    test('Table Selection Changed', () {
+      print('1.14');
 
       bool passed = false;
       alohaEditor.tableSelectionChangedEvent.listen((e) {
         passed = true;
       });
 
-      final String script = "Aloha.trigger('aloha-table-selection-changed');";
+      const String script = "Aloha.trigger('aloha-table-selection-changed');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("Table Activated", () {
-      print("1.15");
+    test('Table Activated', () {
+      print('1.15');
 
       bool passed = false;
       alohaEditor.tableActivatedEvent.listen((e) {
         passed = true;
       });
 
-      final String script = "Aloha.trigger('aloha-table-activated');";
+      const String script = "Aloha.trigger('aloha-table-activated');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("DDF All Files Prepared", () {
-      print("1.16");
+    test('DDF All Files Prepared', () {
+      print('1.16');
 
       bool passed = false;
       alohaEditor.ddfAllFilesPreparedEvent.listen((e) {
         passed = true;
       });
 
-      final String script = "Aloha.trigger('aloha-allfiles-upload-prepared');";
+      const String script = "Aloha.trigger('aloha-allfiles-upload-prepared');";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("DDF Files Dropped In Page", () {
-      print("1.17");
+    test('DDF Files Dropped In Page', () {
+      print('1.17');
 
       bool passed = false;
       alohaEditor.ddfFilesDroppedInPageEvent.listen((e) {
@@ -352,16 +365,16 @@ int main() {
         passed = true;
       });
 
-      final String script =
+      const String script =
           "var block = \$('#filesdropped');Aloha.trigger('aloha-drop-files-in-page', block);";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
-    test("DDF File Upload Prepared", () {
-      print("1.18");
+    test('DDF File Upload Prepared', () {
+      print('1.18');
 
       bool passed = false;
       alohaEditor.ddfFileUploadPreparedEvent.listen((e) {
@@ -369,12 +382,12 @@ int main() {
         passed = true;
       });
 
-      final String script =
+      const String script =
           "var block = \$('#filesdropped');Aloha.trigger('aloha-file-upload-prepared', block);";
       final ButtonElement theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
   });
 
@@ -457,7 +470,7 @@ int main() {
         passed = true;
       });
       void checkTest() => expect(passed, isTrue);
-      new Timer(new Duration(milliseconds: 20), expectAsync0(checkTest));
+      Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
       alohaEditor.reinitialise();
     }, skip: false);
 

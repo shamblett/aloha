@@ -7,6 +7,19 @@
 
 part of aloha;
 
+// ignore_for_file: file_names
+// ignore_for_file: omit_local_variable_types
+// ignore_for_file: unnecessary_final
+// ignore_for_file: cascade_invocations
+// ignore_for_file: avoid_print
+// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: public_member_api_docs
+// ignore_for_file: always_specify_types
+// ignore_for_file: unnecessary_getters_setters
+// ignore_for_file: always_put_control_body_on_new_line
+// ignore_for_file: flutter_style_todos
+// ignore_for_file: avoid_positional_boolean_parameters
+
 class AlohaEditable {
   /// An Aloha editable class binding.
   /// Note that the context and event you pass here are NOT automatically
@@ -15,16 +28,17 @@ class AlohaEditable {
   /// uses to instantiate this class.
   AlohaEditable(this._context, [this._event]);
 
-  js.JsObject _context = null;
+  final js.JsObject _context;
 
   /// The context for the editable
   js.JsObject get proxy => _context;
 
-  js.JsObject _event = null;
+  js.JsObject _event;
 
   /// The event that triggered the creation of the editable, e.g
   /// the event from editableActivatedEvent. This is optional for this
   /// class but if not supplied some API calls will throw an exception.
+  // ignore: avoid_setters_without_getters
   set event(js.JsObject event) => _event = event;
 
   /// True, if this editable is active for editing.
@@ -83,12 +97,14 @@ class AlohaEditable {
   bool get isEmpty => _context.callMethod('isEmpty');
 
   /// String representation of the object
+  @override
   String toString() => 'Aloha.Editable';
 
   /// Activates an editable for editing, disables all other active items
   void activate() {
     if (_event == null)
-      throw new AlohaException("AlohaEditable - Activate, no event specified");
+      // ignore: curly_braces_in_flow_control_structures
+      throw AlohaException('AlohaEditable - Activate, no event specified');
     _context.callMethod('activate', [_event]);
   }
 
@@ -98,9 +114,7 @@ class AlohaEditable {
   }
 
   /// Check if the string is empty as far as Aloha is concerned
-  bool empty(String str) {
-    return _context.callMethod('empty', [str]);
-  }
+  bool empty(String str) => _context.callMethod('empty', [str]);
 
   /// Get the contents of this editable as a HTML string or child node DOM
   /// objects.
@@ -109,15 +123,13 @@ class AlohaEditable {
   /// Defaults to string                          .
   /// return {string|jQuery.HTMLElement} Contents of the editable as
   /// a DOM object or an HTML string.
-  dynamic getContents([bool asObject = false]) {
-    return _context.callMethod('getContents', [asObject]);
-  }
+  dynamic getContents([bool asObject = false]) =>
+      _context.callMethod('getContents', [asObject]);
 
   /// Set the contents of this editable as a HTML string
   /// The return object is as an object or html string, default is HTML.
-  dynamic setContents(String content, [bool asObject = false]) {
-    return _context.callMethod('setContents', [content, asObject]);
-  }
+  dynamic setContents(String content, [bool asObject = false]) =>
+      _context.callMethod('setContents', [content, asObject]);
 
   /// Get the id of this editable
   String get id => _context.callMethod('getId');
@@ -137,16 +149,17 @@ class AlohaEditable {
   /// the passed element).
   /// js.Proxy context, the aAloha editable context ,usually Aloha.Editable
   static void setContentSerializer(
-      dynamic serializerFunction, js.JsObject context) {
+      // ignore: avoid_annotating_with_dynamic
+      dynamic serializerFunction,
+      js.JsObject context) {
     context['contentSerializer'] = serializerFunction;
   }
 
   /// Gets the content serializer function.
   ///
   /// js.Proxy context, the Aloha editable context ,usually Aloha.Editable
-  static dynamic getContentSerializer(js.JsObject context) {
-    return context['contextSerializer'];
-  }
+  static dynamic getContentSerializer(js.JsObject context) =>
+      context['contextSerializer'];
 
   /// Destroy the editable
   void destroy() {
