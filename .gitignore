@@ -15,4 +15,4 @@ doc/api/
 .dart_tool/
 
 # no idea
-.idea
+/.idea
