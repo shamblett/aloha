@@ -9,23 +9,8 @@
 
 import 'dart:async';
 import 'dart:html';
-import 'dart:js' as js;
 import 'package:aloha/aloha.dart';
 import 'package:test/test.dart';
-
-// ignore_for_file: file_names
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: unnecessary_final
-// ignore_for_file: cascade_invocations
-// ignore_for_file: avoid_print
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: public_member_api_docs
-// ignore_for_file: always_specify_types
-// ignore_for_file: unnecessary_getters_setters
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: flutter_style_todos
-// ignore_for_file: avoid_positional_boolean_parameters
-// ignore_for_file: prefer_single_quotes
 
 Aloha alohaEditor;
 
@@ -33,7 +18,7 @@ DivElement buttonSection = querySelector('#aloha-button-section');
 
 ButtonElement createEventButton(String onClickScript) {
   buttonSection.children.clear();
-  final ButtonElement theButton = ButtonElement();
+  final theButton = ButtonElement();
   theButton.attributes['onclick'] = onClickScript;
   buttonSection.children.add(theButton);
   return theButton;
@@ -49,7 +34,7 @@ int main() {
     test('Ready', () {
       print('1.1');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.editableCreatedEvent.listen((e) {
         passed = true;
       });
@@ -73,13 +58,13 @@ int main() {
     test('Logging Ready', () {
       print('1.2');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.loggerReadyEvent.listen((e) {
         passed = true;
       });
 
-      const String script = "Aloha.trigger('aloha-logger-ready');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-logger-ready');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -88,13 +73,13 @@ int main() {
     test('Log Full', () {
       print('1.3');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.loggerFullEvent.listen((e) {
         passed = true;
       });
 
-      const String script = "Aloha.trigger('aloha-log-full');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-log-full');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -103,17 +88,16 @@ int main() {
     test('Command Will Execute', () {
       print('1.4');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.commandWillExecuteEvent.listen((e) {
         if (e.commandId != 'Bold') return;
         if (e.preventDefault) return;
         passed = true;
       });
 
-      const String script =
-          "var evtObj = {commandId: 'Bold',preventDefault: false};"
+      const script = "var evtObj = {commandId: 'Bold',preventDefault: false};"
           "Aloha.trigger('aloha-command-will-execute', evtObj);";
-      final ButtonElement theButton = createEventButton(script);
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -122,15 +106,14 @@ int main() {
     test('Command Executed', () {
       print('1.5');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.commandExecutedEvent.listen((e) {
         if (e != 'Italic') return;
         passed = true;
       });
 
-      const String script =
-          "Aloha.trigger('aloha-command-executed', 'Italic');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-command-executed', 'Italic');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -139,7 +122,7 @@ int main() {
     test('Editable created', () {
       print('1.6');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.editableCreatedEvent.listen((e) {
         passed = true;
       });
@@ -159,7 +142,7 @@ int main() {
     test('Editable destroyed', () {
       print('1.7');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.editableDestroyedEvent.listen((e) {
         passed = true;
       });
@@ -179,7 +162,7 @@ int main() {
     test('Editable Activated', () {
       print('1.8');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.editableActivatedEvent.listen((e) {
         if (!e[0].isActive) return;
         if (e[0].id != 'alohaedit1') return;
@@ -200,7 +183,7 @@ int main() {
     test('Editable Deactivated', () {
       print('1.9');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.editableDeactivatedEvent.listen((e) {
         if (e.isActive) return;
         if (e.id != 'alohaedit1') return;
@@ -215,7 +198,7 @@ int main() {
     test('Smart content changed', () {
       print('1.10');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.smartContentChangeEvent.listen((e) {
         if (e.char != null) return;
         if (e.triggerType != 'blur') return;
@@ -240,41 +223,41 @@ int main() {
     test('Block Selected', () {
       print('1.11');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.blockSelectedEvent.listen((e) {
         if (e.innerHtml != 'This is an editable div container.') return;
         passed = true;
       });
 
-      const String script =
+      const script =
           "var block = \$('#cepara');Aloha.trigger('aloha-block-selected', block);";
-      final ButtonElement theButton = createEventButton(script);
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
     test('Image Selected', () {
-      bool passed = false;
+      var passed = false;
       alohaEditor.imageSelectedEvent.listen((e) {
         passed = true;
       });
 
-      const String script = "Aloha.trigger('aloha-image-selected');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-image-selected');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
     }, skip: false);
 
     test('Image Unselected', () {
-      bool passed = false;
+      var passed = false;
       alohaEditor.imageUnselectedEvent.listen((e) {
         passed = true;
       });
 
-      const String script = "Aloha.trigger('aloha-image-unselected');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-image-unselected');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -283,13 +266,13 @@ int main() {
     test('Link Selected', () {
       print('1.12');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.linkSelectedEvent.listen((e) {
         passed = true;
       });
 
-      const String script = "Aloha.trigger('aloha-link-selected');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-link-selected');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -298,13 +281,13 @@ int main() {
     test('Link Unselected', () {
       print('1.13');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.linkUnselectedEvent.listen((e) {
         passed = true;
       });
 
-      const String script = "Aloha.trigger('aloha-link-unselected');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-link-unselected');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -313,13 +296,13 @@ int main() {
     test('Table Selection Changed', () {
       print('1.14');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.tableSelectionChangedEvent.listen((e) {
         passed = true;
       });
 
-      const String script = "Aloha.trigger('aloha-table-selection-changed');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-table-selection-changed');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -328,13 +311,13 @@ int main() {
     test('Table Activated', () {
       print('1.15');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.tableActivatedEvent.listen((e) {
         passed = true;
       });
 
-      const String script = "Aloha.trigger('aloha-table-activated');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-table-activated');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -343,13 +326,13 @@ int main() {
     test('DDF All Files Prepared', () {
       print('1.16');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.ddfAllFilesPreparedEvent.listen((e) {
         passed = true;
       });
 
-      const String script = "Aloha.trigger('aloha-allfiles-upload-prepared');";
-      final ButtonElement theButton = createEventButton(script);
+      const script = "Aloha.trigger('aloha-allfiles-upload-prepared');";
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -358,16 +341,16 @@ int main() {
     test('DDF Files Dropped In Page', () {
       print('1.17');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.ddfFilesDroppedInPageEvent.listen((e) {
         if (e.innerHtml != 'Files Dropped Text') return;
 
         passed = true;
       });
 
-      const String script =
+      const script =
           "var block = \$('#filesdropped');Aloha.trigger('aloha-drop-files-in-page', block);";
-      final ButtonElement theButton = createEventButton(script);
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -376,15 +359,15 @@ int main() {
     test('DDF File Upload Prepared', () {
       print('1.18');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.ddfFileUploadPreparedEvent.listen((e) {
         if (e.innerHtml != 'Files Dropped Text') return;
         passed = true;
       });
 
-      const String script =
+      const script =
           "var block = \$('#filesdropped');Aloha.trigger('aloha-file-upload-prepared', block);";
-      final ButtonElement theButton = createEventButton(script);
+      final theButton = createEventButton(script);
       theButton.click();
       void checkTest() => expect(passed, isTrue);
       Timer(const Duration(milliseconds: 20), expectAsync0(checkTest));
@@ -392,17 +375,17 @@ int main() {
   });
 
   /* Group 2 - Core API tests*/
-  group("2. Core API - ", () {
-    test("Version", () {
+  group('2. Core API - ', () {
+    test('Version', () {
       expect(alohaEditor.version, equals('0.23.27-SNAPSHOT'));
-      print(">>> Aloha Version is ${alohaEditor.version}");
+      print('>>> Aloha Version is ${alohaEditor.version}');
     });
 
-    test("OSName", () {
-      print("2.1");
+    test('OSName', () {
+      print('2.1');
 
-      String correct = 'Failed';
-      final String osName = alohaEditor.osName;
+      var correct = 'Failed';
+      final osName = alohaEditor.osName;
       switch (osName) {
         case 'Linux':
           correct = 'Passed';
@@ -417,29 +400,29 @@ int main() {
           correct = 'Passed';
           break;
         default:
-          correct = "Failed, actual OSName is $osName";
+          correct = 'Failed, actual OSName is $osName';
       }
       expect(correct, equals('Passed'));
-      print(">>> OsName is $osName");
+      print('>>> OsName is $osName');
     }, skip: false);
 
-    test("Editables List", () {
-      print("2.2");
+    test('Editables List', () {
+      print('2.2');
       expect(alohaEditor.editables.length, equals(4));
     }, skip: false);
 
-    test("Active Editable - Property", () {
-      print("2.3");
+    test('Active Editable - Property', () {
+      print('2.3');
       final HeadingElement theEditableElement = querySelector('#alohaedit1');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
-      final AlohaEditable editable = alohaEditor.activeEditable;
+      final editable = alohaEditor.activeEditable;
       expect(editable.id, equals('alohaedit1'));
     }, skip: false);
 
-    test("Settings", () {
-      print("2.4");
+    test('Settings', () {
+      print('2.4');
       expect(alohaEditor.settings['logLevels']['debug'], isFalse);
       expect(
           alohaEditor.settings['baseUrl'],
@@ -447,25 +430,25 @@ int main() {
               'https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib'));
     }, skip: false);
 
-    test("Defaults", () {
-      print("2.5");
+    test('Defaults', () {
+      print('2.5');
       expect(alohaEditor.defaults['contentHandler']['getContents'][0],
           equals('blockelement'));
       expect(alohaEditor.defaults['contentHandler']['initEditable'][0],
           equals('blockelement'));
     }, skip: false);
 
-    test("Loaded Plugins - Property", () {
-      print("2.6");
-      final js.JsObject plugins = alohaEditor.loadedPlugins;
+    test('Loaded Plugins - Property', () {
+      print('2.6');
+      final plugins = alohaEditor.loadedPlugins;
       expect(plugins[0], equals('format'));
       expect(plugins[2], equals('link'));
     }, skip: false);
 
-    test("Reinitialise", () {
-      print("2.7");
+    test('Reinitialise', () {
+      print('2.7');
 
-      bool passed = false;
+      var passed = false;
       alohaEditor.loggerReadyEvent.listen((e) {
         passed = true;
       });
@@ -474,150 +457,149 @@ int main() {
       alohaEditor.reinitialise();
     }, skip: false);
 
-    test("Loaded Plugins", () {
-      print("2.8");
-      final js.JsObject plugins = alohaEditor.loadedPlugins;
+    test('Loaded Plugins', () {
+      print('2.8');
+      final plugins = alohaEditor.loadedPlugins;
       expect(plugins[0], equals('format'));
       expect(plugins[2], equals('link'));
     }, skip: false);
 
-    test("Is Plugin Loaded", () {
-      print("2.9");
+    test('Is Plugin Loaded', () {
+      print('2.9');
       expect(alohaEditor.isPluginLoaded('format'), isTrue);
       expect(alohaEditor.isPluginLoaded('link'), isTrue);
     }, skip: false);
 
-    test("Get Editable By Id", () {
-      print("2.10");
-      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+    test('Get Editable By Id', () {
+      print('2.10');
+      final editable = alohaEditor.getEditableById('alohaedit3');
       expect(editable.id, equals('alohaedit3'));
-      final AlohaEditable nullEditable =
-          alohaEditor.getEditableById('alohaedit35');
+      final nullEditable = alohaEditor.getEditableById('alohaedit35');
       expect(nullEditable, isNull);
     }, skip: false);
 
-    test("Activate Editable", () {
-      print("2.11");
-      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+    test('Activate Editable', () {
+      print('2.11');
+      final editable = alohaEditor.getEditableById('alohaedit3');
       expect(editable.id, equals('alohaedit3'));
       alohaEditor.activateEditable(editable);
       expect(alohaEditor.activeEditable.id, equals('alohaedit3'));
     }, skip: false);
 
-    test("Get Activate Editable", () {
-      print("2.12");
+    test('Get Activate Editable', () {
+      print('2.12');
       expect(alohaEditor.getActiveEditable().id, equals('alohaedit3'));
     }, skip: false);
 
-    test("Deactivate Activate Editable", () {
-      print("2.13");
+    test('Deactivate Activate Editable', () {
+      print('2.13');
       alohaEditor.deactivateActiveEditable();
       expect(alohaEditor.getActiveEditable(), isNull);
     }, skip: false);
 
-    test("Is An Editable", () {
-      print("2.14");
-      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+    test('Is An Editable', () {
+      print('2.14');
+      final editable = alohaEditor.getEditableById('alohaedit3');
       expect(alohaEditor.isAnEditable(editable), isTrue);
       List myList;
       expect(alohaEditor.isAnEditable(myList), isFalse);
     }, skip: false);
 
-    test("Get Editable Host", () {
-      print("2.15");
+    test('Get Editable Host', () {
+      print('2.15');
       HtmlElement element = querySelector('#cepara');
-      AlohaEditable editable = alohaEditor.getEditableHost(element);
+      var editable = alohaEditor.getEditableHost(element);
       expect(editable.id, equals('alohaedit4'));
       element = querySelector('#aloha-edit-section');
       editable = alohaEditor.getEditableHost(element);
       expect(editable, isNull);
     }, skip: false);
 
-    test("Unregister Editable", () {
-      print("2.16");
-      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+    test('Unregister Editable', () {
+      print('2.16');
+      final editable = alohaEditor.getEditableById('alohaedit3');
       regEditable = editable;
       expect(alohaEditor.isAnEditable(regEditable), isTrue);
       alohaEditor.unregisterEditable(regEditable);
-      final AlohaEditable editable2 = alohaEditor.getEditableById('alohaedit3');
+      final editable2 = alohaEditor.getEditableById('alohaedit3');
       expect(editable2, isNull);
     }, skip: false);
 
-    test("Register Editable", () {
-      print("2.17");
+    test('Register Editable', () {
+      print('2.17');
       alohaEditor.registerEditable(regEditable);
-      final AlohaEditable editable = alohaEditor.getEditableById('alohaedit3');
+      final editable = alohaEditor.getEditableById('alohaedit3');
       expect(alohaEditor.isAnEditable(editable), isTrue);
     }, skip: false);
 
-    test("URL", () {
-      print("2.18");
-      final String url = alohaEditor.getUrl();
+    test('URL', () {
+      print('2.18');
+      final url = alohaEditor.getUrl();
       expect(
           url,
           equals(
               'https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib'));
     }, skip: false);
 
-    test("Plugin URL", () {
-      print("2.19");
-      final String url = alohaEditor.getPluginUrl('format');
+    test('Plugin URL', () {
+      print('2.19');
+      final url = alohaEditor.getPluginUrl('format');
       expect(
           url,
           equals(
               'https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib../plugins/common/format'));
     }, skip: false);
 
-    test("Log", () {
-      print("2.20");
-      alohaEditor.log("warn", "Dart", ">>> Log Test");
-      alohaEditor.log("debug", "Dart", "This won't log");
+    test('Log', () {
+      print('2.20');
+      alohaEditor.log('warn', 'Dart', '>>> Log Test');
+      alohaEditor.log('debug', 'Dart', 'This won\'t log');
     }, skip: false);
 
-    test("Disable Object Resizing", () {
-      print("2.21");
+    test('Disable Object Resizing', () {
+      print('2.21');
       alohaEditor.disableObjectResizing();
     }, skip: false);
 
-    test("To String", () {
-      print("2.22");
-      final String name = alohaEditor.toString();
+    test('To String', () {
+      print('2.22');
+      final name = alohaEditor.toString();
       expect(name, 'Aloha');
     }, skip: false);
   });
 
   /* Group 3 - Command tests*/
-  group("3.Commands - ", () {
-    test("Query Command Enabled", () {
-      print("3.1");
+  group('3.Commands - ', () {
+    test('Query Command Enabled', () {
+      print('3.1');
       final ParagraphElement theEditableElement = querySelector('#alohaedit3');
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
-      final bool state = alohaEditor.queryCommandEnabled('forwardDelete');
+      final state = alohaEditor.queryCommandEnabled('forwardDelete');
       expect(state, isTrue);
     }, skip: false);
 
-    test("Execute Command", () {
-      print("3.2");
+    test('Execute Command', () {
+      print('3.2');
       alohaEditor.execCommand('forwardDelete');
     }, skip: false);
 
-    test("Query Command Supported", () {
-      print("3.3");
-      final bool res = alohaEditor.queryCommandSupported('forwardDelete');
+    test('Query Command Supported', () {
+      print('3.3');
+      final res = alohaEditor.queryCommandSupported('forwardDelete');
       expect(res, isTrue);
     }, skip: false);
 
-    test("Query Command Value", () {
-      print("3.4");
-      final String res = alohaEditor.queryCommandValue('forwardDelete');
+    test('Query Command Value', () {
+      print('3.4');
+      final res = alohaEditor.queryCommandValue('forwardDelete');
       expect(res, isEmpty);
     }, skip: false);
 
-    test("Query Supported Commands", () {
-      print("3.5");
-      final List res = alohaEditor.querySupportedCommands();
+    test('Query Supported Commands', () {
+      print('3.5');
+      final res = alohaEditor.querySupportedCommands();
       expect(res.length, isPositive);
     }, skip: false);
   });

@@ -7,19 +7,6 @@
 
 part of aloha;
 
-// ignore_for_file: file_names
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: unnecessary_final
-// ignore_for_file: cascade_invocations
-// ignore_for_file: avoid_print
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: public_member_api_docs
-// ignore_for_file: always_specify_types
-// ignore_for_file: unnecessary_getters_setters
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: flutter_style_todos
-// ignore_for_file: avoid_positional_boolean_parameters
-
 class AlohaEditable {
   /// An Aloha editable class binding.
   /// Note that the context and event you pass here are NOT automatically
@@ -38,7 +25,6 @@ class AlohaEditable {
   /// The event that triggered the creation of the editable, e.g
   /// the event from editableActivatedEvent. This is optional for this
   /// class but if not supplied some API calls will throw an exception.
-  // ignore: avoid_setters_without_getters
   set event(js.JsObject event) => _event = event;
 
   /// True, if this editable is active for editing.
@@ -102,9 +88,9 @@ class AlohaEditable {
 
   /// Activates an editable for editing, disables all other active items
   void activate() {
-    if (_event == null)
-      // ignore: curly_braces_in_flow_control_structures
+    if (_event == null) {
       throw AlohaException('AlohaEditable - Activate, no event specified');
+    }
     _context.callMethod('activate', [_event]);
   }
 
@@ -149,9 +135,7 @@ class AlohaEditable {
   /// the passed element).
   /// js.Proxy context, the aAloha editable context ,usually Aloha.Editable
   static void setContentSerializer(
-      // ignore: avoid_annotating_with_dynamic
-      dynamic serializerFunction,
-      js.JsObject context) {
+      dynamic serializerFunction, js.JsObject context) {
     context['contentSerializer'] = serializerFunction;
   }
 

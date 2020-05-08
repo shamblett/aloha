@@ -10,18 +10,6 @@
 
 part of aloha;
 
-// ignore_for_file: file_names
-// ignore_for_file: omit_local_variable_types
-// ignore_for_file: unnecessary_final
-// ignore_for_file: cascade_invocations
-// ignore_for_file: avoid_print
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: public_member_api_docs
-// ignore_for_file: always_specify_types
-// ignore_for_file: unnecessary_getters_setters
-// ignore_for_file: always_put_control_body_on_new_line
-// ignore_for_file: flutter_style_todos
-
 class Aloha {
   /// A binding class for the Aloha HTML5 editor. Refer to the accompanying documentation
   /// for setup and usage information. Omissions from the Aloha API are also documented.
@@ -38,9 +26,8 @@ class Aloha {
     /// their first parameter, even if Aloha sends nothing, e.g, log ready trigger.
     ///
     void _jsCommandWillExecute(js.JsObject event, js.JsObject jsParams) {
-      final AlohaCommandWillExecuteParameters params =
-          AlohaCommandWillExecuteParameters(
-              jsParams['commandId'], jsParams['preventDefault']);
+      final params = AlohaCommandWillExecuteParameters(
+          jsParams['commandId'], jsParams['preventDefault']);
       _onCommandWillExecute.add(params);
     }
 
@@ -69,7 +56,7 @@ class Aloha {
 
     /* Editables */
     void _jsEditableCreated(js.JsObject event, js.JsObject editable) {
-      final AlohaEditable theEditable = AlohaEditable(editable, event);
+      final theEditable = AlohaEditable(editable, event);
       _onEditableCreated.add(theEditable);
     }
 
@@ -86,15 +73,13 @@ class Aloha {
     void _jsEditableActivated(js.JsObject event, editableObjects) {
       /* We always have the event and the current active editable */
       List editableList;
-      final js.JsObject editableEvent = event;
-      final js.JsObject activeEditable = editableObjects['editable'];
-      final AlohaEditable editable =
-          AlohaEditable(activeEditable, editableEvent);
+      final editableEvent = event;
+      final activeEditable = editableObjects['editable'];
+      final editable = AlohaEditable(activeEditable, editableEvent);
       /* See if we have an old editable, if so pass it back. */
       try {
-        final js.JsObject oldActiveEditable = editableObjects['old'];
-        final AlohaEditable oldEditable =
-            AlohaEditable(oldActiveEditable, editableEvent);
+        final oldActiveEditable = editableObjects['old'];
+        final oldEditable = AlohaEditable(oldActiveEditable, editableEvent);
         editableList = [editable, oldEditable];
       } on Exception {
         editableList = [editable];
@@ -107,8 +92,7 @@ class Aloha {
         .callMethod('bind', ['aloha-editable-activated', _jsEditableActivated]);
 
     void _jsEditableDeactivated(js.JsObject event, js.JsObject editable) {
-      final AlohaEditable theEditable =
-          AlohaEditable(editable['editable'], event);
+      final theEditable = AlohaEditable(editable['editable'], event);
       _onEditableDeactivated.add(theEditable);
     }
 
@@ -117,16 +101,14 @@ class Aloha {
 
     /* Content changes */
     void _jsSmartContentChange(js.JsObject event, js.JsObject parameters) {
-      final AlohaEditable theEditable =
-          AlohaEditable(parameters['editable'], event);
-      final AlohaSmartContentChangeParameters params =
-          AlohaSmartContentChangeParameters(
-              theEditable,
-              parameters['keyIdentifier'],
-              parameters['keyCode'],
-              parameters['char'],
-              parameters['triggerType'],
-              parameters.callMethod('getSnapshotContent'));
+      final theEditable = AlohaEditable(parameters['editable'], event);
+      final params = AlohaSmartContentChangeParameters(
+          theEditable,
+          parameters['keyIdentifier'],
+          parameters['keyCode'],
+          parameters['char'],
+          parameters['triggerType'],
+          parameters.callMethod('getSnapshotContent'));
       _onSmartContentChange.add(params);
     }
 
@@ -204,7 +186,7 @@ class Aloha {
   }
 
   /// Aloha context
-  final js.JsObject _alohaContext = js.context['Aloha'];
+  final _alohaContext = js.context['Aloha'];
   js.JsObject get context => _alohaContext;
 
   /// Aloha is ready when this is set. The API calls check for this,
@@ -342,10 +324,10 @@ class Aloha {
     List editablesList = <AlohaEditable>[];
 
     try {
-      final js.JsObject jsEditablesList = _alohaContext['editables'];
+      final jsEditablesList = _alohaContext['editables'];
       final int length = _alohaContext['editables'].length;
-      for (int i = 0; i < length; i++) {
-        final AlohaEditable editable = AlohaEditable(jsEditablesList[i]);
+      for (var i = 0; i < length; i++) {
+        final editable = AlohaEditable(jsEditablesList[i]);
         editablesList.add(editable);
       }
     } on Exception {
@@ -362,8 +344,7 @@ class Aloha {
     if (!_ready) throw AlohaException(AlohaException.notReady);
 
     try {
-      final AlohaEditable editable =
-          AlohaEditable(_alohaContext['activeEditable']);
+      final editable = AlohaEditable(_alohaContext['activeEditable']);
       return editable;
     } on Exception {
       return null;
@@ -404,10 +385,9 @@ class Aloha {
     if (!_ready) throw AlohaException(AlohaException.notReady);
 
     try {
-      final js.JsObject editableProxy =
-          _alohaContext.callMethod('getEditableById', [id]);
+      final editableProxy = _alohaContext.callMethod('getEditableById', [id]);
       if (editableProxy == null) return null;
-      final AlohaEditable theEditable = AlohaEditable(editableProxy);
+      final theEditable = AlohaEditable(editableProxy);
       return theEditable;
     } on Exception {
       return null;
@@ -421,7 +401,7 @@ class Aloha {
   /// makes the editable supplied the activeEditable.
   void activateEditable(AlohaEditable editable) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
-    final js.JsObject editableProxy = editable.proxy;
+    final editableProxy = editable.proxy;
     _alohaContext.callMethod('activateEditable', [editableProxy]);
   }
 
@@ -430,10 +410,9 @@ class Aloha {
     if (!_ready) throw AlohaException(AlohaException.notReady);
 
     try {
-      final js.JsObject editableProxy =
-          _alohaContext.callMethod('getActiveEditable');
+      final editableProxy = _alohaContext.callMethod('getActiveEditable');
       if (editableProxy == null) return null;
-      final AlohaEditable theEditable = AlohaEditable(editableProxy);
+      final theEditable = AlohaEditable(editableProxy);
       return theEditable;
     } on Exception {
       return null;
@@ -462,8 +441,8 @@ class Aloha {
 
     /* Check if the object is in the editables list */
     final int length = _alohaContext['editables'].length;
-    final js.JsObject jsEditableList = _alohaContext['editables'];
-    for (int i = 0; i < length; i++) {
+    final jsEditableList = _alohaContext['editables'];
+    for (var i = 0; i < length; i++) {
       if (anyObject == _alohaContext[jsEditableList[i]]) return true;
     }
 
@@ -476,12 +455,11 @@ class Aloha {
   /// element parameter. Returns null if none found.
   AlohaEditable getEditableHost(HtmlElement element) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
-    final String jQueryId = '#${element.id}';
-    final js.JsObject jQueryElement = js.context.callMethod(r'$', [jQueryId]);
-    final js.JsObject proxy =
-        _alohaContext.callMethod('getEditableHost', [jQueryElement]);
+    final jQueryId = '#${element.id}';
+    final jQueryElement = js.context.callMethod(r'$', [jQueryId]);
+    final proxy = _alohaContext.callMethod('getEditableHost', [jQueryElement]);
     if (proxy == null) return null;
-    final AlohaEditable editable = AlohaEditable(proxy);
+    final editable = AlohaEditable(proxy);
     return editable;
   }
 
@@ -570,8 +548,8 @@ class Aloha {
     List commands = <String>[];
 
     try {
-      final int length = proxy.length;
-      for (int i = 0; i < length; i++) {
+      final length = proxy.length;
+      for (var i = 0; i < length; i++) {
         commands.add(proxy[i]);
       }
     } on Exception {

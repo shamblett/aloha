@@ -1,3 +1,7 @@
+## 3.0.2
+
+Linter + pana updates
+
 ## 3.0.1
 
 Linter updates
