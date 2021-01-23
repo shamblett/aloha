@@ -13,15 +13,15 @@ class AlohaCommandWillExecuteParameters {
   /// Command will execute event return parameters
   AlohaCommandWillExecuteParameters(this._commandId, this._preventDefault);
 
-  final String _commandId;
+  final String? _commandId;
 
   /// The command Id e.g 'bold'
-  String get commandId => _commandId;
+  String? get commandId => _commandId;
 
-  final bool _preventDefault;
+  final bool? _preventDefault;
 
   /// The prevent default state
-  bool get preventDefault => _preventDefault;
+  bool? get preventDefault => _preventDefault;
 }
 
 class AlohaSmartContentChangeParameters {
@@ -34,30 +34,30 @@ class AlohaSmartContentChangeParameters {
   /// The editable object
   AlohaEditable get editableObject => _editableObject;
 
-  final String _keyIdentifier;
+  final String? _keyIdentifier;
 
   /// The key identifier
-  String get keyIdentifier => _keyIdentifier;
+  String? get keyIdentifier => _keyIdentifier;
 
-  final int _keyCode;
+  final int? _keyCode;
 
   /// The key code
-  int get keyCode => _keyCode;
+  int? get keyCode => _keyCode;
 
-  final String _char;
+  final String? _char;
 
   /// The character entered
-  String get char => _char;
+  String? get char => _char;
 
-  final String _triggerType;
+  final String? _triggerType;
 
   /// The trigger type, one of
   /// keypress, idle, blur, paste, block-change
-  String get triggerType => _triggerType;
+  String? get triggerType => _triggerType;
 
-  final String _snapshotContent;
+  final String? _snapshotContent;
 
   /// Snapshot content
   /// The snapshot content of the editable as a HTML String
-  String get snapshotContent => _snapshotContent;
+  String? get snapshotContent => _snapshotContent;
 }

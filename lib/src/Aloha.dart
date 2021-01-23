@@ -187,7 +187,7 @@ class Aloha {
 
   /// Aloha context
   final _alohaContext = js.context['Aloha'];
-  js.JsObject get context => _alohaContext;
+  js.JsObject? get context => _alohaContext;
 
   /// Aloha is ready when this is set. The API calls check for this,
   /// if Aloha is not ready an AlohaException is raised.
@@ -316,12 +316,12 @@ class Aloha {
   Stream get ddfFileUploadPreparedEvent => _onDdfFileUploadPrepared.stream;
 
   /// Version string
-  String get version => _alohaContext['version'];
+  String? get version => _alohaContext['version'];
 
-  List<AlohaEditable> _getEditablesAsList() {
+  List<AlohaEditable>? _getEditablesAsList() {
     if (!_ready) throw AlohaException(AlohaException.notReady);
 
-    List editablesList = <AlohaEditable>[];
+    List? editablesList = <AlohaEditable>[];
 
     try {
       final jsEditablesList = _alohaContext['editables'];
@@ -334,13 +334,13 @@ class Aloha {
       editablesList = null;
     }
 
-    return editablesList;
+    return editablesList as List<AlohaEditable>?;
   }
 
   /// List of currently maintained editables as a List of AlohaEditable's.
-  List<AlohaEditable> get editables => _getEditablesAsList();
+  List<AlohaEditable>? get editables => _getEditablesAsList();
 
-  AlohaEditable _getActiveEditable() {
+  AlohaEditable? _getActiveEditable() {
     if (!_ready) throw AlohaException(AlohaException.notReady);
 
     try {
@@ -352,23 +352,23 @@ class Aloha {
   }
 
   /// Currently active editable as an AlohaEditable
-  AlohaEditable get activeEditable => _getActiveEditable();
+  AlohaEditable? get activeEditable => _getActiveEditable();
 
   /// Settings
   /// We have no way of knowing what settings have been applied to Aloha in its js startup
   /// so you need to know the settings structure on the client side.
-  js.JsObject get settings => _alohaContext['settings'];
+  js.JsObject? get settings => _alohaContext['settings'];
 
   /// Defaults
   /// Hardwired startup defaults.
   ///
-  js.JsObject get defaults => _alohaContext['defaults'];
+  js.JsObject? get defaults => _alohaContext['defaults'];
 
   /// OS name
-  String get osName => _alohaContext['OSName'];
+  String? get osName => _alohaContext['OSName'];
 
   /// Loaded plugins, returned a list of plugin name strings
-  js.JsObject get loadedPlugins => _alohaContext['loadedPlugins'];
+  js.JsObject? get loadedPlugins => _alohaContext['loadedPlugins'];
 
   /// Initialization
   /// Use to set Aloha back to its original state
@@ -377,11 +377,11 @@ class Aloha {
   }
 
   /// Is a plugin loaded
-  bool isPluginLoaded(String pluginName) =>
+  bool? isPluginLoaded(String pluginName) =>
       _alohaContext.callMethod('isPluginLoaded', [pluginName]);
 
   /// Get an editable by its id attribute, returns null if none found
-  AlohaEditable getEditableById(String id) {
+  AlohaEditable? getEditableById(String id) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
 
     try {
@@ -406,7 +406,7 @@ class Aloha {
   }
 
   /// Get the active editable, null if none active
-  AlohaEditable getActiveEditable() {
+  AlohaEditable? getActiveEditable() {
     if (!_ready) throw AlohaException(AlohaException.notReady);
 
     try {
@@ -430,7 +430,7 @@ class Aloha {
   /// This check is performed in the class, its not passed through to the
   /// Aloha API, Aloha uses javascript object comparison which is not robust,
   /// we can better do this ourselves.
-  bool isAnEditable(Object anyObject) {
+  bool isAnEditable(Object? anyObject) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
 
     /* If we are an AlohaEditable then we are an editable */
@@ -453,7 +453,7 @@ class Aloha {
   ///
   /// Gets the nearest editable parent of the HTML element contained in the
   /// element parameter. Returns null if none found.
-  AlohaEditable getEditableHost(HtmlElement element) {
+  AlohaEditable? getEditableHost(HtmlElement element) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
     final jQueryId = '#${element.id}';
     final jQueryElement = js.context.callMethod(r'$', [jQueryId]);
@@ -478,7 +478,7 @@ class Aloha {
   /// Get the Aloha url.
   ///
   /// Aloha's baseUrl setting or "" if not set
-  String getUrl() {
+  String? getUrl() {
     if (!_ready) throw AlohaException(AlohaException.notReady);
     return _alohaContext.callMethod('getAlohaUrl');
   }
@@ -486,7 +486,7 @@ class Aloha {
   /// Gets a plugin's url.
   ///
   /// Given the name returns the plugin url as a string
-  String getPluginUrl(String name) {
+  String? getPluginUrl(String name) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
     return _alohaContext.callMethod('getPluginUrl', [name]);
   }
@@ -503,7 +503,7 @@ class Aloha {
   /// execCommand implements the commands from the commmand manager section
   /// See the relevant Mozilla documentation here for details.
   /// https://developer.mozilla.org/en/docs/Rich-Text_Editing_in_Mozilla
-  void execCommand(String commandId, {bool showUi = false, String value}) {
+  void execCommand(String commandId, {bool showUi = false, String? value}) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
     _alohaContext.callMethod('execCommand', [commandId, showUi, value, null]);
   }
@@ -514,7 +514,7 @@ class Aloha {
   /// is not null the command is enabled, True indicates this.
   ///
   /// TODO range option needs to be added, uses current range selection.
-  bool queryCommandEnabled(String commandId) {
+  bool? queryCommandEnabled(String commandId) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
     return _alohaContext.callMethod('queryCommandEnabled', [commandId, null]);
   }
@@ -522,7 +522,7 @@ class Aloha {
   /// Query command supported.
   ///
   /// Returns true if the command is supported.
-  bool queryCommandSupported(String commandId) {
+  bool? queryCommandSupported(String commandId) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
     return _alohaContext.callMethod('queryCommandSupported', [commandId]);
   }
@@ -531,7 +531,7 @@ class Aloha {
   ///
   ///
   /// TODO range option needs to be added, uses current range selection.
-  String queryCommandValue(String commandId) {
+  String? queryCommandValue(String commandId) {
     if (!_ready) throw AlohaException(AlohaException.notReady);
     return _alohaContext.callMethod('queryCommandValue', [commandId, null]);
   }
@@ -540,12 +540,12 @@ class Aloha {
   ///
   /// Returns a list of supported commands.
   ///
-  List querySupportedCommands() {
+  List? querySupportedCommands() {
     if (!_ready) throw AlohaException(AlohaException.notReady);
 
     final js.JsArray proxy = _alohaContext.callMethod('querySupportedCommands');
 
-    List commands = <String>[];
+    List? commands = <String>[];
 
     try {
       final length = proxy.length;

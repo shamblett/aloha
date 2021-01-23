@@ -15,12 +15,12 @@ class AlohaEditable {
   /// uses to instantiate this class.
   AlohaEditable(this._context, [this._event]);
 
-  final js.JsObject _context;
+  final js.JsObject? _context;
 
   /// The context for the editable
-  js.JsObject get proxy => _context;
+  js.JsObject? get proxy => _context;
 
-  js.JsObject _event;
+  js.JsObject? _event;
 
   /// The event that triggered the creation of the editable, e.g
   /// the event from editableActivatedEvent. This is optional for this
@@ -28,46 +28,46 @@ class AlohaEditable {
   set event(js.JsObject event) => _event = event;
 
   /// True, if this editable is active for editing.
-  bool get isActive => _context['isActive'];
+  bool? get isActive => _context!['isActive'];
 
   /// Check if the editable has been modified during the edit process
   /// Return boolean true if the editable has been modified.
-  bool get isModified => _context.callMethod('isModified');
+  bool? get isModified => _context!.callMethod('isModified');
 
   /// Marks the editables current state as unmodified. Use this method to inform the editable
   /// that it's contents have been saved
   void setUnmodified() {
-    _context.callMethod('setUnmodified');
+    _context!.callMethod('setUnmodified');
   }
 
   /// Check whether the editable has been disabled
-  bool get isDisabled => _context.callMethod('isDisabled');
+  bool? get isDisabled => _context!.callMethod('isDisabled');
 
   /// Disable this editable
   /// A disabled editable cannot be written on by keyboard
   void disable() {
-    _context.callMethod('disable');
+    _context!.callMethod('disable');
   }
 
   /// Enable this editable
   /// Reenables a disabled editable to be writeable again
 
   void enable() {
-    _context.callMethod('enable');
+    _context!.callMethod('enable');
   }
 
   /// Check if the object can be edited by Aloha Editor
   /// return true if Aloha Editor can handle it.
-  bool get check => _context.callMethod('check');
+  bool? get check => _context!.callMethod('check');
 
   /// Initialise the placeholder
   void initPlaceholder() {
-    _context.callMethod('initPlaceholder');
+    _context!.callMethod('initPlaceholder');
   }
 
   /// Add placeholder in editable
   void addPlaceholder() {
-    _context.callMethod('addPlaceholder');
+    _context!.callMethod('addPlaceholder');
   }
 
   /// Remove placeholder from the content. If setCursor is true,
@@ -76,11 +76,11 @@ class AlohaEditable {
   /// the placeholder is removed after calling this method, setCursor
   /// should be false ( or not set )
   void removePlaceholder([bool setCursor = false]) {
-    _context.callMethod('removePlaceholder', [setCursor]);
+    _context!.callMethod('removePlaceholder', [setCursor]);
   }
 
   /// Check if the content is empty.
-  bool get isEmpty => _context.callMethod('isEmpty');
+  bool? get isEmpty => _context!.callMethod('isEmpty');
 
   /// String representation of the object
   @override
@@ -91,16 +91,16 @@ class AlohaEditable {
     if (_event == null) {
       throw AlohaException('AlohaEditable - Activate, no event specified');
     }
-    _context.callMethod('activate', [_event]);
+    _context!.callMethod('activate', [_event]);
   }
 
   /// Blur the editable
   void blur() {
-    _context.callMethod('blur');
+    _context!.callMethod('blur');
   }
 
   /// Check if the string is empty as far as Aloha is concerned
-  bool empty(String str) => _context.callMethod('empty', [str]);
+  bool? empty(String str) => _context!.callMethod('empty', [str]);
 
   /// Get the contents of this editable as a HTML string or child node DOM
   /// objects.
@@ -110,18 +110,18 @@ class AlohaEditable {
   /// return {string|jQuery.HTMLElement} Contents of the editable as
   /// a DOM object or an HTML string.
   dynamic getContents([bool asObject = false]) =>
-      _context.callMethod('getContents', [asObject]);
+      _context!.callMethod('getContents', [asObject]);
 
   /// Set the contents of this editable as a HTML string
   /// The return object is as an object or html string, default is HTML.
   dynamic setContents(String content, [bool asObject = false]) =>
-      _context.callMethod('setContents', [content, asObject]);
+      _context!.callMethod('setContents', [content, asObject]);
 
   /// Get the id of this editable
-  String get id => _context.callMethod('getId');
+  String? get id => _context!.callMethod('getId');
 
   /// Get a snapshot of the active editable as a HTML string
-  String get snapshotContent => _context.callMethod('getSnapshotContent');
+  String? get snapshotContent => _context!.callMethod('getSnapshotContent');
 
   /// Sets the content serializer function.
   /// The default content serializer will just call the jQuery.html()
@@ -147,6 +147,6 @@ class AlohaEditable {
 
   /// Destroy the editable
   void destroy() {
-    _context.callMethod('destroy');
+    _context!.callMethod('destroy');
   }
 }

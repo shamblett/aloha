@@ -12,22 +12,22 @@ import 'dart:html';
 import 'package:aloha/aloha.dart';
 import 'package:test/test.dart';
 
-Aloha alohaEditor;
+late Aloha alohaEditor;
 
-DivElement buttonSection = querySelector('#aloha-button-section');
+DivElement? buttonSection = querySelector('#aloha-button-section') as DivElement?;
 
 ButtonElement createEventButton(String onClickScript) {
-  buttonSection.children.clear();
+  buttonSection!.children.clear();
   final theButton = ButtonElement();
   theButton.attributes['onclick'] = onClickScript;
-  buttonSection.children.add(theButton);
+  buttonSection!.children.add(theButton);
   return theButton;
 }
 
 int main() {
   /* Setup */
   alohaEditor = Aloha();
-  AlohaEditable regEditable;
+  AlohaEditable? regEditable;
 
   /* Group 1 - Core event tests*/
   group('1. Core Events - ', () {
@@ -131,7 +131,7 @@ int main() {
        *  Create an editable by adding the noweditable class to a previously
        *  not editable entity and adding it.
        */
-      final HeadingElement theEditableElement = querySelector('#alohaedit2');
+      final HeadingElement theEditableElement = querySelector('#alohaedit2') as HeadingElement;
       theEditableElement.classes.remove('noteditable');
       theEditableElement.classes.add('noweditable');
       alohaEditor.attachEditable('.noweditable');
@@ -151,7 +151,7 @@ int main() {
        *  Destroy an editable by adding the noteditable class to a previously
        *  editable entity and detaching it.
        */
-      final HeadingElement theEditableElement = querySelector('#alohaedit2');
+      final HeadingElement theEditableElement = querySelector('#alohaedit2') as HeadingElement;
       theEditableElement.classes.remove('noweditable');
       theEditableElement.classes.add('noteditable');
       alohaEditor.detachEditable('.noteditable');
@@ -172,7 +172,7 @@ int main() {
       /* To trigger the activated event we must do this through the page,
        * not any core API calls
        */
-      final HeadingElement theEditableElement = querySelector('#alohaedit1');
+      final HeadingElement theEditableElement = querySelector('#alohaedit1') as HeadingElement;
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -208,7 +208,7 @@ int main() {
         passed = true;
       });
       /* Re-activate an editable */
-      final ParagraphElement theEditableElement = querySelector('#alohaedit3');
+      final ParagraphElement theEditableElement = querySelector('#alohaedit3') as ParagraphElement;
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -408,39 +408,39 @@ int main() {
 
     test('Editables List', () {
       print('2.2');
-      expect(alohaEditor.editables.length, equals(4));
+      expect(alohaEditor.editables!.length, equals(4));
     }, skip: false);
 
     test('Active Editable - Property', () {
       print('2.3');
-      final HeadingElement theEditableElement = querySelector('#alohaedit1');
+      final HeadingElement theEditableElement = querySelector('#alohaedit1') as HeadingElement;
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
-      final editable = alohaEditor.activeEditable;
+      final editable = alohaEditor.activeEditable!;
       expect(editable.id, equals('alohaedit1'));
     }, skip: false);
 
     test('Settings', () {
       print('2.4');
-      expect(alohaEditor.settings['logLevels']['debug'], isFalse);
+      expect(alohaEditor.settings!['logLevels']['debug'], isFalse);
       expect(
-          alohaEditor.settings['baseUrl'],
+          alohaEditor.settings!['baseUrl'],
           equals(
               'https://cdn.rawgit.com/alohaeditor/Aloha-Editor/dev/src/lib'));
     }, skip: false);
 
     test('Defaults', () {
       print('2.5');
-      expect(alohaEditor.defaults['contentHandler']['getContents'][0],
+      expect(alohaEditor.defaults!['contentHandler']['getContents'][0],
           equals('blockelement'));
-      expect(alohaEditor.defaults['contentHandler']['initEditable'][0],
+      expect(alohaEditor.defaults!['contentHandler']['initEditable'][0],
           equals('blockelement'));
     }, skip: false);
 
     test('Loaded Plugins - Property', () {
       print('2.6');
-      final plugins = alohaEditor.loadedPlugins;
+      final plugins = alohaEditor.loadedPlugins!;
       expect(plugins[0], equals('format'));
       expect(plugins[2], equals('link'));
     }, skip: false);
@@ -459,7 +459,7 @@ int main() {
 
     test('Loaded Plugins', () {
       print('2.8');
-      final plugins = alohaEditor.loadedPlugins;
+      final plugins = alohaEditor.loadedPlugins!;
       expect(plugins[0], equals('format'));
       expect(plugins[2], equals('link'));
     }, skip: false);
@@ -472,7 +472,7 @@ int main() {
 
     test('Get Editable By Id', () {
       print('2.10');
-      final editable = alohaEditor.getEditableById('alohaedit3');
+      final editable = alohaEditor.getEditableById('alohaedit3')!;
       expect(editable.id, equals('alohaedit3'));
       final nullEditable = alohaEditor.getEditableById('alohaedit35');
       expect(nullEditable, isNull);
@@ -480,15 +480,15 @@ int main() {
 
     test('Activate Editable', () {
       print('2.11');
-      final editable = alohaEditor.getEditableById('alohaedit3');
+      final editable = alohaEditor.getEditableById('alohaedit3')!;
       expect(editable.id, equals('alohaedit3'));
       alohaEditor.activateEditable(editable);
-      expect(alohaEditor.activeEditable.id, equals('alohaedit3'));
+      expect(alohaEditor.activeEditable!.id, equals('alohaedit3'));
     }, skip: false);
 
     test('Get Activate Editable', () {
       print('2.12');
-      expect(alohaEditor.getActiveEditable().id, equals('alohaedit3'));
+      expect(alohaEditor.getActiveEditable()!.id, equals('alohaedit3'));
     }, skip: false);
 
     test('Deactivate Activate Editable', () {
@@ -501,17 +501,17 @@ int main() {
       print('2.14');
       final editable = alohaEditor.getEditableById('alohaedit3');
       expect(alohaEditor.isAnEditable(editable), isTrue);
-      List myList;
+      List? myList;
       expect(alohaEditor.isAnEditable(myList), isFalse);
     }, skip: false);
 
     test('Get Editable Host', () {
       print('2.15');
-      HtmlElement element = querySelector('#cepara');
-      var editable = alohaEditor.getEditableHost(element);
+      HtmlElement element = querySelector('#cepara') as HtmlElement;
+      var editable = alohaEditor.getEditableHost(element)!;
       expect(editable.id, equals('alohaedit4'));
-      element = querySelector('#aloha-edit-section');
-      editable = alohaEditor.getEditableHost(element);
+      element = querySelector('#aloha-edit-section') as HtmlElement;
+      editable = alohaEditor.getEditableHost(element)!;
       expect(editable, isNull);
     }, skip: false);
 
@@ -520,14 +520,14 @@ int main() {
       final editable = alohaEditor.getEditableById('alohaedit3');
       regEditable = editable;
       expect(alohaEditor.isAnEditable(regEditable), isTrue);
-      alohaEditor.unregisterEditable(regEditable);
+      alohaEditor.unregisterEditable(regEditable!);
       final editable2 = alohaEditor.getEditableById('alohaedit3');
       expect(editable2, isNull);
     }, skip: false);
 
     test('Register Editable', () {
       print('2.17');
-      alohaEditor.registerEditable(regEditable);
+      alohaEditor.registerEditable(regEditable!);
       final editable = alohaEditor.getEditableById('alohaedit3');
       expect(alohaEditor.isAnEditable(editable), isTrue);
     }, skip: false);
@@ -572,7 +572,7 @@ int main() {
   group('3.Commands - ', () {
     test('Query Command Enabled', () {
       print('3.1');
-      final ParagraphElement theEditableElement = querySelector('#alohaedit3');
+      final ParagraphElement theEditableElement = querySelector('#alohaedit3') as ParagraphElement;
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -599,7 +599,7 @@ int main() {
 
     test('Query Supported Commands', () {
       print('3.5');
-      final res = alohaEditor.querySupportedCommands();
+      final res = alohaEditor.querySupportedCommands()!;
       expect(res.length, isPositive);
     }, skip: false);
   });
