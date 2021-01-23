@@ -14,7 +14,8 @@ import 'package:test/test.dart';
 
 late Aloha alohaEditor;
 
-DivElement? buttonSection = querySelector('#aloha-button-section') as DivElement?;
+DivElement? buttonSection =
+    querySelector('#aloha-button-section') as DivElement?;
 
 ButtonElement createEventButton(String onClickScript) {
   buttonSection!.children.clear();
@@ -131,7 +132,7 @@ int main() {
        *  Create an editable by adding the noweditable class to a previously
        *  not editable entity and adding it.
        */
-      final HeadingElement theEditableElement = querySelector('#alohaedit2') as HeadingElement;
+      final theEditableElement = querySelector('#alohaedit2') as HeadingElement;
       theEditableElement.classes.remove('noteditable');
       theEditableElement.classes.add('noweditable');
       alohaEditor.attachEditable('.noweditable');
@@ -151,7 +152,7 @@ int main() {
        *  Destroy an editable by adding the noteditable class to a previously
        *  editable entity and detaching it.
        */
-      final HeadingElement theEditableElement = querySelector('#alohaedit2') as HeadingElement;
+      final theEditableElement = querySelector('#alohaedit2') as HeadingElement;
       theEditableElement.classes.remove('noweditable');
       theEditableElement.classes.add('noteditable');
       alohaEditor.detachEditable('.noteditable');
@@ -172,7 +173,7 @@ int main() {
       /* To trigger the activated event we must do this through the page,
        * not any core API calls
        */
-      final HeadingElement theEditableElement = querySelector('#alohaedit1') as HeadingElement;
+      final theEditableElement = querySelector('#alohaedit1') as HeadingElement;
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -208,7 +209,8 @@ int main() {
         passed = true;
       });
       /* Re-activate an editable */
-      final ParagraphElement theEditableElement = querySelector('#alohaedit3') as ParagraphElement;
+      final theEditableElement =
+          querySelector('#alohaedit3') as ParagraphElement;
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -413,7 +415,7 @@ int main() {
 
     test('Active Editable - Property', () {
       print('2.3');
-      final HeadingElement theEditableElement = querySelector('#alohaedit1') as HeadingElement;
+      final theEditableElement = querySelector('#alohaedit1') as HeadingElement;
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
@@ -507,7 +509,7 @@ int main() {
 
     test('Get Editable Host', () {
       print('2.15');
-      HtmlElement element = querySelector('#cepara') as HtmlElement;
+      var element = querySelector('#cepara') as HtmlElement;
       var editable = alohaEditor.getEditableHost(element)!;
       expect(editable.id, equals('alohaedit4'));
       element = querySelector('#aloha-edit-section') as HtmlElement;
@@ -572,7 +574,8 @@ int main() {
   group('3.Commands - ', () {
     test('Query Command Enabled', () {
       print('3.1');
-      final ParagraphElement theEditableElement = querySelector('#alohaedit3') as ParagraphElement;
+      final theEditableElement =
+          querySelector('#alohaedit3') as ParagraphElement;
       /* Focus, then click, need this sequence for Aloha */
       theEditableElement.focus();
       theEditableElement.click();
