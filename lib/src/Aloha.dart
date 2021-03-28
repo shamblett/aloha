@@ -192,7 +192,9 @@ class Aloha {
   /// Aloha is ready when this is set. The API calls check for this,
   /// if Aloha is not ready an AlohaException is raised.
   bool _ready = true;
+  // ignore: unnecessary_getters_setters
   bool get isReady => _ready;
+  // ignore: unnecessary_getters_setters
   set isReady(bool state) => _ready = state;
 
   /// Ready, NOT a broadcast event, only use one listener for this.
